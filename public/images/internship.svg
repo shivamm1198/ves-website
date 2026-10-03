@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6f5f2"/>
+      <stop offset="1" stop-color="#d6d3cd"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.68" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#000000" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a2c"/>
+      <stop offset="0.5" stop-color="#d4b26a"/>
+      <stop offset="1" stop-color="#8a6a2c"/>
+    </linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+  <g stroke="#000000" stroke-opacity="0.07" stroke-width="1"><line x1="0" y1="0" x2="0" y2="800"/><line x1="48" y1="0" x2="48" y2="800"/><line x1="96" y1="0" x2="96" y2="800"/><line x1="144" y1="0" x2="144" y2="800"/><line x1="192" y1="0" x2="192" y2="800"/><line x1="240" y1="0" x2="240" y2="800"/><line x1="288" y1="0" x2="288" y2="800"/><line x1="336" y1="0" x2="336" y2="800"/><line x1="384" y1="0" x2="384" y2="800"/><line x1="432" y1="0" x2="432" y2="800"/><line x1="480" y1="0" x2="480" y2="800"/><line x1="528" y1="0" x2="528" y2="800"/><line x1="576" y1="0" x2="576" y2="800"/><line x1="624" y1="0" x2="624" y2="800"/><line x1="672" y1="0" x2="672" y2="800"/><line x1="720" y1="0" x2="720" y2="800"/><line x1="768" y1="0" x2="768" y2="800"/><line x1="816" y1="0" x2="816" y2="800"/><line x1="864" y1="0" x2="864" y2="800"/><line x1="912" y1="0" x2="912" y2="800"/><line x1="960" y1="0" x2="960" y2="800"/><line x1="1008" y1="0" x2="1008" y2="800"/><line x1="1056" y1="0" x2="1056" y2="800"/><line x1="1104" y1="0" x2="1104" y2="800"/><line x1="1152" y1="0" x2="1152" y2="800"/><line x1="1200" y1="0" x2="1200" y2="800"/><line x1="0" y1="0" x2="1200" y2="0"/><line x1="0" y1="48" x2="1200" y2="48"/><line x1="0" y1="96" x2="1200" y2="96"/><line x1="0" y1="144" x2="1200" y2="144"/><line x1="0" y1="192" x2="1200" y2="192"/><line x1="0" y1="240" x2="1200" y2="240"/><line x1="0" y1="288" x2="1200" y2="288"/><line x1="0" y1="336" x2="1200" y2="336"/><line x1="0" y1="384" x2="1200" y2="384"/><line x1="0" y1="432" x2="1200" y2="432"/><line x1="0" y1="480" x2="1200" y2="480"/><line x1="0" y1="528" x2="1200" y2="528"/><line x1="0" y1="576" x2="1200" y2="576"/><line x1="0" y1="624" x2="1200" y2="624"/><line x1="0" y1="672" x2="1200" y2="672"/><line x1="0" y1="720" x2="1200" y2="720"/><line x1="0" y1="768" x2="1200" y2="768"/></g>
+  <g transform="translate(584.0000000000001 168.00000000000003) scale(19.333333333333332)" fill="none" stroke="#111111" stroke-opacity="0.9" stroke-width="0.32" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  <rect width="20" height="14" x="2" y="6" rx="2" />
+  </g>
+  <rect x="72" y="704" width="160" height="3" fill="url(#gold)"/>
+  <rect width="1200" height="800" filter="url(#grain)" opacity="0.07"/>
+</svg>

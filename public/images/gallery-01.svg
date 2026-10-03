@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#222222"/>
+      <stop offset="1" stop-color="#5c5c5c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a2c"/>
+      <stop offset="0.5" stop-color="#d4b26a"/>
+      <stop offset="1" stop-color="#8a6a2c"/>
+    </linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <rect width="900" height="1200" fill="url(#glow)"/>
+  <g stroke="#ffffff" stroke-opacity="0.10" fill="none" stroke-width="1.5"><path d="M 72 254 L 450 72 L 828 254 Z"/><line x1="54" y1="264" x2="846" y2="264"/><rect x="90" y="276" width="44.19642857142857" height="744"/><line x1="101.04910714285714" y1="284" x2="101.04910714285714" y2="1012" stroke-opacity="0.05"/><line x1="112.09821428571428" y1="284" x2="112.09821428571428" y2="1012" stroke-opacity="0.05"/><line x1="123.14732142857143" y1="284" x2="123.14732142857143" y2="1012" stroke-opacity="0.05"/><rect x="202.63392857142856" y="276" width="44.19642857142857" height="744"/><line x1="213.6830357142857" y1="284" x2="213.6830357142857" y2="1012" stroke-opacity="0.05"/><line x1="224.73214285714283" y1="284" x2="224.73214285714283" y2="1012" stroke-opacity="0.05"/><line x1="235.78125" y1="284" x2="235.78125" y2="1012" stroke-opacity="0.05"/><rect x="315.2678571428571" y="276" width="44.19642857142857" height="744"/><line x1="326.3169642857143" y1="284" x2="326.3169642857143" y2="1012" stroke-opacity="0.05"/><line x1="337.3660714285714" y1="284" x2="337.3660714285714" y2="1012" stroke-opacity="0.05"/><line x1="348.41517857142856" y1="284" x2="348.41517857142856" y2="1012" stroke-opacity="0.05"/><rect x="427.9017857142857" y="276" width="44.19642857142857" height="744"/><line x1="438.9508928571429" y1="284" x2="438.9508928571429" y2="1012" stroke-opacity="0.05"/><line x1="450" y1="284" x2="450" y2="1012" stroke-opacity="0.05"/><line x1="461.04910714285717" y1="284" x2="461.04910714285717" y2="1012" stroke-opacity="0.05"/><rect x="540.5357142857142" y="276" width="44.19642857142857" height="744"/><line x1="551.5848214285713" y1="284" x2="551.5848214285713" y2="1012" stroke-opacity="0.05"/><line x1="562.6339285714286" y1="284" x2="562.6339285714286" y2="1012" stroke-opacity="0.05"/><line x1="573.6830357142857" y1="284" x2="573.6830357142857" y2="1012" stroke-opacity="0.05"/><rect x="653.1696428571429" y="276" width="44.19642857142857" height="744"/><line x1="664.21875" y1="284" x2="664.21875" y2="1012" stroke-opacity="0.05"/><line x1="675.2678571428572" y1="284" x2="675.2678571428572" y2="1012" stroke-opacity="0.05"/><line x1="686.3169642857143" y1="284" x2="686.3169642857143" y2="1012" stroke-opacity="0.05"/><rect x="765.8035714285714" y="276" width="44.19642857142857" height="744"/><line x1="776.8526785714286" y1="284" x2="776.8526785714286" y2="1012" stroke-opacity="0.05"/><line x1="787.9017857142858" y1="284" x2="787.9017857142858" y2="1012" stroke-opacity="0.05"/><line x1="798.9508928571429" y1="284" x2="798.9508928571429" y2="1012" stroke-opacity="0.05"/><line x1="36" y1="1032" x2="864" y2="1032"/><line x1="18" y1="1046" x2="882" y2="1046"/></g>
+  <g transform="translate(189 339) scale(21.75)" fill="none" stroke="#fafafa" stroke-opacity="0.9" stroke-width="0.32" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m14 13-8.381 8.38a1 1 0 0 1-3.001-3l8.384-8.381" />
+  <path d="m16 16 6-6" />
+  <path d="m21.5 10.5-8-8" />
+  <path d="m8 8 6-6" />
+  <path d="m8.5 7.5 8 8" />
+  </g>
+  <rect x="54" y="1056" width="160" height="3" fill="url(#gold)"/>
+  <rect width="900" height="1200" filter="url(#grain)" opacity="0.07"/>
+</svg>

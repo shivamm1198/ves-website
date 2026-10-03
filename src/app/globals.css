@@ -1,0 +1,154 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+
+  --font-sans: var(--font-inter), var(--font-deva), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), var(--font-deva), Georgia, serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Light-only legal theme: ink on paper, with restrained gold accents. */
+:root {
+  --radius: 0.375rem;
+
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+  --primary: #0a0a0a;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f2;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f4f4f2;
+  --muted-foreground: #5f5f5c;
+  --accent: #f4f4f2;
+  --accent-foreground: #0a0a0a;
+  --destructive: #b42318;
+  --border: #e6e5e1;
+  --input: #dcdbd6;
+  --ring: #a8843f;
+
+  --gold: #a8843f;
+  --gold-light: #d6b878;
+  --gold-dark: #7a5d24;
+  --ink: #0a0a0a;
+  --paper: #faf9f6;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif tracking-tight;
+  }
+  /* Cormorant defaults to old-style figures; keep numbers lining. */
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-serif {
+    --tw-numeric-figure: lining-nums;
+    font-variant-numeric: lining-nums;
+  }
+  ::selection {
+    background: var(--gold-light);
+    color: var(--ink);
+  }
+}
+
+@layer utilities {
+  .gold-gradient {
+    background-image: linear-gradient(
+      90deg,
+      var(--gold-dark),
+      var(--gold-light) 50%,
+      var(--gold-dark)
+    );
+  }
+  .gold-text {
+    background-image: linear-gradient(
+      100deg,
+      var(--gold-dark),
+      var(--gold) 40%,
+      var(--gold-light) 60%,
+      var(--gold-dark)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .paper-grid {
+    background-image:
+      linear-gradient(to right, rgb(0 0 0 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(0 0 0 / 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .mask-fade-x {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+}

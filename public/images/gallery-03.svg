@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0b0b"/>
+      <stop offset="1" stop-color="#2e2e2e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a2c"/>
+      <stop offset="0.5" stop-color="#d4b26a"/>
+      <stop offset="1" stop-color="#8a6a2c"/>
+    </linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <rect width="1000" height="1000" fill="url(#glow)"/>
+  <g stroke="#ffffff" fill="none" stroke-opacity="0.08" stroke-width="1.2"><circle cx="720" cy="500" r="60"/><circle cx="720" cy="500" r="106"/><circle cx="720" cy="500" r="152"/><circle cx="720" cy="500" r="198"/><circle cx="720" cy="500" r="244"/><circle cx="720" cy="500" r="290"/><circle cx="720" cy="500" r="336"/><circle cx="720" cy="500" r="382"/><circle cx="720" cy="500" r="428"/><circle cx="720" cy="500" r="474"/><circle cx="720" cy="500" r="520"/><circle cx="720" cy="500" r="566"/><circle cx="720" cy="500" r="612"/><circle cx="720" cy="500" r="658"/><circle cx="720" cy="500" r="704"/><circle cx="720" cy="500" r="750"/><circle cx="720" cy="500" r="796"/><circle cx="720" cy="500" r="842"/><circle cx="720" cy="500" r="888"/><circle cx="720" cy="500" r="934"/><circle cx="720" cy="500" r="980"/></g>
+  <g transform="translate(210 210) scale(24.166666666666668)" fill="none" stroke="#f5f5f4" stroke-opacity="0.9" stroke-width="0.32" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 19v3" />
+  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+  <rect x="9" y="2" width="6" height="13" rx="3" />
+  </g>
+  <rect x="60" y="880" width="160" height="3" fill="url(#gold)"/>
+  <rect width="1000" height="1000" filter="url(#grain)" opacity="0.07"/>
+</svg>

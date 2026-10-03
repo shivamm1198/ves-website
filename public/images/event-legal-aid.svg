@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6f5f2"/>
+      <stop offset="1" stop-color="#d6d3cd"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.68" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#000000" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a2c"/>
+      <stop offset="0.5" stop-color="#d4b26a"/>
+      <stop offset="1" stop-color="#8a6a2c"/>
+    </linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+  <g stroke="#000000" fill="none" stroke-opacity="0.08" stroke-width="1.2"><circle cx="864" cy="400" r="60"/><circle cx="864" cy="400" r="106"/><circle cx="864" cy="400" r="152"/><circle cx="864" cy="400" r="198"/><circle cx="864" cy="400" r="244"/><circle cx="864" cy="400" r="290"/><circle cx="864" cy="400" r="336"/><circle cx="864" cy="400" r="382"/><circle cx="864" cy="400" r="428"/><circle cx="864" cy="400" r="474"/><circle cx="864" cy="400" r="520"/><circle cx="864" cy="400" r="566"/><circle cx="864" cy="400" r="612"/><circle cx="864" cy="400" r="658"/><circle cx="864" cy="400" r="704"/><circle cx="864" cy="400" r="750"/><circle cx="864" cy="400" r="796"/><circle cx="864" cy="400" r="842"/><circle cx="864" cy="400" r="888"/><circle cx="864" cy="400" r="934"/><circle cx="864" cy="400" r="980"/><circle cx="864" cy="400" r="1026"/><circle cx="864" cy="400" r="1072"/><circle cx="864" cy="400" r="1118"/><circle cx="864" cy="400" r="1164"/></g>
+  <g transform="translate(584.0000000000001 168.00000000000003) scale(19.333333333333332)" fill="none" stroke="#111111" stroke-opacity="0.9" stroke-width="0.32" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762" />
+  </g>
+  <rect x="72" y="704" width="160" height="3" fill="url(#gold)"/>
+  <rect width="1200" height="800" filter="url(#grain)" opacity="0.07"/>
+</svg>
