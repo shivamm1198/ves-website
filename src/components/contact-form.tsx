@@ -4,7 +4,6 @@ import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Send } from "lucide-react";
 
-import { site } from "@/data/site";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,7 +27,7 @@ type Errors = Partial<Record<"name" | "email" | "message", string>>;
  * Contact form with client-side validation. There is no backend yet, so a
  * valid submission opens the visitor's mail app addressed to VES.
  */
-export function ContactForm({ initialSubject }: { initialSubject?: string }) {
+export function ContactForm({ initialSubject, email }: { initialSubject?: string; email: string }) {
   const resolved = initialSubject?.startsWith("wing-") ? "volunteer" : initialSubject;
   const [subject, setSubject] = React.useState(
     subjects.some((s) => s.value === resolved) ? resolved! : "general",
@@ -59,7 +58,7 @@ export function ContactForm({ initialSubject }: { initialSubject?: string }) {
       "",
       message,
     ].join("\n");
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(
       `[${label}] ${name}`,
     )}&body=${encodeURIComponent(body)}`;
     setSent(true);
@@ -81,8 +80,8 @@ export function ContactForm({ initialSubject }: { initialSubject?: string }) {
             <h2 className="text-3xl font-semibold text-ink">Thank you</h2>
             <p className="max-w-sm text-muted-foreground">
               Your mail app should have opened with your message to{" "}
-              <span className="font-medium text-ink">{site.email}</span>. Hit send and we&apos;ll
-              reply within two working days.
+              <span className="font-medium text-ink">{email}</span>. Hit send and we&apos;ll reply
+              within two working days.
             </p>
             <Button variant="outline" onClick={() => setSent(false)} className="mt-2">
               Write another message

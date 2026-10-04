@@ -4,7 +4,6 @@ import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 
-import { site } from "@/data/site";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,7 +21,15 @@ import { Textarea } from "@/components/ui/textarea";
  * Application form. There is no backend yet, so submitting opens the
  * applicant's mail app with a pre-filled email to VES.
  */
-export function ApplyDialog({ title, children }: { title: string; children: React.ReactNode }) {
+export function ApplyDialog({
+  title,
+  email,
+  children,
+}: {
+  title: string;
+  email: string;
+  children: React.ReactNode;
+}) {
   const [sent, setSent] = React.useState(false);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +43,7 @@ export function ApplyDialog({ title, children }: { title: string; children: Reac
       "",
       String(data.get("note") ?? ""),
     ].join("\n");
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(
       `Application: ${title}`,
     )}&body=${encodeURIComponent(body)}`;
     setSent(true);

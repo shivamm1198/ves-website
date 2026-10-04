@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { scholarships } from "@/data/site";
+import type { SiteContent } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export function ScholarshipSection() {
+export function ScholarshipSection({
+  scholarships,
+}: {
+  scholarships: SiteContent["scholarships"];
+}) {
   return (
     <section id="scholarships" className="relative scroll-mt-20 overflow-hidden bg-ink text-white">
       <div className="mx-auto grid max-w-7xl gap-14 px-4 py-24 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20 lg:px-8 lg:py-32">

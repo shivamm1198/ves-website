@@ -5,15 +5,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { internships, type Internship } from "@/data/site";
+import type { Internship } from "@/lib/content/schema";
 import { Input } from "@/components/ui/input";
 import { InternshipCard } from "@/components/internship-card";
 
-const domains = ["All", ...Array.from(new Set(internships.map((i) => i.domain)))] as const;
 const modes = ["Any mode", "On-site", "Hybrid", "Remote"] as const;
 
-export function InternshipExplorer() {
-  const [domain, setDomain] = React.useState<(typeof domains)[number]>("All");
+export function InternshipExplorer({
+  internships,
+  email,
+}: {
+  internships: Internship[];
+  email: string;
+}) {
+  const domains = ["All", ...Array.from(new Set(internships.map((i) => i.domain)))];
+  const [domain, setDomain] = React.useState("All");
   const [mode, setMode] = React.useState<(typeof modes)[number]>("Any mode");
   const [query, setQuery] = React.useState("");
 
@@ -96,7 +102,7 @@ export function InternshipExplorer() {
               exit={{ opacity: 0, scale: 0.97 }}
               transition={{ duration: 0.3 }}
             >
-              <InternshipCard item={item} />
+              <InternshipCard item={item} email={email} />
             </motion.div>
           ))}
         </AnimatePresence>

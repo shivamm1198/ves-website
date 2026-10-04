@@ -12,36 +12,44 @@ import {
   GraduationCap,
   HandHeart,
   Megaphone,
+  Scale,
+  Users,
   Venus,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { wings } from "@/data/site";
+import type { Wing } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { easeOut } from "@/components/motion";
 
-const icons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
-  internship: BriefcaseBusiness,
-  "legal-aid": HandHeart,
-  moot: Gavel,
-  research: BookOpenText,
-  women: Venus,
-  student: GraduationCap,
-  events: CalendarRange,
-  media: Megaphone,
+export const wingIconComponents: Record<
+  Wing["icon"],
+  React.ComponentType<{ className?: string; strokeWidth?: number }>
+> = {
+  briefcase: BriefcaseBusiness,
+  "hand-heart": HandHeart,
+  gavel: Gavel,
+  book: BookOpenText,
+  venus: Venus,
+  "graduation-cap": GraduationCap,
+  calendar: CalendarRange,
+  megaphone: Megaphone,
+  scale: Scale,
+  users: Users,
 };
 
-export function WingsExplorer() {
-  const [active, setActive] = React.useState(wings[0].key);
-  const wing = wings.find((w) => w.key === active)!;
-  const Icon = icons[wing.key];
-  const index = wings.findIndex((w) => w.key === active);
+export function WingsExplorer({ wings }: { wings: Wing[] }) {
+  const [active, setActive] = React.useState(wings[0]?.key);
+  const wing = wings.find((w) => w.key === active) ?? wings[0];
+  if (!wing) return null;
+  const Icon = wingIconComponents[wing.icon];
+  const index = wings.indexOf(wing);
 
   return (
     <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
       <ul className="flex flex-col border-t" role="tablist" aria-label="Organisation wings">
         {wings.map((w, i) => {
-          const WingIcon = icons[w.key];
+          const WingIcon = wingIconComponents[w.icon];
           const selected = w.key === active;
           return (
             <li key={w.key} className="border-b">

@@ -5,14 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { gallery, type GalleryItem } from "@/data/site";
+import type { GalleryItem } from "@/lib/content/schema";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Photo } from "@/components/photo";
 
-const categories = ["All", ...Array.from(new Set(gallery.map((g) => g.category)))] as const;
-
-export function GalleryGrid() {
-  const [category, setCategory] = React.useState<(typeof categories)[number]>("All");
+export function GalleryGrid({ gallery }: { gallery: GalleryItem[] }) {
+  const categories = ["All", ...Array.from(new Set(gallery.map((g) => g.category)))];
+  const [category, setCategory] = React.useState("All");
   const [index, setIndex] = React.useState<number | null>(null);
 
   const items = gallery.filter((g) => category === "All" || g.category === category);
@@ -79,7 +78,7 @@ export function GalleryGrid() {
       <div key={category} className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
         {items.map((item, i) => (
           <motion.button
-            key={item.src}
+            key={item.id}
             type="button"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -117,7 +116,7 @@ export function GalleryGrid() {
               <div className="relative h-[70dvh] max-h-[720px] w-full bg-black">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
-                    key={active.src}
+                    key={active.id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}

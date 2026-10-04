@@ -1,11 +1,11 @@
 import { CalendarClock, Clock, IndianRupee, MapPin } from "lucide-react";
 
-import type { Internship } from "@/data/site";
+import type { Internship } from "@/lib/content/schema";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ApplyDialog } from "@/components/apply-dialog";
 
-export function InternshipCard({ item }: { item: Internship }) {
+export function InternshipCard({ item, email }: { item: Internship; email: string }) {
   return (
     <article className="group relative flex h-full flex-col rounded-lg border bg-white p-6 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,0.3)]">
       <span className="absolute inset-x-6 top-0 h-[2px] origin-left scale-x-0 gold-gradient transition-transform duration-500 group-hover:scale-x-100" />
@@ -28,7 +28,7 @@ export function InternshipCard({ item }: { item: Internship }) {
         <span className="text-xs text-muted-foreground">
           {item.seats} {item.seats === 1 ? "seat" : "seats"}
         </span>
-        <ApplyDialog title={item.title}>
+        <ApplyDialog title={item.title} email={email}>
           <Button size="sm">Apply now</Button>
         </ApplyDialog>
       </div>

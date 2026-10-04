@@ -1,12 +1,17 @@
 /**
- * Central content for the Vidhi Ekta Sangh website.
+ * Default content for the Vidhi Ekta Sangh website.
  *
- * NOTE: Names, numbers, dates, and contact details below are SAMPLE content
- * so the design can be reviewed end-to-end. Replace them with VES's real data
- * before going live. Images live in /public/images (see scripts/generate-placeholders.mjs).
+ * Live content is edited by the president in the /admin dashboards and stored
+ * in Supabase. These values are used to pre-fill the homepage editor, as a
+ * fallback for any section that hasn't been saved yet, and for the whole site
+ * when Supabase isn't configured (e.g. local development).
+ *
+ * NOTE: Names, numbers, dates, and contact details below are SAMPLE content.
  */
 
-export const site = {
+import type { EventItem, GalleryItem, SiteContent } from "@/lib/content/schema";
+
+const site: SiteContent["site"] = {
   name: "Vidhi Ekta Sangh",
   short: "VES",
   hindi: "विधि एकता संघ",
@@ -37,7 +42,7 @@ export const nav = [
 ];
 
 /** Joined members per state / UT, keyed by the map's location id. */
-export const stateMembers: Record<string, { members: number; cities: string[] }> = {
+const stateMembers: SiteContent["stateMembers"] = {
   dl: { members: 214, cities: ["New Delhi", "Dwarka", "Rohini"] },
   up: { members: 186, cities: ["Lucknow", "Prayagraj", "Noida", "Varanasi"] },
   mh: { members: 162, cities: ["Mumbai", "Pune", "Nagpur"] },
@@ -72,21 +77,15 @@ export const stateMembers: Record<string, { members: number; cities: string[] }>
   ar: { members: 4, cities: ["Itanagar"] },
 };
 
-const memberCounts = Object.values(stateMembers);
-export const totalMembers = memberCounts.reduce((sum, s) => sum + s.members, 0);
-export const statesReached = memberCounts.filter((s) => s.members > 0).length;
+const stats: SiteContent["stats"] = {
+  internshipsFacilitated: 420,
+  eventsHeld: 96,
+};
 
-export const stats = [
-  { value: totalMembers, suffix: "", label: "Members nationwide" },
-  { value: 420, suffix: "+", label: "Internships facilitated" },
-  { value: 96, suffix: "", label: "Events & seminars" },
-  { value: statesReached, suffix: "", label: "States & UTs reached" },
-];
-
-export const founder = {
+const founder: SiteContent["founder"] = {
   name: "Adv. Rohan Malhotra",
   title: "Founder & National President",
-  initials: "RM",
+  photo: "",
   quote:
     "The law is not a profession of the privileged few. Every student who walks into a courtroom for the first time deserves a mentor beside them — that is why Vidhi Ekta Sangh exists.",
   bio: [
@@ -100,7 +99,7 @@ export const founder = {
   ],
 };
 
-export const pillars = [
+const pillars: SiteContent["pillars"] = [
   {
     key: "integrity",
     title: "Integrity",
@@ -125,24 +124,9 @@ export const pillars = [
     hindi: "सशक्तिकरण",
     text: "Internships, scholarships and mentorship that turn ambition into opportunity — especially for first-generation lawyers.",
   },
-] as const;
+];
 
-export type Internship = {
-  id: string;
-  title: string;
-  organization: string;
-  location: string;
-  mode: "On-site" | "Remote" | "Hybrid";
-  domain: "Litigation" | "Corporate" | "Policy & Research" | "Legal Aid" | "Judiciary";
-  duration: string;
-  stipend: string;
-  deadline: string;
-  seats: number;
-  description: string;
-  eligibility: string;
-};
-
-export const internships: Internship[] = [
+const internships: SiteContent["internships"] = [
   {
     id: "lit-delhi-hc",
     title: "Litigation Intern — Constitutional & Writ Practice",
@@ -235,7 +219,7 @@ export const internships: Internship[] = [
   },
 ];
 
-export const internshipSteps = [
+const internshipSteps: SiteContent["internshipSteps"] = [
   {
     title: "Register",
     text: "Create your VES membership profile with your CV and areas of interest.",
@@ -254,7 +238,7 @@ export const internshipSteps = [
   },
 ];
 
-export const internshipFaqs = [
+const internshipFaqs: SiteContent["internshipFaqs"] = [
   {
     q: "Is VES membership required to apply?",
     a: "Membership is free for law students. Registering helps us verify your enrolment and match you with mentors who fit your interests.",
@@ -273,7 +257,7 @@ export const internshipFaqs = [
   },
 ];
 
-export const scholarships = [
+const scholarships: SiteContent["scholarships"] = [
   {
     title: "VES Merit Scholarship",
     amount: "₹25,000",
@@ -294,52 +278,82 @@ export const scholarships = [
   },
 ];
 
-export const events = [
+export const sampleEvents: EventItem[] = [
   {
+    id: "sample-event-1",
     title: "National Moot Court Competition 2026",
-    date: "14 – 16 Aug 2026",
     location: "New Delhi",
+    startDate: "2026-08-14",
+    endDate: "2026-08-16",
+    dateLabel: "14 – 16 Aug 2026",
+    description:
+      "64 teams from 22 states argued a constitutional problem on digital privacy before benches of senior advocates and retired judges.",
     image: "/images/event-moot-court.svg",
-    text: "64 teams from 22 states argued a constitutional problem on digital privacy before benches of senior advocates and retired judges.",
+    published: true,
   },
   {
+    id: "sample-event-2",
     title: "Rural Legal Aid Camp",
-    date: "02 Jul 2026",
     location: "Alwar, Rajasthan",
+    startDate: "2026-07-02",
+    endDate: null,
+    dateLabel: "02 Jul 2026",
+    description:
+      "120 volunteers offered free consultations on land, pension and domestic-violence matters to over 900 villagers.",
     image: "/images/event-legal-aid.svg",
-    text: "120 volunteers offered free consultations on land, pension and domestic-violence matters to over 900 villagers.",
+    published: true,
   },
   {
+    id: "sample-event-3",
     title: "Constitution Day Seminar",
-    date: "26 Nov 2025",
     location: "Lucknow",
+    startDate: "2025-11-26",
+    endDate: null,
+    dateLabel: "26 Nov 2025",
+    description:
+      "A day-long reading and panel discussion on the Preamble, fundamental duties and 75 years of the Republic.",
     image: "/images/event-constitution-day.svg",
-    text: "A day-long reading and panel discussion on the Preamble, fundamental duties and 75 years of the Republic.",
+    published: true,
   },
   {
+    id: "sample-event-4",
     title: "Legal Career Conclave",
-    date: "18 Jan 2026",
     location: "Mumbai",
+    startDate: "2026-01-18",
+    endDate: null,
+    dateLabel: "18 Jan 2026",
+    description:
+      "Partners, in-house counsel and judiciary toppers on building a career in law — beyond the usual paths.",
     image: "/images/event-career-conclave.svg",
-    text: "Partners, in-house counsel and judiciary toppers on building a career in law — beyond the usual paths.",
+    published: true,
   },
   {
+    id: "sample-event-5",
     title: "Women & the Law Workshop",
-    date: "08 Mar 2026",
     location: "Bengaluru",
+    startDate: "2026-03-08",
+    endDate: null,
+    dateLabel: "08 Mar 2026",
+    description:
+      "Hands-on sessions on POSH compliance, maintenance law and courtroom confidence for young women advocates.",
     image: "/images/event-womens-rights.svg",
-    text: "Hands-on sessions on POSH compliance, maintenance law and courtroom confidence for young women advocates.",
+    published: true,
   },
   {
+    id: "sample-event-6",
     title: "Legal Writing Bootcamp",
-    date: "22 – 24 May 2026",
     location: "Online",
+    startDate: "2026-05-22",
+    endDate: "2026-05-24",
+    dateLabel: "22 – 24 May 2026",
+    description:
+      "Three days on drafting, citation and persuasive writing, with personalised feedback on every submission.",
     image: "/images/event-legal-writing.svg",
-    text: "Three days on drafting, citation and persuasive writing, with personalised feedback on every submission.",
+    published: true,
   },
 ];
 
-export const news = [
+const news: SiteContent["news"] = [
   {
     date: "28 Sep 2026",
     category: "Announcement",
@@ -407,45 +421,41 @@ const memberSeed: [string, string, string][] = [
   ["Abhinav Dubey", "Alumni Relations", "Madhya Pradesh"],
 ];
 
-export const members = memberSeed.map(([name, role, state]) => ({
+const members: SiteContent["members"] = memberSeed.map(([name, role, state]) => ({
   name,
   role,
   state,
-  initials: name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2),
+  photo: "",
 }));
 
-export const patrons = [
+const patrons: SiteContent["patrons"] = [
   {
     name: "Hon'ble Justice (Retd.) S. N. Kashyap",
     title: "Chief Patron",
     detail: "Former Judge, High Court of Judicature at Allahabad",
-    initials: "SK",
+    photo: "",
   },
   {
     name: "Sr. Adv. Meenakshi Raghavan",
     title: "Patron",
     detail: "Senior Advocate, Supreme Court of India",
-    initials: "MR",
+    photo: "",
   },
   {
     name: "Prof. (Dr.) Alok Bhattacharya",
     title: "Academic Patron",
     detail: "Former Vice-Chancellor, National Law University",
-    initials: "AB",
+    photo: "",
   },
   {
     name: "Sr. Adv. Harpreet Gill",
     title: "Patron",
     detail: "Senior Advocate, Punjab & Haryana High Court",
-    initials: "HG",
+    photo: "",
   },
 ];
 
-export const videos = [
+const videos: SiteContent["videos"] = [
   {
     // Paste the YouTube video id (the part after "v=") to embed it inline.
     youtubeId: "",
@@ -467,9 +477,10 @@ export const videos = [
   },
 ];
 
-export const wings = [
+const wings: SiteContent["wings"] = [
   {
     key: "internship",
+    icon: "briefcase",
     name: "Internship & Placement Wing",
     head: "Ishita Rao",
     summary:
@@ -478,6 +489,7 @@ export const wings = [
   },
   {
     key: "legal-aid",
+    icon: "hand-heart",
     name: "Legal Aid Wing",
     head: "Arjun Nair",
     summary:
@@ -486,6 +498,7 @@ export const wings = [
   },
   {
     key: "moot",
+    icon: "gavel",
     name: "Moot Court & Advocacy Wing",
     head: "Siddharth Chauhan",
     summary: "Builds courtroom skills through national moots, mock trials and advocacy workshops.",
@@ -497,6 +510,7 @@ export const wings = [
   },
   {
     key: "research",
+    icon: "book",
     name: "Research & Publication Wing",
     head: "Priya Iyer",
     summary: "Publishes the VES Quarterly Law Review and policy briefs on emerging areas of law.",
@@ -504,6 +518,7 @@ export const wings = [
   },
   {
     key: "women",
+    icon: "venus",
     name: "Women's Rights Wing",
     head: "Meera Joshi",
     summary:
@@ -512,6 +527,7 @@ export const wings = [
   },
   {
     key: "student",
+    icon: "graduation-cap",
     name: "Student Wing",
     head: "Riya Kapoor",
     summary: "The voice of law students — campus chapters, ambassadors and peer-learning circles.",
@@ -519,6 +535,7 @@ export const wings = [
   },
   {
     key: "events",
+    icon: "calendar",
     name: "Events & Outreach Wing",
     head: "Vivaan Mishra",
     summary:
@@ -527,6 +544,7 @@ export const wings = [
   },
   {
     key: "media",
+    icon: "megaphone",
     name: "Media & Communication Wing",
     head: "Aditya Banerjee",
     summary:
@@ -535,7 +553,7 @@ export const wings = [
   },
 ];
 
-export const journey = [
+const journey: SiteContent["journey"] = [
   {
     year: "2020",
     title: "A WhatsApp group becomes a movement",
@@ -573,16 +591,9 @@ export const journey = [
   },
 ];
 
-export type GalleryItem = {
-  src: string;
-  title: string;
-  category: "Events" | "Moot Court" | "Legal Aid" | "Seminars" | "Community";
-  w: number;
-  h: number;
-};
-
-export const gallery: GalleryItem[] = [
+export const sampleGallery: GalleryItem[] = [
   {
+    id: "sample-photo-1",
     src: "/images/gallery-01.svg",
     title: "Final round, National Moot Court",
     category: "Moot Court",
@@ -590,6 +601,7 @@ export const gallery: GalleryItem[] = [
     h: 1200,
   },
   {
+    id: "sample-photo-2",
     src: "/images/gallery-02.svg",
     title: "Volunteers at the Alwar legal-aid camp",
     category: "Legal Aid",
@@ -597,6 +609,7 @@ export const gallery: GalleryItem[] = [
     h: 800,
   },
   {
+    id: "sample-photo-3",
     src: "/images/gallery-03.svg",
     title: "Keynote at the Career Conclave",
     category: "Seminars",
@@ -604,6 +617,7 @@ export const gallery: GalleryItem[] = [
     h: 1000,
   },
   {
+    id: "sample-photo-4",
     src: "/images/gallery-04.svg",
     title: "Felicitation of scholarship awardees",
     category: "Events",
@@ -611,6 +625,7 @@ export const gallery: GalleryItem[] = [
     h: 1200,
   },
   {
+    id: "sample-photo-5",
     src: "/images/gallery-05.svg",
     title: "Library visit, Supreme Court of India",
     category: "Community",
@@ -618,6 +633,7 @@ export const gallery: GalleryItem[] = [
     h: 800,
   },
   {
+    id: "sample-photo-6",
     src: "/images/gallery-06.svg",
     title: "Legal writing bootcamp",
     category: "Seminars",
@@ -625,6 +641,7 @@ export const gallery: GalleryItem[] = [
     h: 1000,
   },
   {
+    id: "sample-photo-7",
     src: "/images/gallery-07.svg",
     title: "MoU signing with partner universities",
     category: "Events",
@@ -632,6 +649,7 @@ export const gallery: GalleryItem[] = [
     h: 800,
   },
   {
+    id: "sample-photo-8",
     src: "/images/gallery-08.svg",
     title: "Constitution Day reading circle",
     category: "Seminars",
@@ -639,6 +657,7 @@ export const gallery: GalleryItem[] = [
     h: 1200,
   },
   {
+    id: "sample-photo-9",
     src: "/images/gallery-09.svg",
     title: "Best Speaker award ceremony",
     category: "Moot Court",
@@ -646,6 +665,7 @@ export const gallery: GalleryItem[] = [
     h: 1000,
   },
   {
+    id: "sample-photo-10",
     src: "/images/gallery-10.svg",
     title: "Rights awareness at a village school",
     category: "Legal Aid",
@@ -653,6 +673,7 @@ export const gallery: GalleryItem[] = [
     h: 800,
   },
   {
+    id: "sample-photo-11",
     src: "/images/gallery-11.svg",
     title: "Annual national meet",
     category: "Community",
@@ -660,6 +681,7 @@ export const gallery: GalleryItem[] = [
     h: 1200,
   },
   {
+    id: "sample-photo-12",
     src: "/images/gallery-12.svg",
     title: "Women & the Law workshop",
     category: "Events",
@@ -667,3 +689,21 @@ export const gallery: GalleryItem[] = [
     h: 800,
   },
 ];
+
+export const defaultContent: SiteContent = {
+  site,
+  stats,
+  stateMembers,
+  founder,
+  pillars,
+  internships,
+  internshipSteps,
+  internshipFaqs,
+  scholarships,
+  news,
+  members,
+  patrons,
+  videos,
+  wings,
+  journey,
+};

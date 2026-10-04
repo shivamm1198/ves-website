@@ -1,33 +1,36 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
-import { site } from "@/data/site";
+import { getContent } from "@/lib/content/queries";
 import { ContactForm } from "@/components/contact-form";
 import { PageHero } from "@/components/page-hero";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { InstagramIcon, LinkedinIcon, XIcon, YoutubeIcon } from "@/components/social-icons";
+import { socialLinks } from "@/components/social-icons";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: `Get in touch with ${site.name} — membership, internships, scholarships and partnerships.`,
-};
-
-const details = [
-  { Icon: MapPin, label: "Office", value: site.address },
-  { Icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
-  { Icon: Phone, label: "Phone", value: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` },
-  { Icon: Clock, label: "Hours", value: site.hours },
-];
-
-const socials = [
-  { href: site.socials.youtube, label: "YouTube", Icon: YoutubeIcon },
-  { href: site.socials.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
-  { href: site.socials.instagram, label: "Instagram", Icon: InstagramIcon },
-  { href: site.socials.x, label: "X", Icon: XIcon },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const { site } = await getContent();
+  return {
+    title: "Contact",
+    description: `Get in touch with ${site.name} — membership, internships, scholarships and partnerships.`,
+  };
+}
 
 export default async function ContactPage({ searchParams }: PageProps<"/contact">) {
-  const { subject } = await searchParams;
+  const { site } = await getContent();
+  const details = [
+    { Icon: MapPin, label: "Office", value: site.address },
+    { Icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
+    {
+      Icon: Phone,
+      label: "Phone",
+      value: site.phone,
+      href: `tel:${site.phone.replace(/\s/g, "")}`,
+    },
+    { Icon: Clock, label: "Hours", value: site.hours },
+  ];
+
+  const socials = socialLinks(site.socials);
 
   return (
     <>
@@ -88,9 +91,22 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
         </div>
 
         <Reveal delay={0.1}>
-          <ContactForm initialSubject={typeof subject === "string" ? subject : undefined} />
+          {/* The form renders immediately; the ?subject= preset streams in. */}
+          <Suspense fallback={<ContactForm email={site.email} />}>
+            <PresetContactForm searchParams={searchParams} email={site.email} />
+          </Suspense>
         </Reveal>
       </section>
     </>
+  );
+}
+
+async function PresetContactForm({
+  searchParams,
+  email,
+}: Pick<PageProps<"/contact">, "searchParams"> & { email: string }) {
+  const { subject } = await searchParams;
+  return (
+    <ContactForm email={email} initialSubject={typeof subject === "string" ? subject : undefined} />
   );
 }

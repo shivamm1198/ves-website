@@ -4,7 +4,7 @@ import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { MapPin } from "lucide-react";
 
-import { members } from "@/data/site";
+import type { Member } from "@/lib/content/schema";
 import {
   Carousel,
   CarouselContent,
@@ -13,11 +13,11 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { Monogram } from "@/components/monogram";
+import { Avatar } from "@/components/monogram";
 import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export function MembersSection() {
+export function MembersSection({ members }: { members: Member[] }) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [plugins] = React.useState(() => [
@@ -65,13 +65,15 @@ export function MembersSection() {
             <CarouselContent className="-ml-5">
               {members.map((m, i) => (
                 <CarouselItem
-                  key={m.name}
+                  key={`${i}-${m.name}`}
                   className="basis-[78%] pl-5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
                 >
                   <article className="group flex h-full flex-col items-center rounded-lg border bg-white px-6 pt-9 pb-7 text-center transition-[border-color,box-shadow] duration-300 hover:border-foreground/20 hover:shadow-[0_18px_40px_-28px_rgba(0,0,0,0.4)]">
                     <div className="relative">
-                      <Monogram
-                        initials={m.initials}
+                      <Avatar
+                        name={m.name}
+                        photo={m.photo}
+                        sizes="96px"
                         className="w-24 text-3xl transition-transform duration-500 group-hover:scale-105"
                       />
                       <span className="absolute -right-1 -bottom-1 grid size-7 place-items-center rounded-full border-2 border-white bg-gold text-[10px] font-semibold text-ink tabular-nums">

@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { site, stats } from "@/data/site";
+import type { Stat } from "@/lib/content/derive";
+import type { Site, SiteContent } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { CountUp, easeOut } from "@/components/motion";
 import { IndiaMap } from "@/components/home/india-map";
@@ -16,7 +17,15 @@ const rise = (delay: number) => ({
   transition: { duration: 0.8, ease: easeOut, delay },
 });
 
-export function Hero() {
+export function Hero({
+  site,
+  stats,
+  stateMembers,
+}: {
+  site: Site;
+  stats: Stat[];
+  stateMembers: SiteContent["stateMembers"];
+}) {
   return (
     <section className="relative overflow-hidden">
       <div
@@ -37,9 +46,7 @@ export function Hero() {
             {...rise(0.08)}
             className="mt-7 text-[3.4rem] leading-[0.95] font-semibold text-ink sm:text-7xl xl:text-[5.6rem]"
           >
-            Vidhi Ekta
-            <br />
-            Sangh
+            {site.name}
           </motion.h1>
 
           <motion.div {...rise(0.16)} className="mt-5 flex items-center gap-4">
@@ -94,7 +101,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, ease: easeOut, delay: 0.2 }}
         >
-          <IndiaMap />
+          <IndiaMap stateMembers={stateMembers} />
         </motion.div>
       </div>
     </section>

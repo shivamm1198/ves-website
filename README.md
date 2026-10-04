@@ -28,22 +28,34 @@ npm run lint
 npm run format
 ```
 
-## Editing content
+## Editing content: the president's dashboards
 
-All copy and data live in **`src/data/site.ts`**: organisation details, members per state (this drives the
-map), founder, members, patrons, internships, scholarships, events, news, wings, journey, gallery and videos.
+All content is editable at **`/admin`** (Supabase login required):
 
-> The names, numbers and contact details there are **sample content**. Replace them with VES's real data
-> before launch.
+| Dashboard       | Route            | Manages                                                                                                                                              |
+| --------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Homepage editor | `/admin/content` | Organisation details, numbers, members map, founder, internships, steps, FAQs, scholarships, news, videos, members, patrons, pillars, wings, journey |
+| Events          | `/admin/events`  | Create, edit, hide and delete events with a cover photo                                                                                              |
+| Gallery         | `/admin/gallery` | Bulk upload, caption, categorise and delete photos                                                                                                   |
 
-- **Map:** edit `stateMembers` (keys are state codes such as `dl`, `up`, `mh`). The totals, shading, ranked
-  chips and pulsing markers all update automatically.
-- **YouTube:** set `site.socials.youtube` to the channel URL and add each video's `youtubeId`. Videos with an
-  id play inline in a dialog. Videos without one link to the channel.
-- **Photos:** `public/images` holds generated monochrome placeholder artwork
-  (`npm run generate:images`). Replace a file with a real photo, or point the data at a new path (`.jpg`/`.png`
-  are optimised by `next/image`).
-- **Founder, member and patron portraits** currently show elegant monograms (`src/components/monogram.tsx`).
+**➡️ Follow [SUPABASE_SETUP.md](SUPABASE_SETUP.md)** to create the Supabase project, run the SQL in
+[`supabase/`](supabase/), create the president's login and connect the keys.
+
+- `src/data/site.ts` holds the **default content**. It pre-fills the editor, fills in any section not yet
+  saved, and powers the whole site when Supabase isn't configured (handy for local development).
+- Saved content lives in Supabase (`site_content`, `events`, `gallery_items` tables and the `media` bucket).
+  Every section is validated with zod (`src/lib/content/schema.ts`) when saved and when read.
+- Uploaded portraits (founder, members, patrons) replace the monograms automatically.
+- `public/images` holds generated placeholder artwork used by the sample content (`npm run generate:images`).
+
+## Environment variables
+
+Copy `.env.example` to `.env.local`:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_…
+```
 
 ## Forms
 
@@ -55,12 +67,20 @@ a route handler or a form service.
 
 ```
 src/
-  app/                 routes (one folder per page)
+  app/
+    (site)/            public pages (home, about, internships, gallery, journey, wings, contact)
+    admin/             login + dashboards (overview, content, events, gallery)
   components/
-    ui/                shadcn/ui components (button, card, dialog, sheet, tabs, accordion, carousel, …)
+    ui/                shadcn/ui components
     home/              landing-page sections (hero, india-map, members, pillars, …)
-    motion.tsx         Reveal / Stagger / CountUp animation helpers (respect reduced-motion)
-  data/site.ts         all site content
+    admin/             dashboard UI (content editor, events manager, gallery manager, …)
+  lib/
+    content/           schemas, cached public queries, admin session helpers
+    admin/             server actions (content, events, gallery, auth) + image upload helper
+    supabase/          browser / server / public clients and the session proxy
+  proxy.ts             refreshes the Supabase session on /admin routes
+  data/site.ts         default content
+supabase/              SQL: schema.sql, seed.sql (optional), make-admin.sql
 scripts/               placeholder image generator
 ```
 

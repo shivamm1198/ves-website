@@ -2,28 +2,14 @@
 
 import * as React from "react";
 import Link from "next/link";
-import india from "@svg-maps/india";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, MapPin, Users, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { stateMembers, statesReached, totalMembers as total } from "@/data/site";
+import { indiaStates, indiaViewBox } from "@/lib/india";
+import { memberTotals } from "@/lib/content/derive";
+import type { SiteContent } from "@/lib/content/schema";
 import { CountUp, easeOut } from "@/components/motion";
-
-const NAMES: Record<string, string> = {
-  jk: "Jammu & Kashmir and Ladakh",
-  an: "Andaman & Nicobar Islands",
-  dn: "Dadra & Nagar Haveli",
-  dd: "Daman & Diu",
-};
-
-const locations = india.locations.map((l) => ({
-  ...l,
-  name: NAMES[l.id] ?? l.name ?? l.id,
-  members: stateMembers[l.id]?.members ?? 0,
-}));
-
-const ranked = [...locations].sort((a, b) => b.members - a.members);
 
 /** Monochrome density scale — darker means more members. */
 const scale = [
@@ -79,7 +65,25 @@ function useAnchors(svgRef: React.RefObject<SVGSVGElement | null>) {
   return anchors;
 }
 
-export function IndiaMap({ className }: { className?: string }) {
+export function IndiaMap({
+  stateMembers,
+  className,
+}: {
+  stateMembers: SiteContent["stateMembers"];
+  className?: string;
+}) {
+  const { locations, ranked, total, statesReached } = React.useMemo(() => {
+    const locations = indiaStates.map((l) => ({
+      ...l,
+      members: stateMembers[l.id]?.members ?? 0,
+    }));
+    const ranked = [...locations]
+      .filter((l) => l.members > 0)
+      .sort((a, b) => b.members - a.members);
+    const { total, states } = memberTotals(stateMembers);
+    return { locations, ranked, total, statesReached: states };
+  }, [stateMembers]);
+
   const svgRef = React.useRef<SVGSVGElement>(null);
   const wrapRef = React.useRef<HTMLDivElement>(null);
   const anchors = useAnchors(svgRef);
@@ -135,7 +139,7 @@ export function IndiaMap({ className }: { className?: string }) {
       >
         <svg
           ref={svgRef}
-          viewBox={india.viewBox}
+          viewBox={indiaViewBox}
           role="group"
           aria-label="Interactive map of India showing VES members by state"
           className="h-auto w-full touch-manipulation select-none"
@@ -308,16 +312,19 @@ export function IndiaMap({ className }: { className?: string }) {
                     <motion.div
                       className="h-full gold-gradient"
                       initial={{ width: 0 }}
-                      animate={{ width: `${(selectedLoc.members / ranked[0].members) * 100}%` }}
+                      animate={{
+                        width: `${ranked.length ? (selectedLoc.members / ranked[0].members) * 100 : 0}%`,
+                      }}
                       transition={{ duration: 0.8, ease: easeOut }}
                     />
                   </div>
                   <p className="mt-1 text-[11px] text-muted-foreground">
-                    {((selectedLoc.members / total) * 100).toFixed(1)}% of the national network
+                    {total ? ((selectedLoc.members / total) * 100).toFixed(1) : "0.0"}% of the
+                    national network
                   </p>
                 </div>
               </div>
-              {stateMembers[selectedLoc.id] ? (
+              {stateMembers[selectedLoc.id]?.cities.length ? (
                 <div className="flex flex-wrap items-center gap-1.5">
                   {stateMembers[selectedLoc.id].cities.map((c) => (
                     <span key={c} className="rounded-full border bg-white px-2.5 py-0.5 text-xs">

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { site, videos } from "@/data/site";
+import type { Video } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Photo } from "@/components/photo";
@@ -13,15 +13,13 @@ import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 import { YoutubeIcon } from "@/components/social-icons";
 
-type Video = (typeof videos)[number];
-
-export function YoutubeSection() {
+export function YoutubeSection({ videos, channelUrl }: { videos: Video[]; channelUrl: string }) {
   const [playing, setPlaying] = React.useState<Video | null>(null);
   const [feature, ...rest] = videos;
 
   // Videos without an id yet simply open the channel.
   const open = (v: Video) =>
-    v.youtubeId ? setPlaying(v) : window.open(site.socials.youtube, "_blank", "noopener");
+    v.youtubeId ? setPlaying(v) : channelUrl && window.open(channelUrl, "_blank", "noopener");
 
   return (
     <section className="border-t bg-paper">
@@ -33,7 +31,7 @@ export function YoutubeSection() {
             description="Event highlights, rights-awareness explainers and career guidance from practising lawyers."
           />
           <Button asChild className="shrink-0">
-            <a href={site.socials.youtube} target="_blank" rel="noreferrer">
+            <a href={channelUrl} target="_blank" rel="noreferrer">
               <YoutubeIcon className="size-4" /> Subscribe
             </a>
           </Button>
@@ -94,7 +92,10 @@ function VideoCard({
     >
       <Photo
         src={
-          video.youtubeId ? `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg` : video.image
+          video.image ||
+          (video.youtubeId
+            ? `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`
+            : "/images/event-moot-court.svg")
         }
         alt=""
         fill

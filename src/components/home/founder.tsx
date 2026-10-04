@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, Quote } from "lucide-react";
 
-import { founder } from "@/data/site";
+import type { Founder } from "@/lib/content/schema";
+import { initialsOf } from "@/lib/content/derive";
+import { Photo } from "@/components/photo";
 import { Monogram } from "@/components/monogram";
 import { Reveal } from "@/components/motion";
 import { Eyebrow } from "@/components/section-heading";
 
-export function FounderSection() {
+export function FounderSection({ founder }: { founder: Founder }) {
   return (
     <section id="founder" className="relative scroll-mt-24 overflow-hidden border-y bg-paper">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8 lg:py-32">
@@ -16,10 +18,16 @@ export function FounderSection() {
             <span className="absolute top-4 left-4 h-10 w-10 border-t border-l border-gold-light/70" />
             <span className="absolute right-4 bottom-4 h-10 w-10 border-r border-b border-gold-light/70" />
             <div className="flex h-full flex-col items-center justify-center gap-6">
-              <Monogram
-                initials={founder.initials}
-                className="w-40 bg-white/5 text-6xl text-white ring-1 ring-white/10"
-              />
+              {founder.photo ? (
+                <div className="relative size-40 overflow-hidden rounded-full ring-1 ring-gold-light/50">
+                  <Photo src={founder.photo} alt={founder.name} fill sizes="160px" />
+                </div>
+              ) : (
+                <Monogram
+                  initials={initialsOf(founder.name)}
+                  className="w-40 bg-white/5 text-6xl text-white ring-1 ring-white/10"
+                />
+              )}
               <div className="text-center">
                 <p className="font-serif text-2xl font-semibold text-white">{founder.name}</p>
                 <p className="mt-1 text-xs tracking-[0.2em] text-gold-light uppercase">

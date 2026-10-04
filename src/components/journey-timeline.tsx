@@ -4,10 +4,10 @@ import * as React from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 import { cn } from "@/lib/utils";
-import { journey } from "@/data/site";
+import type { JourneyItem } from "@/lib/content/schema";
 import { easeOut } from "@/components/motion";
 
-export function JourneyTimeline() {
+export function JourneyTimeline({ journey }: { journey: JourneyItem[] }) {
   const ref = React.useRef<HTMLOListElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });

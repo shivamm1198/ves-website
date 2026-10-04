@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { gallery } from "@/data/site";
+import type { GalleryItem } from "@/lib/content/schema";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
@@ -17,8 +17,9 @@ const layout = [
   "md:col-span-2",
 ];
 
-export function GalleryPreview() {
-  const items = [gallery[4], gallery[2], gallery[5], gallery[0], gallery[6], gallery[8]];
+export function GalleryPreview({ gallery }: { gallery: GalleryItem[] }) {
+  const items = gallery.slice(0, 6);
+  if (items.length === 0) return null;
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
@@ -40,7 +41,7 @@ export function GalleryPreview() {
       >
         {items.map((item, i) => (
           <StaggerItem
-            key={item.src}
+            key={item.id}
             className={cn("group relative overflow-hidden rounded-lg", layout[i])}
           >
             <Link href="/gallery" className="block h-full w-full">

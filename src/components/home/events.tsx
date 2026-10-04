@@ -1,11 +1,12 @@
 import { CalendarDays, MapPin } from "lucide-react";
 
-import { events } from "@/data/site";
+import type { EventItem } from "@/lib/content/schema";
 import { Photo } from "@/components/photo";
 import { Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export function EventsSection() {
+export function EventsSection({ events }: { events: EventItem[] }) {
+  if (events.length === 0) return null;
   return (
     <section className="border-y bg-paper">
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
@@ -16,7 +17,7 @@ export function EventsSection() {
         />
         <Stagger className="mt-14 grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
           {events.map((e) => (
-            <StaggerItem key={e.title}>
+            <StaggerItem key={e.id}>
               <article className="group flex h-full flex-col">
                 <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
                   <Photo
@@ -33,7 +34,7 @@ export function EventsSection() {
                 <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">
                     <CalendarDays className="size-3.5 text-gold" />
-                    {e.date}
+                    {e.dateLabel}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <MapPin className="size-3.5 text-gold" />
@@ -43,7 +44,9 @@ export function EventsSection() {
                 <h3 className="mt-3 text-2xl leading-tight font-semibold text-ink decoration-gold/60 decoration-1 underline-offset-4 group-hover:underline">
                   {e.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{e.text}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {e.description}
+                </p>
               </article>
             </StaggerItem>
           ))}

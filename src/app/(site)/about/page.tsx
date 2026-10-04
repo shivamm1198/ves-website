@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Compass, Eye, Target } from "lucide-react";
 
-import { site, stats } from "@/data/site";
+import { buildStats } from "@/lib/content/derive";
+import { getContent } from "@/lib/content/queries";
 import { FounderSection } from "@/components/home/founder";
 import { JoinCta } from "@/components/home/join-cta";
 import { PatronsSection } from "@/components/home/patrons";
@@ -11,10 +12,13 @@ import { Photo } from "@/components/photo";
 import { CountUp, Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: `The story, mission and people behind ${site.name}.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { site } = await getContent();
+  return {
+    title: "About",
+    description: `The story, mission and people behind ${site.name}.`,
+  };
+}
 
 const purpose = [
   {
@@ -52,7 +56,10 @@ const work = [
   ["Research & publication", "The VES Quarterly Law Review and student-authored policy briefs."],
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const content = await getContent();
+  const { site } = content;
+  const stats = buildStats(content);
   return (
     <>
       <PageHero
@@ -132,7 +139,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <FounderSection />
+      <FounderSection founder={content.founder} />
 
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <SectionHeading
@@ -150,8 +157,8 @@ export default function AboutPage() {
         </Stagger>
       </section>
 
-      <PillarsSection />
-      <PatronsSection />
+      <PillarsSection pillars={content.pillars} />
+      {content.patrons.length > 0 && <PatronsSection patrons={content.patrons} />}
       <JoinCta />
     </>
   );

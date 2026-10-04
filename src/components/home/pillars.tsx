@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Handshake, Landmark, Scale, Sparkles } from "lucide-react";
 
-import { pillars } from "@/data/site";
+import type { Pillar } from "@/lib/content/schema";
 import { easeOut } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
@@ -14,7 +14,7 @@ const icons = {
   empowerment: Sparkles,
 } as const;
 
-export function PillarsSection() {
+export function PillarsSection({ pillars }: { pillars: Pillar[] }) {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
       <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">

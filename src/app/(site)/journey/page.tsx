@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
 
-import { site, stats } from "@/data/site";
+import { buildStats } from "@/lib/content/derive";
+import { getContent } from "@/lib/content/queries";
 import { JoinCta } from "@/components/home/join-cta";
 import { JourneyTimeline } from "@/components/journey-timeline";
 import { PageHero } from "@/components/page-hero";
 import { CountUp, Stagger, StaggerItem } from "@/components/motion";
 
-export const metadata: Metadata = {
-  title: "Our Journey",
-  description: `How ${site.name} grew from a student WhatsApp group into a national legal fraternity.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { site } = await getContent();
+  return {
+    title: "Our Journey",
+    description: `How ${site.name} grew into a national legal fraternity.`,
+  };
+}
 
-export default function JourneyPage() {
+export default async function JourneyPage() {
+  const content = await getContent();
+  const { site } = content;
+  const stats = buildStats(content);
   return (
     <>
       <PageHero
@@ -21,7 +28,7 @@ export default function JourneyPage() {
       />
 
       <section className="px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <JourneyTimeline />
+        <JourneyTimeline journey={content.journey} />
       </section>
 
       <section className="bg-ink text-white">

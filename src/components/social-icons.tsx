@@ -43,3 +43,15 @@ export function XIcon(props: IconProps) {
     </svg>
   );
 }
+
+type Socials = { youtube: string; linkedin: string; instagram: string; x: string };
+
+/** Social links that have a URL set, in display order. */
+export function socialLinks(socials: Socials) {
+  return [
+    { href: socials.youtube, label: "YouTube", Icon: YoutubeIcon },
+    { href: socials.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
+    { href: socials.instagram, label: "Instagram", Icon: InstagramIcon },
+    { href: socials.x, label: "X", Icon: XIcon },
+  ].filter((s) => s.href);
+}

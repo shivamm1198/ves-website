@@ -1,10 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 
-import { news } from "@/data/site";
+import type { SiteContent } from "@/lib/content/schema";
 import { Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export function NewsSection() {
+export function NewsSection({ news }: { news: SiteContent["news"] }) {
+  if (news.length === 0) return null;
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">

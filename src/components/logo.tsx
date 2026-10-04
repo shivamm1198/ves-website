@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { site } from "@/data/site";
+import type { Site } from "@/lib/content/schema";
 
 export function Emblem({ className }: { className?: string }) {
   return (
@@ -26,7 +26,15 @@ export function Emblem({ className }: { className?: string }) {
   );
 }
 
-export function Logo({ inverse = false, className }: { inverse?: boolean; className?: string }) {
+export function Logo({
+  site,
+  inverse = false,
+  className,
+}: {
+  site: Pick<Site, "name" | "hindi">;
+  inverse?: boolean;
+  className?: string;
+}) {
   return (
     <Link
       href="/"

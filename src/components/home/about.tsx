@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, BriefcaseBusiness, HandHeart, GraduationCap } from "lucide-react";
 
-import { site } from "@/data/site";
+import type { Site } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
@@ -25,7 +25,7 @@ const points = [
   },
 ];
 
-export function AboutSection() {
+export function AboutSection({ site, year }: { site: Site; year: number }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
@@ -41,7 +41,7 @@ export function AboutSection() {
           <div className="absolute -right-3 -bottom-8 w-56 rounded-lg border bg-white p-5 shadow-xl sm:-right-8">
             <div className="mb-3 h-[3px] w-10 gold-gradient" />
             <p className="font-serif text-4xl font-semibold text-ink">
-              {new Date().getFullYear() - site.founded}+ yrs
+              {Math.max(year - site.founded, 1)}+ yrs
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
               of building India&apos;s most welcoming legal community

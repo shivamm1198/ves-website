@@ -7,7 +7,8 @@ import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { ArrowUpRight, Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { nav, site } from "@/data/site";
+import { nav } from "@/data/site";
+import type { Site } from "@/lib/content/schema";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,7 @@ function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
 
-export function SiteHeader() {
+export function SiteHeader({ site }: { site: Site }) {
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = React.useState(false);
@@ -40,7 +41,7 @@ export function SiteHeader() {
     >
       <div className="h-[3px] w-full gold-gradient" aria-hidden />
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
-        <Logo />
+        <Logo site={site} />
 
         <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
           {nav.map((item) => {
