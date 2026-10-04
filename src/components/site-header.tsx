@@ -30,6 +30,26 @@ export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string })
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [time, setTime] = React.useState("");
+
+  React.useEffect(() => {
+    const updateTime = () => {
+      setTime(
+        new Intl.DateTimeFormat("en-IN", {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }).format(new Date()),
+      );
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 12));
 
@@ -70,7 +90,19 @@ export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string })
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <div
+            className="hidden items-center gap-2 pl-4 lg:flex"
+            aria-label="Current time in India"
+          >
+            <time
+              dateTime={new Date().toISOString()}
+              className="font-mono text-sm font-medium tracking-tight text-foreground/70"
+            >
+              {time}
+            </time>
+          </div>
+
           <Button asChild className="hidden sm:inline-flex">
             <SmartLink href={joinHref}>
               Join {site.short} <ArrowUpRight />

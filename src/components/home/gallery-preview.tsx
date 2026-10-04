@@ -32,7 +32,7 @@ export function GalleryPreview({ gallery }: { gallery: GalleryItem[] }) {
         {items.map((item) => (
           <StaggerItem
             key={item.id}
-            className="group relative aspect-square overflow-hidden rounded-lg"
+            className="group relative aspect-square overflow-hidden rounded-lg border border-ink/10 bg-ink/5 transition-shadow hover:shadow-lg"
           >
             <Link href="/gallery" className="block h-full w-full">
               <Photo

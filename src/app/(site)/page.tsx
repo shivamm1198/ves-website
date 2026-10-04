@@ -27,7 +27,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero site={content.site} stats={buildStats(content)} stateMembers={content.stateMembers} />
+      <Hero site={content.site} stats={buildStats(content)} stateMembers={content.stateMembers} joinHref={joinHref(content.links)} />
       <ValuesMarquee />
       <AboutSection site={content.site} year={year} />
       <FounderSection founder={content.founder} />

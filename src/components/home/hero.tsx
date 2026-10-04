@@ -10,6 +10,8 @@ import type { Site, SiteContent } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { CountUp, easeOut } from "@/components/motion";
 import { IndiaMap } from "@/components/home/india-map";
+import { SmartLink } from "../smart-link";
+import { ArrowUpRight } from "lucide-react";
 
 const rise = (delay: number) => ({
   initial: { opacity: 0, y: 22 },
@@ -21,10 +23,12 @@ export function Hero({
   site,
   stats,
   stateMembers,
+  joinHref,
 }: {
   site: Site;
   stats: Stat[];
   stateMembers: SiteContent["stateMembers"];
+  joinHref: string;
 }) {
   return (
     <section className="relative overflow-hidden">
@@ -67,9 +71,9 @@ export function Hero({
 
           <motion.div {...rise(0.32)} className="mt-9 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/internships">
-                Explore internships <ArrowRight />
-              </Link>
+              <SmartLink href={joinHref}>
+                Join {site.short} <ArrowUpRight />
+              </SmartLink>
             </Button>
             <Button asChild size="lg" variant="outline">
               <Link href="/about">Our story</Link>
