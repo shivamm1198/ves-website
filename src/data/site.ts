@@ -14,6 +14,7 @@ import type { EventItem, GalleryItem, SiteContent } from "@/lib/content/schema";
 const site: SiteContent["site"] = {
   name: "Vidhi Ekta Sangh",
   short: "VES",
+  logo: "",
   hindi: "विधि एकता संघ",
   tagline: "United for Law. Committed to Justice.",
   description:
@@ -75,6 +76,12 @@ const stateMembers: SiteContent["stateMembers"] = {
   nl: { members: 5, cities: ["Kohima"] },
   mz: { members: 4, cities: ["Aizawl"] },
   ar: { members: 4, cities: ["Itanagar"] },
+};
+
+const links: SiteContent["links"] = {
+  // Paste Google Form (or any form) links here or in the dashboard.
+  joinFormUrl: "",
+  scholarshipFormUrl: "",
 };
 
 const stats: SiteContent["stats"] = {
@@ -141,6 +148,7 @@ const internships: SiteContent["internships"] = [
     description:
       "Research on writ petitions, drafting of synopses and list of dates, and attending hearings before the Division Bench.",
     eligibility: "3rd year onwards (5-yr) / 2nd year onwards (3-yr LL.B.)",
+    applyUrl: "",
   },
   {
     id: "corp-mumbai",
@@ -156,6 +164,7 @@ const internships: SiteContent["internships"] = [
     description:
       "Due diligence reports, drafting of shareholder agreements and regulatory research under SEBI and Companies Act frameworks.",
     eligibility: "4th & 5th year students with a corporate law elective",
+    applyUrl: "",
   },
   {
     id: "policy-remote",
@@ -171,6 +180,7 @@ const internships: SiteContent["internships"] = [
     description:
       "Co-author policy briefs on criminal law reforms and the new BNS/BNSS/BSA codes for the VES Quarterly Law Review.",
     eligibility: "Any year; strong writing sample required",
+    applyUrl: "",
   },
   {
     id: "legal-aid-jaipur",
@@ -186,6 +196,7 @@ const internships: SiteContent["internships"] = [
     description:
       "Assist panel lawyers at legal-aid camps, draft applications and conduct rights-awareness sessions in rural blocks.",
     eligibility: "All years; Hindi proficiency preferred",
+    applyUrl: "",
   },
   {
     id: "judiciary-lucknow",
@@ -201,6 +212,7 @@ const internships: SiteContent["internships"] = [
     description:
       "Case-law research, judgment summaries and exposure to trial-court procedure — ideal for judiciary aspirants.",
     eligibility: "Final-year students and recent graduates",
+    applyUrl: "",
   },
   {
     id: "lit-bengaluru",
@@ -216,6 +228,7 @@ const internships: SiteContent["internships"] = [
     description:
       "Drafting plaints and written statements, commercial court filings and client conferences.",
     eligibility: "3rd year onwards",
+    applyUrl: "",
   },
 ];
 
@@ -263,18 +276,21 @@ const scholarships: SiteContent["scholarships"] = [
     amount: "₹25,000",
     text: "For law students with outstanding academic records from economically weaker backgrounds.",
     deadline: "30 Nov 2026",
+    applyUrl: "",
   },
   {
     title: "Nyaya Access Grant",
     amount: "₹15,000",
     text: "Covers travel and stay for students taking up internships outside their home city.",
     deadline: "Rolling",
+    applyUrl: "",
   },
   {
     title: "Women in Law Fellowship",
     amount: "₹30,000",
     text: "Supports women law students pursuing litigation, with a year-long mentorship from senior advocates.",
     deadline: "15 Dec 2026",
+    applyUrl: "",
   },
 ];
 
@@ -692,6 +708,7 @@ export const sampleGallery: GalleryItem[] = [
 
 export const defaultContent: SiteContent = {
   site,
+  links,
   stats,
   stateMembers,
   founder,

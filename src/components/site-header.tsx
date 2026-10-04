@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { nav } from "@/data/site";
 import type { Site } from "@/lib/content/schema";
 import { Logo } from "@/components/logo";
+import { SmartLink } from "@/components/smart-link";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -24,7 +25,7 @@ function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
 
-export function SiteHeader({ site }: { site: Site }) {
+export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string }) {
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = React.useState(false);
@@ -71,9 +72,9 @@ export function SiteHeader({ site }: { site: Site }) {
 
         <div className="flex items-center gap-2">
           <Button asChild className="hidden sm:inline-flex">
-            <Link href="/contact?subject=membership">
-              Join VES <ArrowUpRight />
-            </Link>
+            <SmartLink href={joinHref}>
+              Join {site.short} <ArrowUpRight />
+            </SmartLink>
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -114,9 +115,9 @@ export function SiteHeader({ site }: { site: Site }) {
               </nav>
               <div className="mt-auto p-6">
                 <Button asChild className="w-full" size="lg">
-                  <Link href="/contact?subject=membership" onClick={() => setOpen(false)}>
-                    Join VES <ArrowUpRight />
-                  </Link>
+                  <SmartLink href={joinHref} onClick={() => setOpen(false)}>
+                    Join {site.short} <ArrowUpRight />
+                  </SmartLink>
                 </Button>
               </div>
             </SheetContent>

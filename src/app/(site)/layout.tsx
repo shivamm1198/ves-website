@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
+import { joinHref } from "@/lib/content/links";
 import { getContent } from "@/lib/content/queries";
 import { getCurrentYear } from "@/lib/current-year";
+import { mediaUrl } from "@/lib/supabase/env";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -13,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s · ${site.name}`,
     },
     description: site.description,
+    icons: site.logo ? { icon: mediaUrl(site.logo), apple: mediaUrl(site.logo) } : undefined,
     openGraph: {
       title: site.name,
       description: site.description,
@@ -23,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SiteLayout({ children }: LayoutProps<"/">) {
-  const [{ site }, year] = await Promise.all([getContent(), getCurrentYear()]);
+  const [{ site, links }, year] = await Promise.all([getContent(), getCurrentYear()]);
 
   return (
     <>
@@ -33,7 +36,7 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
       >
         Skip to content
       </a>
-      <SiteHeader site={site} />
+      <SiteHeader site={site} joinHref={joinHref(links)} />
       <main id="main" className="flex-1">
         {children}
       </main>

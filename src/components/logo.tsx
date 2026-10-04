@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import { mediaUrl } from "@/lib/supabase/env";
+import { Photo } from "@/components/photo";
 import type { Site } from "@/lib/content/schema";
 
 export function Emblem({ className }: { className?: string }) {
@@ -31,7 +33,7 @@ export function Logo({
   inverse = false,
   className,
 }: {
-  site: Pick<Site, "name" | "hindi">;
+  site: Pick<Site, "name" | "hindi" | "logo">;
   inverse?: boolean;
   className?: string;
 }) {
@@ -41,7 +43,7 @@ export function Logo({
       className={cn("group flex items-center gap-3", className)}
       aria-label={`${site.name} — home`}
     >
-      <Emblem className={cn(inverse ? "text-white [--background:#0a0a0a]" : "text-ink")} />
+      <BrandMark logo={site.logo} name={site.name} inverse={inverse} />
       <span className="flex flex-col leading-none">
         <span
           className={cn(
@@ -61,5 +63,48 @@ export function Logo({
         </span>
       </span>
     </Link>
+  );
+}
+
+/**
+ * The organisation's uploaded logo, or the built-in emblem when none is set.
+ * On dark backgrounds the logo sits on a white disc so dark artwork stays visible.
+ */
+export function BrandMark({
+  logo,
+  name,
+  inverse = false,
+  className,
+}: {
+  logo?: string;
+  name: string;
+  inverse?: boolean;
+  className?: string;
+}) {
+  if (!logo) {
+    return (
+      <Emblem
+        className={cn(inverse ? "text-white [--background:#0a0a0a]" : "text-ink", className)}
+      />
+    );
+  }
+  return (
+    <span
+      className={cn(
+        "relative block size-10 shrink-0 overflow-hidden",
+        inverse && "rounded-full bg-white p-1",
+        className,
+      )}
+    >
+      <span className="relative block size-full">
+        <Photo
+          src={mediaUrl(logo)}
+          alt={`${name} logo`}
+          fill
+          sizes="96px"
+          className="bg-transparent object-contain"
+        />
+      </span>
+    </span>
   );
 }

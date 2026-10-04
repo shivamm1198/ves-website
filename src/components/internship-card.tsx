@@ -1,4 +1,4 @@
-import { CalendarClock, Clock, IndianRupee, MapPin } from "lucide-react";
+import { ArrowUpRight, CalendarClock, Clock, IndianRupee, MapPin } from "lucide-react";
 
 import type { Internship } from "@/lib/content/schema";
 import { Badge } from "@/components/ui/badge";
@@ -28,9 +28,18 @@ export function InternshipCard({ item, email }: { item: Internship; email: strin
         <span className="text-xs text-muted-foreground">
           {item.seats} {item.seats === 1 ? "seat" : "seats"}
         </span>
-        <ApplyDialog title={item.title} email={email}>
-          <Button size="sm">Apply now</Button>
-        </ApplyDialog>
+        {item.applyUrl ? (
+          <Button asChild size="sm">
+            <a href={item.applyUrl} target="_blank" rel="noopener noreferrer">
+              Apply now <ArrowUpRight />
+            </a>
+          </Button>
+        ) : (
+          // No form linked yet: fall back to an email application.
+          <ApplyDialog title={item.title} email={email}>
+            <Button size="sm">Apply now</Button>
+          </ApplyDialog>
+        )}
       </div>
     </article>
   );

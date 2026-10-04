@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { memberTotals } from "@/lib/content/derive";
+import { joinHref } from "@/lib/content/links";
 import { getContent } from "@/lib/content/queries";
 import { JoinCta } from "@/components/home/join-cta";
 import { PageHero } from "@/components/page-hero";
@@ -58,7 +59,7 @@ function buildStructure(wingCount: number, statesReached: number) {
 }
 
 export default async function WingsPage() {
-  const { wings, stateMembers } = await getContent();
+  const { wings, stateMembers, links } = await getContent();
   const structure = buildStructure(wings.length, memberTotals(stateMembers).states);
   const count = NUMBER_WORDS[wings.length] ?? String(wings.length);
   return (
@@ -102,7 +103,7 @@ export default async function WingsPage() {
         </div>
       </section>
 
-      <JoinCta />
+      <JoinCta joinHref={joinHref(links)} />
     </>
   );
 }

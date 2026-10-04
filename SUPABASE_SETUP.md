@@ -122,6 +122,11 @@ Open **`https://your-site/admin`**, sign in with the president's email and passw
 - **Homepage editor:** pick a section on the left, edit, then **Save & publish** (or <kbd>Ctrl</kbd>/<kbd>⌘</kbd> +
   <kbd>S</kbd>). The website updates immediately. **Restore original** brings back the built-in text for
   that section.
+- **Forms & links** (in the Homepage editor): paste your Google Form links for **Join VES** and
+  **Scholarships**. Each internship and scholarship also has its own **Application form link**. When a
+  link is empty, the button falls back to the contact page (or an email application for internships).
+- **Logo:** upload it in **Homepage editor → Organisation details**. It appears in the header, footer,
+  dashboard and browser tab. Use a square PNG (transparent background works best).
 - **Events:** **New event**, add a cover photo, dates, place and description. Turn **Visible** off
   to hide an event without deleting it.
 - **Gallery:** drop several photos at once, set captions and categories, then **Upload**. Large phone

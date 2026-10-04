@@ -1,4 +1,5 @@
 import { buildStats } from "@/lib/content/derive";
+import { joinHref, scholarshipHref } from "@/lib/content/links";
 import { getContent, getEvents, getGallery } from "@/lib/content/queries";
 import { getCurrentYear } from "@/lib/current-year";
 import { AboutSection } from "@/components/home/about";
@@ -34,7 +35,10 @@ export default async function HomePage() {
         <InternshipSection internships={content.internships} email={content.site.email} />
       )}
       {content.scholarships.length > 0 && (
-        <ScholarshipSection scholarships={content.scholarships} />
+        <ScholarshipSection
+          scholarships={content.scholarships}
+          applyHref={scholarshipHref(content.links)}
+        />
       )}
       <GalleryPreview gallery={gallery} />
       <EventsSection events={events.slice(0, 6)} />
@@ -45,7 +49,7 @@ export default async function HomePage() {
       {content.videos.length > 0 && (
         <YoutubeSection videos={content.videos} channelUrl={content.site.socials.youtube} />
       )}
-      <JoinCta />
+      <JoinCta joinHref={joinHref(content.links)} />
     </>
   );
 }

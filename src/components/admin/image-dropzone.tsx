@@ -21,6 +21,7 @@ export function ImageDropzone({
   hint = "JPG, PNG or WebP · large photos are resized automatically",
   className,
   round = false,
+  fit = "cover",
 }: {
   previewUrl?: string;
   onFile?: (file: File) => void;
@@ -32,6 +33,7 @@ export function ImageDropzone({
   hint?: string;
   className?: string;
   round?: boolean;
+  fit?: "cover" | "contain";
 }) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = React.useState(false);
@@ -66,7 +68,14 @@ export function ImageDropzone({
           )}
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- previews are blob: or storage URLs */}
-          <img src={previewUrl} alt="" className="absolute inset-0 size-full object-cover" />
+          <img
+            src={previewUrl}
+            alt=""
+            className={cn(
+              "absolute inset-0 size-full",
+              fit === "contain" ? "bg-white object-contain p-3" : "object-cover",
+            )}
+          />
           <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/50 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100">
             <button
               type="button"

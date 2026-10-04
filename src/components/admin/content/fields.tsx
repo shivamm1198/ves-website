@@ -220,7 +220,7 @@ function ImageField({
 }: {
   value: string;
   onChange: (v: string) => void;
-  shape?: "round" | "wide";
+  shape?: "round" | "wide" | "logo";
 }) {
   const [uploading, setUploading] = React.useState(false);
 
@@ -238,13 +238,19 @@ function ImageField({
   };
 
   return (
-    <div className={cn("relative", shape === "round" ? "w-28" : "max-w-sm")}>
+    <div
+      className={cn(
+        "relative",
+        shape === "round" ? "w-28" : shape === "logo" ? "w-36" : "max-w-sm",
+      )}
+    >
       <ImageDropzone
         previewUrl={value ? mediaUrl(value) : undefined}
         onFile={upload}
         onClear={() => onChange("")}
         round={shape === "round"}
-        aspect={shape === "round" ? "aspect-square" : "aspect-video"}
+        aspect={shape === "wide" || !shape ? "aspect-video" : "aspect-square"}
+        fit={shape === "logo" ? "contain" : "cover"}
         label="Upload an image"
       />
       {uploading && (

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { scholarshipHref } from "@/lib/content/links";
 import { getContent } from "@/lib/content/queries";
 import {
   Accordion,
@@ -23,7 +24,8 @@ export const metadata: Metadata = {
 };
 
 export default async function InternshipsPage() {
-  const { internships, internshipSteps, internshipFaqs, scholarships, site } = await getContent();
+  const { internships, internshipSteps, internshipFaqs, scholarships, site, links } =
+    await getContent();
   return (
     <>
       <PageHero
@@ -73,7 +75,9 @@ export default async function InternshipsPage() {
         <InternshipExplorer internships={internships} email={site.email} />
       </section>
 
-      {scholarships.length > 0 && <ScholarshipSection scholarships={scholarships} />}
+      {scholarships.length > 0 && (
+        <ScholarshipSection scholarships={scholarships} applyHref={scholarshipHref(links)} />
+      )}
 
       {internshipFaqs.length > 0 && (
         <section className="mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8 lg:py-32">

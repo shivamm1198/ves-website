@@ -15,11 +15,15 @@ export function EventsSection({ events }: { events: EventItem[] }) {
           title="Where the legal community gathers"
           description="Moot courts, seminars, legal-aid camps and conclaves — organised by VES wings across the country."
         />
-        <Stagger className="mt-14 grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {events.map((e) => (
             <StaggerItem key={e.id}>
-              <article className="group flex h-full flex-col">
-                <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
+              <article className="group relative flex h-full flex-col overflow-hidden rounded-lg border bg-white transition-shadow duration-300 hover:shadow-[0_20px_40px_-28px_rgba(0,0,0,0.35)]">
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 z-10 h-[3px] gold-gradient opacity-80"
+                />
+                <div className="relative aspect-[3/2] overflow-hidden">
                   <Photo
                     src={e.image}
                     alt={e.title}
@@ -31,22 +35,24 @@ export function EventsSection({ events }: { events: EventItem[] }) {
                     {e.location}
                   </span>
                 </div>
-                <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5">
-                    <CalendarDays className="size-3.5 text-gold" />
-                    {e.dateLabel}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <MapPin className="size-3.5 text-gold" />
-                    {e.location}
-                  </span>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5">
+                      <CalendarDays className="size-3.5 text-gold" />
+                      {e.dateLabel}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <MapPin className="size-3.5 text-gold" />
+                      {e.location}
+                    </span>
+                  </div>
+                  <h3 className="mt-3 text-2xl leading-tight font-semibold text-ink decoration-gold/60 decoration-1 underline-offset-4 group-hover:underline">
+                    {e.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {e.description}
+                  </p>
                 </div>
-                <h3 className="mt-3 text-2xl leading-tight font-semibold text-ink decoration-gold/60 decoration-1 underline-offset-4 group-hover:underline">
-                  {e.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {e.description}
-                </p>
               </article>
             </StaggerItem>
           ))}

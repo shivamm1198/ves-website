@@ -3,12 +3,14 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { Emblem } from "@/components/logo";
+import { getContent } from "@/lib/content/queries";
+import { BrandMark } from "@/components/logo";
 import { LoginForm } from "@/components/admin/login-form";
 
 export const metadata: Metadata = { title: "Sign in" };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const { site } = await getContent();
   return (
     <main className="relative grid min-h-dvh place-items-center px-4 py-16">
       <div className="paper-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
@@ -16,9 +18,9 @@ export default function LoginPage() {
         <div className="overflow-hidden rounded-xl border bg-white shadow-[0_30px_80px_-50px_rgba(0,0,0,0.45)]">
           <div className="h-[3px] gold-gradient" />
           <div className="px-8 pt-10 pb-8 sm:px-10">
-            <Emblem className="size-12 text-ink" />
+            <BrandMark logo={site.logo} name={site.name} className="size-12" />
             <p className="mt-6 text-xs font-semibold tracking-[0.22em] text-gold-dark uppercase">
-              Vidhi Ekta Sangh
+              {site.name}
             </p>
             <h1 className="mt-2 text-4xl font-semibold text-ink">President&apos;s dashboard</h1>
             <p className="mt-2 text-sm text-muted-foreground">

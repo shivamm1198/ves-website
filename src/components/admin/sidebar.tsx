@@ -16,7 +16,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { signOut } from "@/lib/admin/auth-actions";
-import { Emblem } from "@/components/logo";
+import { BrandMark } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
@@ -31,7 +31,7 @@ function isActive(pathname: string, href: string) {
   return href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
 }
 
-export function AdminSidebar({ email }: { email: string }) {
+export function AdminSidebar({ email, logo }: { email: string; logo: string }) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -39,7 +39,7 @@ export function AdminSidebar({ email }: { email: string }) {
       {/* Mobile top bar */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b bg-ink px-4 py-3 text-white lg:hidden">
         <Link href="/admin" className="flex items-center gap-2.5">
-          <Emblem className="size-8 text-white [--background:#0a0a0a]" />
+          <BrandMark logo={logo} name="Organisation" inverse className="size-8" />
           <span className="font-serif text-lg">VES Dashboard</span>
         </Link>
         <Sheet open={open} onOpenChange={setOpen}>
@@ -55,27 +55,35 @@ export function AdminSidebar({ email }: { email: string }) {
           </SheetTrigger>
           <SheetContent side="left" className="w-72 border-0 bg-ink p-0 text-white">
             <SheetTitle className="sr-only">Dashboard menu</SheetTitle>
-            <SidebarBody email={email} onNavigate={() => setOpen(false)} />
+            <SidebarBody email={email} logo={logo} onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
       </header>
 
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 bg-ink text-white lg:block">
-        <SidebarBody email={email} />
+        <SidebarBody email={email} logo={logo} />
       </aside>
     </>
   );
 }
 
-function SidebarBody({ email, onNavigate }: { email: string; onNavigate?: () => void }) {
+function SidebarBody({
+  email,
+  logo,
+  onNavigate,
+}: {
+  email: string;
+  logo: string;
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
 
   return (
     <div className="flex h-full flex-col">
       <div className="h-[3px] gold-gradient" />
       <Link href="/admin" onClick={onNavigate} className="flex items-center gap-3 px-6 pt-7 pb-8">
-        <Emblem className="size-10 text-white [--background:#0a0a0a]" />
+        <BrandMark logo={logo} name="Organisation" inverse />
         <span className="leading-tight">
           <span className="block font-serif text-xl">Vidhi Ekta Sangh</span>
           <span className="text-[11px] tracking-[0.2em] text-gold-light uppercase">Dashboard</span>

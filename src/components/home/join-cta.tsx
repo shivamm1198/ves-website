@@ -3,8 +3,9 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion";
+import { SmartLink } from "@/components/smart-link";
 
-export function JoinCta() {
+export function JoinCta({ joinHref }: { joinHref: string }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <Reveal className="relative overflow-hidden rounded-xl border bg-white px-8 py-14 text-center sm:px-16">
@@ -20,9 +21,9 @@ export function JoinCta() {
           </p>
           <div className="mt-2 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg">
-              <Link href="/contact?subject=membership">
+              <SmartLink href={joinHref}>
                 Become a member <ArrowRight />
-              </Link>
+              </SmartLink>
             </Button>
             <Button asChild size="lg" variant="outline">
               <Link href="/wings">Explore our wings</Link>

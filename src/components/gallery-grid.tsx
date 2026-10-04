@@ -75,35 +75,37 @@ export function GalleryGrid({ gallery }: { gallery: GalleryItem[] }) {
       </div>
 
       {/* Re-keyed per category so each filter fades in as a fresh set */}
-      <div key={category} className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
+      <div
+        key={category}
+        className="mt-10 grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-3 md:grid-cols-5 lg:grid-cols-6"
+      >
         {items.map((item, i) => (
           <motion.button
             key={item.id}
             type="button"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, delay: Math.min(i, 12) * 0.04, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => setIndex(i)}
-            className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg text-left"
-            style={{ aspectRatio: `${item.w} / ${item.h}` }}
+            className="group relative block aspect-square w-full overflow-hidden rounded-lg text-left"
             aria-label={`Open photo: ${item.title}`}
           >
             <Photo
               src={item.src}
               alt={item.title}
               fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              sizes="(min-width: 1024px) 200px, (min-width: 640px) 25vw, 33vw"
               className="transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            <span className="absolute top-3 right-3 grid size-9 place-items-center rounded-full bg-white/90 text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="absolute top-1.5 right-1.5 grid size-7 place-items-center rounded-full bg-white/90 text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <Expand className="size-4" />
             </span>
-            <div className="absolute inset-x-0 bottom-0 translate-y-2 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-              <p className="text-[11px] tracking-[0.2em] text-gold-light uppercase">
+            <div className="absolute inset-x-0 bottom-0 translate-y-2 p-2.5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+              <p className="hidden text-[10px] tracking-[0.2em] text-gold-light uppercase sm:block">
                 {item.category}
               </p>
-              <p className="mt-1 font-medium text-white">{item.title}</p>
+              <p className="mt-0.5 line-clamp-2 text-xs font-medium text-white">{item.title}</p>
             </div>
           </motion.button>
         ))}

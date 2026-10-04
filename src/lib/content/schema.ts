@@ -8,11 +8,21 @@ import { z } from "zod";
 
 const str = z.string().trim();
 const optionalStr = z.string().trim().default("");
+/** Empty, or a full web link (e.g. a Google Form). */
+const optionalUrl = z
+  .string()
+  .trim()
+  .refine(
+    (v) => v === "" || /^https?:\/\/\S+$/i.test(v),
+    "Enter a full link starting with https://",
+  )
+  .default("");
 const strList = z.array(z.string().trim().min(1));
 
 export const siteSchema = z.object({
   name: str.min(1, "Name is required"),
   short: str.min(1),
+  logo: optionalStr,
   hindi: optionalStr,
   tagline: optionalStr,
   description: optionalStr,
@@ -27,6 +37,11 @@ export const siteSchema = z.object({
     instagram: optionalStr,
     x: optionalStr,
   }),
+});
+
+export const linksSchema = z.object({
+  joinFormUrl: optionalUrl,
+  scholarshipFormUrl: optionalUrl,
 });
 
 export const statsSchema = z.object({
@@ -76,6 +91,7 @@ export const internshipSchema = z.object({
   seats: z.number().int().min(0),
   description: optionalStr,
   eligibility: optionalStr,
+  applyUrl: optionalUrl,
 });
 
 export const internshipsSchema = z.array(internshipSchema);
@@ -85,7 +101,13 @@ export const internshipStepsSchema = z.array(z.object({ title: str.min(1), text:
 export const internshipFaqsSchema = z.array(z.object({ q: str.min(1), a: optionalStr }));
 
 export const scholarshipsSchema = z.array(
-  z.object({ title: str.min(1), amount: optionalStr, text: optionalStr, deadline: optionalStr }),
+  z.object({
+    title: str.min(1),
+    amount: optionalStr,
+    text: optionalStr,
+    deadline: optionalStr,
+    applyUrl: optionalUrl,
+  }),
 );
 
 export const newsSchema = z.array(
@@ -140,6 +162,7 @@ export const journeySchema = z.array(
 /** Every editable section, keyed by its row key in `site_content`. */
 export const contentSchemas = {
   site: siteSchema,
+  links: linksSchema,
   stats: statsSchema,
   stateMembers: stateMembersSchema,
   founder: founderSchema,
@@ -162,6 +185,7 @@ export const contentKeys = Object.keys(contentSchemas) as ContentKey[];
 export type SiteContent = { [K in ContentKey]: z.infer<(typeof contentSchemas)[K]> };
 
 export type Site = SiteContent["site"];
+export type Links = SiteContent["links"];
 export type Founder = SiteContent["founder"];
 export type Pillar = SiteContent["pillars"][number];
 export type Internship = SiteContent["internships"][number];

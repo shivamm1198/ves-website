@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { buildStats } from "@/lib/content/derive";
+import { joinHref } from "@/lib/content/links";
 import { getContent } from "@/lib/content/queries";
 import { JoinCta } from "@/components/home/join-cta";
 import { JourneyTimeline } from "@/components/journey-timeline";
@@ -49,7 +50,7 @@ export default async function JourneyPage() {
         </Stagger>
       </section>
 
-      <JoinCta />
+      <JoinCta joinHref={joinHref(content.links)} />
     </>
   );
 }

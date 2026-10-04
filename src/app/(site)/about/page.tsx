@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Compass, Eye, Target } from "lucide-react";
 
 import { buildStats } from "@/lib/content/derive";
+import { joinHref } from "@/lib/content/links";
 import { getContent } from "@/lib/content/queries";
 import { FounderSection } from "@/components/home/founder";
 import { JoinCta } from "@/components/home/join-cta";
@@ -159,7 +160,7 @@ export default async function AboutPage() {
 
       <PillarsSection pillars={content.pillars} />
       {content.patrons.length > 0 && <PatronsSection patrons={content.patrons} />}
-      <JoinCta />
+      <JoinCta joinHref={joinHref(content.links)} />
     </>
   );
 }

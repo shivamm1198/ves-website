@@ -8,6 +8,7 @@ import {
   GraduationCap,
   HelpCircle,
   ListOrdered,
+  Link2,
   Map,
   Newspaper,
   Network,
@@ -30,7 +31,7 @@ export type FieldDef =
   | (Base & { kind: "textarea"; rows?: number; placeholder?: string })
   | (Base & { kind: "number"; min?: number })
   | (Base & { kind: "select"; options: readonly { value: string; label: string }[] })
-  | (Base & { kind: "image"; shape?: "round" | "wide" })
+  | (Base & { kind: "image"; shape?: "round" | "wide" | "logo" })
   | (Base & { kind: "strings"; itemLabel: string; multiline?: boolean })
   | (Base & { kind: "group"; fields: FieldDef[] });
 
@@ -89,6 +90,14 @@ export const sections: SectionDef[] = [
       "Name, tagline and contact details. Used in the header, footer, hero, contact page and every form.",
     shape: "object",
     fields: [
+      {
+        kind: "image",
+        key: "logo",
+        label: "Logo",
+        shape: "logo",
+        help: "Shown in the header, footer, dashboard and browser tab. A square PNG with a transparent background works best. Leave empty to use the built-in emblem.",
+        wide: true,
+      },
       { kind: "text", key: "name", label: "Organisation name" },
       { kind: "text", key: "short", label: "Short name", help: "e.g. VES" },
       { kind: "text", key: "hindi", label: "Name in Hindi" },
@@ -122,6 +131,31 @@ export const sections: SectionDef[] = [
           { kind: "url", key: "instagram", label: "Instagram" },
           { kind: "url", key: "x", label: "X (Twitter)" },
         ],
+      },
+    ],
+  },
+  {
+    key: "links",
+    group: "Organisation",
+    title: "Forms & links",
+    Icon: Link2,
+    description:
+      "Links to your application forms (e.g. Google Forms). Leave a link empty to send people to the contact page instead.",
+    shape: "object",
+    fields: [
+      {
+        kind: "url",
+        key: "joinFormUrl",
+        label: "Join VES form",
+        help: "Used by every “Join VES” and “Become a member” button.",
+        wide: true,
+      },
+      {
+        kind: "url",
+        key: "scholarshipFormUrl",
+        label: "Scholarship application form",
+        help: "Used by the “Apply for a scholarship” button. Individual scholarships can also have their own form in Programmes → Scholarships.",
+        wide: true,
       },
     ],
   },
@@ -207,6 +241,7 @@ export const sections: SectionDef[] = [
       seats: 1,
       description: "",
       eligibility: "",
+      applyUrl: "",
     }),
     itemFields: [
       { kind: "text", key: "title", label: "Title", wide: true },
@@ -230,6 +265,13 @@ export const sections: SectionDef[] = [
       { kind: "number", key: "seats", label: "Seats", min: 0 },
       { kind: "textarea", key: "description", label: "Description", wide: true },
       { kind: "text", key: "eligibility", label: "Eligibility", wide: true },
+      {
+        kind: "url",
+        key: "applyUrl",
+        label: "Application form link",
+        help: "The “Apply now” button opens this form. Leave empty to let students apply by email.",
+        wide: true,
+      },
     ],
   },
   {
@@ -272,7 +314,7 @@ export const sections: SectionDef[] = [
     itemNoun: "scholarship",
     itemTitle: (i) => s(i.title) || "Untitled scholarship",
     itemSubtitle: (i) => s(i.amount),
-    newItem: () => ({ title: "", amount: "", text: "", deadline: "" }),
+    newItem: () => ({ title: "", amount: "", text: "", deadline: "", applyUrl: "" }),
     itemFields: [
       { kind: "text", key: "title", label: "Name", wide: true },
       { kind: "text", key: "amount", label: "Amount", placeholder: "e.g. ₹25,000" },
@@ -283,6 +325,13 @@ export const sections: SectionDef[] = [
         placeholder: "e.g. 30 Nov 2026 or Rolling",
       },
       { kind: "textarea", key: "text", label: "Description", rows: 2, wide: true },
+      {
+        kind: "url",
+        key: "applyUrl",
+        label: "Application form link",
+        help: "Optional. Adds an “Apply” link to this scholarship.",
+        wide: true,
+      },
     ],
   },
   {

@@ -3,14 +3,17 @@ import { ArrowUpRight } from "lucide-react";
 
 import type { SiteContent } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
+import { SmartLink } from "@/components/smart-link";
 import { Photo } from "@/components/photo";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
 export function ScholarshipSection({
   scholarships,
+  applyHref,
 }: {
   scholarships: SiteContent["scholarships"];
+  applyHref: string;
 }) {
   return (
     <section id="scholarships" className="relative scroll-mt-20 overflow-hidden bg-ink text-white">
@@ -25,7 +28,7 @@ export function ScholarshipSection({
           <Stagger className="flex flex-col border-t border-white/15">
             {scholarships.map((s) => (
               <StaggerItem
-                key={s.title}
+                key={`${s.title}-${s.amount}`}
                 className="group grid gap-2 border-b border-white/15 py-6 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8"
               >
                 <div>
@@ -36,16 +39,28 @@ export function ScholarshipSection({
                 </div>
                 <div className="sm:text-right">
                   <p className="gold-text font-serif text-4xl font-semibold">{s.amount}</p>
-                  <p className="mt-1 text-xs text-white/50">Deadline · {s.deadline}</p>
+                  {s.deadline && (
+                    <p className="mt-1 text-xs text-white/50">Deadline · {s.deadline}</p>
+                  )}
+                  {s.applyUrl && (
+                    <a
+                      href={s.applyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-gold-light underline-offset-4 hover:underline"
+                    >
+                      Apply <ArrowUpRight className="size-3.5" />
+                    </a>
+                  )}
                 </div>
               </StaggerItem>
             ))}
           </Stagger>
           <Reveal className="flex flex-wrap gap-3">
             <Button asChild variant="gold" size="lg">
-              <Link href="/contact?subject=scholarship">
+              <SmartLink href={applyHref}>
                 Apply for a scholarship <ArrowUpRight />
-              </Link>
+              </SmartLink>
             </Button>
             <Button
               asChild

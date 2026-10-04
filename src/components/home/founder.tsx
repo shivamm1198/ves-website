@@ -42,10 +42,10 @@ export function FounderSection({ founder }: { founder: Founder }) {
           <Eyebrow>From the founder</Eyebrow>
           <blockquote className="relative">
             <Quote
-              className="absolute -top-4 -left-2 size-14 -scale-x-100 text-gold/20"
+              className="absolute -top-3 -left-1 size-9 -scale-x-100 text-gold/20 sm:-top-4 sm:-left-2 sm:size-14"
               aria-hidden
             />
-            <p className="relative font-serif text-3xl leading-snug font-medium text-balance text-ink italic sm:text-4xl">
+            <p className="relative font-serif text-lg leading-relaxed font-medium text-pretty text-ink italic sm:text-4xl sm:leading-snug sm:text-balance">
               “{founder.quote}”
             </p>
           </blockquote>
