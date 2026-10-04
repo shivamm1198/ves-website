@@ -96,7 +96,6 @@ export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string })
             aria-label="Current time in India"
           >
             <time
-              dateTime={new Date().toISOString()}
               className="font-mono text-sm font-medium tracking-tight text-foreground/70"
             >
               {time}
