@@ -8,6 +8,8 @@ import { Photo } from "@/components/photo";
 import { Monogram } from "@/components/monogram";
 import { Reveal } from "@/components/motion";
 import { Eyebrow } from "@/components/section-heading";
+import { mediaUrl } from "@/lib/supabase/env";
+import Image from "next/image";
 
 export function FounderSection({ founder, images }: { founder: Founder; images: SiteImages }) {
   return (
@@ -37,7 +39,14 @@ export function FounderSection({ founder, images }: { founder: Founder; images: 
             <div className="flex h-full flex-col items-center justify-center gap-6">
               {founder.photo ? (
                 <div className="relative size-40 overflow-hidden rounded-full ring-1 ring-gold-light/50">
-                  <Photo src={founder.photo} alt={founder.name} fill sizes="160px" />
+                  <Image
+                    src={mediaUrl(founder.photo)}
+                    alt={founder.name}
+                    fill
+                    sizes="160px"
+                    quality={90}
+                    className="object-cover"
+                  />
                 </div>
               ) : (
                 <Monogram
