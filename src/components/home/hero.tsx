@@ -72,7 +72,7 @@ export function Hero({
           <motion.div {...rise(0.32)} className="mt-9 flex flex-wrap gap-3">
             <Button asChild size="lg">
               <SmartLink href={joinHref}>
-                Join {site.short} <ArrowUpRight />
+                 Become a part of family <ArrowUpRight /> {/* {site.short} */}
               </SmartLink>
             </Button>
             <Button asChild size="lg" variant="outline">

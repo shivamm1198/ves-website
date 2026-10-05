@@ -128,10 +128,10 @@ export default async function AboutPage() {
           </div>
           <Reveal
             delay={0.1}
-            className="relative aspect-[4/5] overflow-hidden rounded-lg lg:sticky lg:top-28"
+            className="relative aspect-[4/5] overflow-hidden rounded-lg lg:sticky lg:top-28 opacity-100"
           >
             <Photo
-              src="/images/journey.svg"
+              src="/images/VES-About.png"
               alt="Scroll and documents illustration"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
