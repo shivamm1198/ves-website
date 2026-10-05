@@ -11,12 +11,7 @@ import { Eyebrow } from "@/components/section-heading";
 import { mediaUrl } from "@/lib/supabase/env";
 import Image from "next/image";
 
-const truncate = (text: string, maxLength: number) => {
-  if (text.length <= maxLength) return text;
-  return `${text.slice(0, maxLength).trimEnd()}…`;
-};
-
-export function FounderSection({ founder, images }: { founder: Founder; images: SiteImages }) {
+export function FounderAboutSection({ founder, images }: { founder: Founder; images: SiteImages }) {
   return (
     <section id="founder" className="relative scroll-mt-24 overflow-hidden border-y bg-paper">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8 lg:py-32">
@@ -77,14 +72,13 @@ export function FounderSection({ founder, images }: { founder: Founder; images: 
               aria-hidden
             />
             <p className="relative font-serif text-sm leading-relaxed font-medium text-pretty text-ink italic sm:text-4xl sm:leading-snug sm:text-balance">
-              “{truncate(founder.quote, 200)}”
+              “{founder.quote}”
             </p>
           </blockquote>
-
-          <div className="flex flex-col gap-3 text-muted-foreground">
-            {founder.bio.slice(0, 2).map((p) => (
+          <div className="flex flex-col gap-4 text-muted-foreground">
+            {founder.bio.map((p) => (
               <p key={p.slice(0, 20)} className="leading-relaxed">
-                {truncate(p, 400)}
+                {p}
               </p>
             ))}
           </div>

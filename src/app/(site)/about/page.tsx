@@ -13,6 +13,7 @@ import { Photo } from "@/components/photo";
 import { mediaUrl } from "@/lib/supabase/env";
 import { CountUp, Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
+import { FounderAboutSection } from "@/components/home/founder-about";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
@@ -143,7 +144,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <FounderSection founder={content.founder} images={content.images} />
+      <FounderAboutSection founder={content.founder} images={content.images} />
 
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <SectionHeading
