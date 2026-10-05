@@ -104,16 +104,16 @@ export function Hero({
 
         <div className="relative lg:px-10 lg:pt-14 lg:pb-12">
           {/* Photos tucked behind the map card */}
-          <FloatingPhoto
+          {/* <FloatingPhoto
             src={images.hero1}
             className="top-0 -left-8 z-0 hidden w-56 lg:block"
             rotate={-4}
             delay={0.6}
             sizes="224px"
-          />
+          /> */}
           <FloatingPhoto
             src={images.hero3}
-            className="-right-10 bottom-28 z-0 hidden w-44 lg:block"
+            className="-right-10 bottom-74 z-20 hidden w-44 lg:block"
             rotate={3}
             delay={0.8}
             duration={8}
@@ -140,7 +140,7 @@ export function Hero({
           />
           <FloatingPhoto
             src={images.hero4}
-            className="-bottom-3 -left-14 z-0 hidden w-44 lg:block"
+            className="bottom-50 -left-10 z-20 hidden w-44 lg:block"
             rotate={-3}
             delay={1.2}
             drift={7}

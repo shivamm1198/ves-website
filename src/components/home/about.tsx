@@ -66,15 +66,6 @@ export function AboutSection({
             aspect="aspect-[4/3]"
             sizes="144px"
           />
-          <div className="absolute -right-3 -bottom-8 z-20 w-56 rounded-lg border bg-white p-5 shadow-xl sm:-right-8">
-            <div className="mb-3 h-[3px] w-10 gold-gradient" />
-            <p className="font-serif text-4xl font-semibold text-ink">
-              {Math.max(year - site.founded, 1)}+ yrs
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              of building India&apos;s most welcoming legal community
-            </p>
-          </div>
         </Reveal>
 
         <div className="flex flex-col gap-10">
@@ -83,6 +74,14 @@ export function AboutSection({
             title={<>One fraternity for every law student and legal professional</>}
             description={`${site.name} bridges the gap between the classroom and the courtroom. We connect students with the mentors, opportunities and community they need — wherever in India they study.`}
           />
+          <div className=" border-3 border-l-[gold-gradient] border-r-0 border-b-0 border-t-0 pl-6">
+            <p className="font-serif text-4xl font-semibold text-ink">
+              {Math.max(year - site.founded, 1)}+ yrs
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              of building India&apos;s most welcoming legal community
+            </p>
+          </div>
           <Stagger className="flex flex-col divide-y border-y">
             {points.map(({ Icon, title, text }) => (
               <StaggerItem key={title} className="flex gap-4 py-5">
