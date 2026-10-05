@@ -1,5 +1,5 @@
 -- ============================================================================
--- Vidhi Ekta Sangh — database setup
+-- Vidhi Ekta Sngh — database setup
 --
 -- Run this whole file once in Supabase → SQL Editor → New query → Run.
 -- It is safe to run again: every statement checks whether it already exists.

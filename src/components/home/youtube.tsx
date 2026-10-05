@@ -12,6 +12,7 @@ import { Photo } from "@/components/photo";
 import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 import { YoutubeIcon } from "@/components/social-icons";
+import { mediaUrl } from "@/lib/supabase/env";
 
 export function YoutubeSection({ videos, channelUrl }: { videos: Video[]; channelUrl: string }) {
   const [playing, setPlaying] = React.useState<Video | null>(null);
@@ -92,10 +93,11 @@ function VideoCard({
     >
       <Photo
         src={
-          video.image ||
-          (video.youtubeId
-            ? `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`
-            : "/images/event-moot-court.svg")
+          video.image
+            ? mediaUrl(video.image)
+            : video.youtubeId
+              ? `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`
+              : "/images/event-moot-court.svg"
         }
         alt=""
         fill

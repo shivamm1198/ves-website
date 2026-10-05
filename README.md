@@ -1,6 +1,6 @@
-# Vidhi Ekta Sangh (VES) — website
+# Vidhi Ekta Sngh (VES) — website
 
-The website for **Vidhi Ekta Sangh (विधि एकता संघ)**, a national community that helps law students and
+The website for **Vidhi Ekta Sngh (विधि एकता संघ)**, a national community that helps law students and
 legal professionals with internships, scholarships, mentorship and events.
 
 Built with **Next.js 16 (App Router)**, **Tailwind CSS v4**, **shadcn/ui** (Radix primitives) and

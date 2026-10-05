@@ -12,7 +12,7 @@ export function NewsSection({ news }: { news: SiteContent["news"] }) {
         <div className="lg:sticky lg:top-32 lg:self-start">
           <SectionHeading
             eyebrow="Inside VES"
-            title="News from the Sangh"
+            title="News from the Sngh"
             description="Announcements, chapter updates, publications and recognitions — straight from our wings."
           />
         </div>

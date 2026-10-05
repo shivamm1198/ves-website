@@ -21,7 +21,7 @@ This connects the website to Supabase so the president can edit content from the
 2. Click **New project**.
 3. Fill in:
    - **Organization:** your organisation (create one if asked).
-   - **Project name:** `vidhi-ekta-sangh`
+   - **Project name:** `vidhi-ekta-Sngh`
    - **Database password:** click **Generate a password** and **save it somewhere safe**. You won't
      need it for this setup, but you can't see it again later.
    - **Region:** **South Asia (Mumbai)**, which is closest to your visitors.
@@ -134,7 +134,7 @@ anything, and only the president (Step 5) can open the website dashboards.
 ## Step 8: Set the site URL for auth
 
 1. Open **Authentication → URL Configuration**.
-2. Set **Site URL** to your live website address, e.g. `https://vidhiektasangh.org`
+2. Set **Site URL** to your live website address, e.g. `https://vidhiektaSngh.org`
    (or your `…vercel.app` address).
 3. Under **Redirect URLs**, click **Add URL** and add `https://your-site/auth/callback`
    (e.g. `https://vidhiektasangh.org/auth/callback`). Add `http://localhost:3000/auth/callback` too

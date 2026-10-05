@@ -23,7 +23,7 @@ const tiro = Tiro_Devanagari_Hindi({
 });
 
 export const metadata: Metadata = {
-  title: { default: "Vidhi Ekta Sangh", template: "%s · Vidhi Ekta Sangh" },
+  title: { default: "Vidhi Ekta Sngh", template: "%s · Vidhi Ekta Sngh" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

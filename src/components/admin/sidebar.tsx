@@ -89,7 +89,7 @@ function SidebarBody({
       <Link href="/admin" onClick={onNavigate} className="flex items-center gap-3 px-6 pt-7 pb-8">
         <BrandMark logo={logo} name="Organisation" inverse />
         <span className="leading-tight">
-          <span className="block font-serif text-xl">Vidhi Ekta Sangh</span>
+          <span className="block font-serif text-xl">Vidhi Ekta Sngh</span>
           <span className="text-[11px] tracking-[0.2em] text-gold-light uppercase">Dashboard</span>
         </span>
       </Link>

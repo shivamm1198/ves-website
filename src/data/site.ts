@@ -1,5 +1,5 @@
 /**
- * Default content for the Vidhi Ekta Sangh website.
+ * Default content for the Vidhi Ekta Sngh website.
  *
  * Live content is edited by the president in the /admin dashboards and stored
  * in Supabase. These values are used to pre-fill the homepage editor, as a
@@ -12,23 +12,23 @@
 import type { ArticleItem, EventItem, GalleryItem, SiteContent } from "@/lib/content/schema";
 
 const site: SiteContent["site"] = {
-  name: "Vidhi Ekta Sangh",
+  name: "Vidhi Ekta Sngh",
   short: "VES",
   logo: "",
   hindi: "विधि एकता संघ",
   tagline: "United for Law. Committed to Justice.",
   description:
-    "Vidhi Ekta Sangh is a national community of legal professionals and law students — opening doors to internships, scholarships, mentorship and events across India.",
+    "Vidhi Ekta Sngh is a national community of legal professionals and law students — opening doors to internships, scholarships, mentorship and events across India.",
   founded: 2020,
-  email: "contact@vidhiektasangh.org",
+  email: "contact@vidhiektaSngh.org",
   phone: "+91 98765 43210",
   address: "Chamber Block, Patiala House Courts, New Delhi — 110001",
   hours: "Mon – Sat, 10:00 AM – 6:00 PM IST",
   socials: {
-    youtube: "https://www.youtube.com/@VidhiEktaSangh",
-    linkedin: "https://www.linkedin.com/company/vidhi-ekta-sangh",
-    instagram: "https://www.instagram.com/vidhiektasangh",
-    x: "https://x.com/vidhiektasangh",
+    youtube: "https://www.youtube.com/@VidhiEktaSngh",
+    linkedin: "https://www.linkedin.com/company/vidhi-ekta-Sngh",
+    instagram: "https://www.instagram.com/vidhiektaSngh",
+    x: "https://x.com/vidhiektaSngh",
   },
 };
 
@@ -95,7 +95,7 @@ const founder: SiteContent["founder"] = {
   title: "Founder & National President",
   photo: "",
   quote:
-    "The law is not a profession of the privileged few. Every student who walks into a courtroom for the first time deserves a mentor beside them — that is why Vidhi Ekta Sangh exists.",
+    "The law is not a profession of the privileged few. Every student who walks into a courtroom for the first time deserves a mentor beside them — that is why Vidhi Ekta Sngh exists.",
   bio: [
     "An advocate practising before the High Court of Delhi with over a decade at the Bar, Adv. Malhotra founded VES in 2020 after witnessing how many talented law students from smaller towns never found their first internship.",
     "What began as a WhatsApp group of 40 students has grown into a national network spanning more than 30 states and union territories, with chapters, wings and a mentorship programme run entirely by volunteers.",
@@ -724,7 +724,7 @@ const aboutSection: SiteContent["aboutSection"] = {
   eyebrow: "About VES",
   title: "One fraternity for every law student and legal professional",
   description:
-    "Vidhi Ekta Sangh bridges the gap between the classroom and the courtroom. We connect students with the mentors, opportunities and community they need — wherever in India they study.",
+    "Vidhi Ekta Sngh bridges the gap between the classroom and the courtroom. We connect students with the mentors, opportunities and community they need — wherever in India they study.",
   badgeText: "of building India's most welcoming legal community",
   points: [
     {
@@ -751,7 +751,7 @@ const aboutPage: SiteContent["aboutPage"] = {
   heroTitle: "Law is a fraternity.",
   heroTitleMuted: "We make sure no one walks in alone.",
   heroDescription:
-    "Vidhi Ekta Sangh (विधि एकता संघ) is a national, volunteer-led organisation that helps law students and young legal professionals find their footing — and gives back to society through legal aid.",
+    "Vidhi Ekta Sngh (विधि एकता संघ) is a national, volunteer-led organisation that helps law students and young legal professionals find their footing — and gives back to society through legal aid.",
   purpose: [
     {
       icon: "target",
@@ -773,7 +773,7 @@ const aboutPage: SiteContent["aboutPage"] = {
   storyTitle: "From forty students to a national movement",
   storyParagraphs: [
     "In 2020, when courts went virtual and internships vanished overnight, a small group of law students and young advocates in Delhi started sharing whatever opportunities they could find. Within months, students from Jaipur, Patna, Kochi and Guwahati had joined in.",
-    "That informal circle became Vidhi Ekta Sangh — vidhi (law), ekta (unity), sangh (fraternity). Today our wings run internship cycles, scholarships, moot courts and legal-aid camps, with chapters in more than 30 states and union territories.",
+    "That informal circle became Vidhi Ekta Sngh — vidhi (law), ekta (unity), Sngh (fraternity). Today our wings run internship cycles, scholarships, moot courts and legal-aid camps, with chapters in more than 30 states and union territories.",
     "We remain fee-free and volunteer-led, because the people who helped us find our first internship never asked for anything in return.",
   ],
   showStats: true,
@@ -844,7 +844,7 @@ const sectionText: SiteContent["sectionText"] = {
   pillarsEyebrow: "Four pillars of VES",
   pillarsTitle: "The principles we stand on",
   pillarsDescription:
-    "Every programme, chapter and decision at Vidhi Ekta Sangh rests on four commitments.",
+    "Every programme, chapter and decision at Vidhi Ekta Sngh rests on four commitments.",
   patronsEyebrow: "Our patrons",
   patronsTitle: "Guided by the Bench, Bar and Academia",
   patronsDescription:
