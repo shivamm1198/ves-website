@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, CalendarDays, Images, PenSquare } from "lucide-react";
+import { ArrowRight, CalendarDays, Images, NotebookPen, PenSquare } from "lucide-react";
 
 import { getAdminSession } from "@/lib/content/admin";
 import { contentKeys } from "@/lib/content/schema";
@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Overview" };
 export default async function AdminOverviewPage() {
   const { supabase } = await getAdminSession();
 
-  const [events, drafts, gallery, content] = await Promise.all([
+  const [events, drafts, gallery, content, articles] = await Promise.all([
     supabase.from("events").select("id", { count: "exact", head: true }),
     supabase.from("events").select("id", { count: "exact", head: true }).eq("published", false),
     supabase.from("gallery_items").select("id", { count: "exact", head: true }),
@@ -20,6 +20,7 @@ export default async function AdminOverviewPage() {
       .from("site_content")
       .select("key, updated_at")
       .order("updated_at", { ascending: false }),
+    supabase.from("articles").select("id", { count: "exact", head: true }),
   ]);
 
   const lastEdit = content.data?.[0]?.updated_at ?? null;
@@ -46,6 +47,15 @@ export default async function AdminOverviewPage() {
       text: "Upload photos in bulk, set captions and categories, remove old ones.",
       stat: `${gallery.count ?? 0} photos`,
     },
+    {
+      href: "/admin/journal",
+      Icon: NotebookPen,
+      title: "Student Journal",
+      text: "Publish student articles with an attached PDF or Word paper.",
+      stat: articles.error
+        ? "Run supabase/journal.sql to enable"
+        : `${articles.count ?? 0} articles`,
+    },
   ];
 
   return (
@@ -55,7 +65,7 @@ export default async function AdminOverviewPage() {
         title="Welcome back"
         description="Everything on the website is managed from here. Changes go live as soon as you save."
       />
-      <div className="grid gap-5 p-5 sm:p-8 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-5 p-5 sm:p-8 md:grid-cols-2 2xl:grid-cols-4">
         {cards.map(({ href, Icon, title, text, stat, updated }) => (
           <Link
             key={href}

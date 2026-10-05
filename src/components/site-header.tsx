@@ -64,7 +64,7 @@ export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string })
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
         <Logo site={site} />
 
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-0.5 lg:flex xl:gap-1">
           {nav.map((item) => {
             const active = isActive(pathname, item.href);
             return (
@@ -73,7 +73,7 @@ export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string })
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative px-3 py-2 text-sm font-medium transition-colors",
+                  "relative px-2 py-2 text-sm font-medium whitespace-nowrap transition-colors xl:px-3",
                   active ? "text-ink" : "text-foreground/60 hover:text-ink",
                 )}
               >
@@ -81,7 +81,7 @@ export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string })
                 {active && (
                   <motion.span
                     layoutId="nav-underline"
-                    className="absolute inset-x-3 -bottom-px h-[2px] gold-gradient"
+                    className="absolute inset-x-2 -bottom-px h-[2px] gold-gradient xl:inset-x-3"
                     transition={{ type: "spring", stiffness: 380, damping: 34 }}
                   />
                 )}
@@ -92,7 +92,7 @@ export function SiteHeader({ site, joinHref }: { site: Site; joinHref: string })
 
         <div className="flex items-center gap-4">
           <div
-            className="hidden items-center gap-2 pl-4 lg:flex"
+            className="hidden items-center gap-2 pl-4 whitespace-nowrap xl:flex"
             aria-label="Current time in India"
           >
             <time className="font-mono text-sm font-medium tracking-tight text-foreground/70">

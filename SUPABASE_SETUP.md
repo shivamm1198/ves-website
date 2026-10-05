@@ -44,6 +44,11 @@ This creates:
 
 > The script is safe to run again. Re-running it changes nothing that already exists.
 
+> **Already set up before the Student Journal was added?** Run
+> [`supabase/journal.sql`](supabase/journal.sql) once in a new SQL Editor query. It creates the
+> `articles` table and a public `documents` bucket for PDF/Word papers (20 MB each). New projects
+> don't need it, because `schema.sql` already includes it.
+
 ### Optional: start with the sample events and photos
 
 To keep the sample events and gallery from the preview (you can delete them later from the dashboards),
@@ -130,6 +135,13 @@ Open **`https://your-site/admin`**, sign in with the president's email and passw
 - **Photos around the site** (Homepage editor → Website images): the About images on the homepage and
   About page, and the small floating photos around the members map (4), the About image (2) and the
   founder portrait (2). Landscape photos look best; remove one to hide it.
+- **Student Journal** (`/admin/journal`): publish student articles with author details, a summary,
+  the article text, an optional cover image and an attached PDF or Word paper. The latest three appear
+  on the homepage below Events, and all of them on `/journal`. Each article has its own page.
+- **Page text** (Homepage editor): the homepage About section, every part of the About page, the
+  Wings page (including "How we're organised"), and shared headings (founder, pillars, patrons,
+  journal, and the Join banner). The hero shows the **Tagline** and **Short description** from
+  Organisation details.
 - **Events:** **New event**, add a cover photo, dates, place and description. Turn **Visible** off
   to hide an event without deleting it.
 - **Gallery:** drop several photos at once, set captions and categories, then **Upload**. Large phone

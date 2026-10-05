@@ -1,4 +1,7 @@
 import {
+  BookOpen,
+  Heading,
+  Info,
   Award,
   BarChart3,
   Building2,
@@ -19,7 +22,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { internshipModes, wingIcons, type ContentKey } from "@/lib/content/schema";
+import { iconNames, internshipModes, type ContentKey } from "@/lib/content/schema";
+import { iconLabels } from "@/components/icon-map";
+
+const iconOptions = iconNames.map((i) => ({ value: i, label: iconLabels[i] }));
 
 type Base = { key: string; label: string; help?: string; wide?: boolean };
 
@@ -34,7 +40,15 @@ export type FieldDef =
   | (Base & { kind: "select"; options: readonly { value: string; label: string }[] })
   | (Base & { kind: "image"; shape?: "round" | "wide" | "logo" })
   | (Base & { kind: "strings"; itemLabel: string; multiline?: boolean })
-  | (Base & { kind: "group"; fields: FieldDef[] });
+  | (Base & { kind: "group"; fields: FieldDef[] })
+  | (Base & { kind: "toggle" })
+  | (Base & {
+      kind: "list";
+      itemFields: FieldDef[];
+      itemNoun: string;
+      itemTitle: (item: Record<string, unknown>) => string;
+      newItem: () => Record<string, unknown>;
+    });
 
 type Item = Record<string, unknown>;
 
@@ -68,19 +82,6 @@ export function youtubeIdFrom(value: string) {
   return match ? match[1] : value.trim();
 }
 
-const wingIconLabels: Record<(typeof wingIcons)[number], string> = {
-  briefcase: "Briefcase",
-  "hand-heart": "Helping hand",
-  gavel: "Gavel",
-  book: "Book",
-  venus: "Women",
-  "graduation-cap": "Graduation cap",
-  calendar: "Calendar",
-  megaphone: "Megaphone",
-  scale: "Scales of justice",
-  users: "People",
-};
-
 export const sections: SectionDef[] = [
   {
     key: "site",
@@ -103,12 +104,18 @@ export const sections: SectionDef[] = [
       { kind: "text", key: "short", label: "Short name", help: "e.g. VES" },
       { kind: "text", key: "hindi", label: "Name in Hindi" },
       { kind: "number", key: "founded", label: "Year founded" },
-      { kind: "text", key: "tagline", label: "Tagline", wide: true },
+      {
+        kind: "text",
+        key: "tagline",
+        label: "Tagline",
+        help: "Shown in the homepage hero, under the name.",
+        wide: true,
+      },
       {
         kind: "textarea",
         key: "description",
         label: "Short description",
-        help: "Shown in the footer and in search results.",
+        help: "Shown in the homepage hero, the footer and in search results.",
         wide: true,
       },
       {
@@ -463,7 +470,7 @@ export const sections: SectionDef[] = [
         kind: "select",
         key: "icon",
         label: "Icon",
-        options: wingIcons.map((i) => ({ value: i, label: wingIconLabels[i] })),
+        options: iconOptions,
       },
       { kind: "text", key: "head", label: "Wing head" },
       { kind: "textarea", key: "summary", label: "Summary", rows: 2, wide: true },
@@ -547,6 +554,283 @@ export const sections: SectionDef[] = [
         fields: [
           { kind: "image", key: "founder1", label: "Left", shape: "wide" },
           { kind: "image", key: "founder2", label: "Right", shape: "wide" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "aboutSection",
+    group: "Page text",
+    title: "Homepage About section",
+    Icon: Info,
+    description:
+      "The About block on the homepage, next to the About image. The years badge is worked out from the founding year.",
+    shape: "object",
+    fields: [
+      { kind: "text", key: "eyebrow", label: "Small heading", placeholder: "e.g. About VES" },
+      {
+        kind: "text",
+        key: "buttonLabel",
+        label: "Button label",
+        help: "Links to the About page. Leave empty to hide.",
+      },
+      { kind: "text", key: "title", label: "Title", wide: true },
+      { kind: "textarea", key: "description", label: "Description", rows: 3, wide: true },
+      { kind: "text", key: "badgeText", label: "Text under the years badge", wide: true },
+      {
+        kind: "list",
+        key: "points",
+        label: "Key points",
+        itemNoun: "point",
+        itemTitle: (i) => s(i.title) || "Untitled point",
+        newItem: () => ({ icon: "scale", title: "", text: "" }),
+        wide: true,
+        itemFields: [
+          { kind: "text", key: "title", label: "Title" },
+          { kind: "select", key: "icon", label: "Icon", options: iconOptions },
+          { kind: "textarea", key: "text", label: "Text", rows: 2, wide: true },
+        ],
+      },
+    ],
+  },
+  {
+    key: "aboutPage",
+    group: "Page text",
+    title: "About page",
+    Icon: BookOpen,
+    description:
+      "All the text on the About page. The founder, pillars, patrons and join banner come from their own sections; the photo is in Website images.",
+    shape: "object",
+    fields: [
+      {
+        kind: "group",
+        key: "",
+        label: "Page header",
+        wide: true,
+        fields: [
+          { kind: "text", key: "heroEyebrow", label: "Small heading" },
+          { kind: "text", key: "heroTitle", label: "Title (first line)" },
+          {
+            kind: "text",
+            key: "heroTitleMuted",
+            label: "Title (second line, in grey)",
+            wide: true,
+          },
+          { kind: "textarea", key: "heroDescription", label: "Introduction", rows: 3, wide: true },
+        ],
+      },
+      {
+        kind: "list",
+        key: "purpose",
+        label: "Mission, vision & approach cards",
+        itemNoun: "card",
+        itemTitle: (i) => s(i.title) || "Untitled card",
+        newItem: () => ({ icon: "target", title: "", text: "" }),
+        wide: true,
+        itemFields: [
+          { kind: "text", key: "title", label: "Title" },
+          { kind: "select", key: "icon", label: "Icon", options: iconOptions },
+          { kind: "textarea", key: "text", label: "Text", rows: 3, wide: true },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Our story",
+        wide: true,
+        fields: [
+          { kind: "text", key: "storyEyebrow", label: "Small heading" },
+          { kind: "text", key: "storyTitle", label: "Title" },
+          {
+            kind: "strings",
+            key: "storyParagraphs",
+            label: "Story",
+            itemLabel: "paragraph",
+            multiline: true,
+            wide: true,
+          },
+          {
+            kind: "toggle",
+            key: "showStats",
+            label: "Show the headline numbers under the story",
+            wide: true,
+          },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "What we do",
+        wide: true,
+        fields: [
+          { kind: "text", key: "workEyebrow", label: "Small heading" },
+          { kind: "text", key: "workTitle", label: "Title" },
+          {
+            kind: "list",
+            key: "work",
+            label: "Activities",
+            itemNoun: "activity",
+            itemTitle: (i) => s(i.title) || "Untitled activity",
+            newItem: () => ({ title: "", text: "" }),
+            wide: true,
+            itemFields: [
+              { kind: "text", key: "title", label: "Title", wide: true },
+              { kind: "textarea", key: "text", label: "Text", rows: 2, wide: true },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: "wingsPage",
+    group: "Page text",
+    title: "Wings page",
+    Icon: Network,
+    description:
+      "The Wings page header and the “How we're organised” chart. The wings themselves are edited in About VES → Organisation wings.",
+    shape: "object",
+    fields: [
+      {
+        kind: "group",
+        key: "",
+        label: "Page header",
+        help: "Placeholders: {count} = number of wings in words (e.g. Eight), {wings} = number of wings, {states} = states & UTs with members.",
+        wide: true,
+        fields: [
+          { kind: "text", key: "heroEyebrow", label: "Small heading" },
+          { kind: "text", key: "heroTitle", label: "Title" },
+          { kind: "textarea", key: "heroDescription", label: "Introduction", rows: 3, wide: true },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "How we're organised",
+        wide: true,
+        fields: [
+          { kind: "text", key: "structureEyebrow", label: "Small heading" },
+          { kind: "text", key: "structureTitle", label: "Title" },
+          {
+            kind: "list",
+            key: "tiers",
+            label: "Levels (top to bottom)",
+            help: "Each level is drawn a little wider than the one above. The same placeholders work here.",
+            itemNoun: "level",
+            itemTitle: (i) => s(i.tier) || "Untitled level",
+            newItem: () => ({ count: "", tier: "", text: "" }),
+            wide: true,
+            itemFields: [
+              { kind: "text", key: "tier", label: "Name", placeholder: "e.g. State Chapters" },
+              {
+                kind: "text",
+                key: "count",
+                label: "Label above",
+                placeholder: "e.g. {states} states & UTs",
+              },
+              { kind: "textarea", key: "text", label: "Description", rows: 2, wide: true },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: "sectionText",
+    group: "Page text",
+    title: "Section headings & banner",
+    Icon: Heading,
+    description:
+      "Headings for sections that appear on several pages — founder, pillars, patrons, student journal — and the “Join” banner at the bottom of pages.",
+    shape: "object",
+    fields: [
+      {
+        kind: "group",
+        key: "",
+        label: "Founder section",
+        wide: true,
+        fields: [
+          { kind: "text", key: "founderEyebrow", label: "Small heading" },
+          {
+            kind: "text",
+            key: "founderLinkLabel",
+            label: "Link label",
+            help: "Leave empty to hide the link.",
+          },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Four pillars",
+        wide: true,
+        fields: [
+          { kind: "text", key: "pillarsEyebrow", label: "Small heading" },
+          { kind: "text", key: "pillarsTitle", label: "Title" },
+          {
+            kind: "textarea",
+            key: "pillarsDescription",
+            label: "Description",
+            rows: 2,
+            wide: true,
+          },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Patrons",
+        wide: true,
+        fields: [
+          { kind: "text", key: "patronsEyebrow", label: "Small heading" },
+          { kind: "text", key: "patronsTitle", label: "Title" },
+          {
+            kind: "textarea",
+            key: "patronsDescription",
+            label: "Description",
+            rows: 2,
+            wide: true,
+          },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Student journal",
+        help: "Used on the homepage journal section and the /journal page.",
+        wide: true,
+        fields: [
+          { kind: "text", key: "journalEyebrow", label: "Small heading" },
+          { kind: "text", key: "journalTitle", label: "Title" },
+          {
+            kind: "textarea",
+            key: "journalDescription",
+            label: "Description",
+            rows: 2,
+            wide: true,
+          },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Join banner (bottom of pages)",
+        wide: true,
+        fields: [
+          { kind: "text", key: "joinTitle", label: "Title", wide: true },
+          { kind: "textarea", key: "joinText", label: "Text", rows: 2, wide: true },
+          {
+            kind: "text",
+            key: "joinButtonLabel",
+            label: "Main button",
+            help: "Opens the Join form from Forms & links.",
+          },
+          {
+            kind: "text",
+            key: "joinSecondaryLabel",
+            label: "Second button",
+            help: "Links to the Wings page. Leave empty to hide.",
+          },
         ],
       },
     ],

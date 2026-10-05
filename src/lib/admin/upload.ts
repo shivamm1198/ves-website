@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import { MEDIA_BUCKET } from "@/lib/supabase/env";
+import { DOCUMENTS_BUCKET, MEDIA_BUCKET } from "@/lib/supabase/env";
 
 export const ACCEPTED_IMAGES = "image/jpeg,image/png,image/webp,image/gif,image/avif";
 const MAX_INPUT_BYTES = 25 * 1024 * 1024;
@@ -86,4 +86,28 @@ export function captionFromFilename(name: string) {
     .replace(/[_-]+/g, " ")
     .trim();
   return base ? base.charAt(0).toUpperCase() + base.slice(1) : "Untitled";
+}
+
+export const ACCEPTED_DOCUMENTS =
+  "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+const MAX_DOCUMENT_BYTES = 20 * 1024 * 1024;
+
+/** Uploads a PDF or Word file for a journal article and returns its stored path. */
+export async function uploadDocument(file: File) {
+  if (!ACCEPTED_DOCUMENTS.split(",").includes(file.type)) {
+    throw new Error("Please attach a PDF or Word document (.pdf, .doc, .docx).");
+  }
+  if (file.size > MAX_DOCUMENT_BYTES) throw new Error("Documents must be smaller than 20 MB.");
+
+  const ext = file.name.split(".").pop()?.toLowerCase() || "pdf";
+  const path = `articles/${crypto.randomUUID()}.${ext}`;
+  const { error } = await createClient()
+    .storage.from(DOCUMENTS_BUCKET)
+    .upload(path, file, { contentType: file.type, cacheControl: "31536000", upsert: false });
+  if (error) throw new Error(`Upload failed: ${error.message}`);
+  return path;
+}
+
+export async function discardDocument(path: string) {
+  await createClient().storage.from(DOCUMENTS_BUCKET).remove([path]);
 }

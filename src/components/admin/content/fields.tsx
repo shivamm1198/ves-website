@@ -11,6 +11,7 @@ import { prepareImage, uploadImage } from "@/lib/admin/upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageDropzone } from "@/components/admin/image-dropzone";
 import type { FieldDef } from "./sections";
@@ -155,6 +156,37 @@ function FieldInput({
             multiline={field.multiline}
           />
           {help}
+        </div>
+      );
+    case "toggle":
+      return (
+        <label
+          htmlFor={id}
+          className="flex items-center justify-between gap-4 rounded-lg border bg-white px-4 py-3"
+        >
+          <span>
+            <span className="block text-sm font-medium">{field.label}</span>
+            {field.help && (
+              <span className="block text-xs text-muted-foreground">{field.help}</span>
+            )}
+          </span>
+          <Switch id={id} checked={value === true} onCheckedChange={onChange} />
+        </label>
+      );
+    case "list":
+      return (
+        <div>
+          <p className="mb-2 text-sm font-medium">{field.label}</p>
+          {field.help && <p className="-mt-1 mb-3 text-xs text-muted-foreground">{field.help}</p>}
+          <ListEditor
+            items={Array.isArray(value) ? (value as Obj[]) : []}
+            onChange={onChange}
+            fields={field.itemFields}
+            noun={field.itemNoun}
+            title={field.itemTitle}
+            newItem={field.newItem}
+            idPrefix={id}
+          />
         </div>
       );
     case "group":

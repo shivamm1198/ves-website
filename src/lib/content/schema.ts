@@ -142,7 +142,73 @@ export const wingIcons = [
   "megaphone",
   "scale",
   "users",
+  "target",
+  "eye",
+  "compass",
+  "landmark",
+  "handshake",
+  "award",
+  "sparkles",
 ] as const;
+
+/** Icons editors can pick for points and cards across the site. */
+export const iconNames = wingIcons;
+export type IconName = (typeof iconNames)[number];
+
+const iconCard = z.object({ icon: z.enum(iconNames), title: str.min(1), text: optionalStr });
+const titledText = z.object({ title: str.min(1), text: optionalStr });
+
+export const aboutSectionSchema = z.object({
+  eyebrow: optionalStr,
+  title: str.min(1),
+  description: optionalStr,
+  badgeText: optionalStr,
+  points: z.array(iconCard),
+  buttonLabel: optionalStr,
+});
+
+export const aboutPageSchema = z.object({
+  heroEyebrow: optionalStr,
+  heroTitle: str.min(1),
+  heroTitleMuted: optionalStr,
+  heroDescription: optionalStr,
+  purpose: z.array(iconCard),
+  storyEyebrow: optionalStr,
+  storyTitle: optionalStr,
+  storyParagraphs: strList,
+  showStats: z.boolean().default(true),
+  workEyebrow: optionalStr,
+  workTitle: optionalStr,
+  work: z.array(titledText),
+});
+
+/** Headings of sections shared between pages (homepage, About, Journal …). */
+export const sectionTextSchema = z.object({
+  founderEyebrow: optionalStr,
+  founderLinkLabel: optionalStr,
+  pillarsEyebrow: optionalStr,
+  pillarsTitle: optionalStr,
+  pillarsDescription: optionalStr,
+  patronsEyebrow: optionalStr,
+  patronsTitle: optionalStr,
+  patronsDescription: optionalStr,
+  journalEyebrow: optionalStr,
+  journalTitle: optionalStr,
+  journalDescription: optionalStr,
+  joinTitle: optionalStr,
+  joinText: optionalStr,
+  joinButtonLabel: optionalStr,
+  joinSecondaryLabel: optionalStr,
+});
+
+export const wingsPageSchema = z.object({
+  heroEyebrow: optionalStr,
+  heroTitle: str.min(1),
+  heroDescription: optionalStr,
+  structureEyebrow: optionalStr,
+  structureTitle: optionalStr,
+  tiers: z.array(z.object({ count: optionalStr, tier: str.min(1), text: optionalStr })),
+});
 
 export const wingsSchema = z.array(
   z.object({
@@ -192,6 +258,10 @@ export const contentSchemas = {
   wings: wingsSchema,
   journey: journeySchema,
   images: imagesSchema,
+  aboutSection: aboutSectionSchema,
+  aboutPage: aboutPageSchema,
+  wingsPage: wingsPageSchema,
+  sectionText: sectionTextSchema,
 } as const;
 
 export type ContentKey = keyof typeof contentSchemas;
@@ -202,6 +272,7 @@ export type SiteContent = { [K in ContentKey]: z.infer<(typeof contentSchemas)[K
 export type Site = SiteContent["site"];
 export type Links = SiteContent["links"];
 export type SiteImages = SiteContent["images"];
+export type SectionText = SiteContent["sectionText"];
 export type Founder = SiteContent["founder"];
 export type Pillar = SiteContent["pillars"][number];
 export type Internship = SiteContent["internships"][number];
@@ -263,4 +334,39 @@ export type GalleryItem = {
   category: string;
   w: number;
   h: number;
+};
+
+export const articleInputSchema = z.object({
+  title: str.min(1, "Title is required").max(250),
+  author_name: optionalStr,
+  author_detail: optionalStr,
+  category: optionalStr,
+  summary: optionalStr,
+  body: optionalStr,
+  cover_url: optionalStr,
+  document_url: optionalStr,
+  document_name: optionalStr,
+  published: z.boolean().default(true),
+  published_on: isoDate,
+});
+
+export type ArticleInput = z.infer<typeof articleInputSchema>;
+
+/** A Student Journal article as shown on the public site. */
+export type ArticleItem = {
+  id: string;
+  slug: string;
+  title: string;
+  author: string;
+  authorDetail: string;
+  category: string;
+  summary: string;
+  body: string;
+  cover: string;
+  documentUrl: string;
+  documentName: string;
+  date: string;
+  dateLabel: string;
+  readingMinutes: number;
+  published: boolean;
 };

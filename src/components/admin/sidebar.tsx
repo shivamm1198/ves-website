@@ -11,6 +11,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  NotebookPen,
   PenSquare,
 } from "lucide-react";
 
@@ -25,6 +26,7 @@ export const adminNav = [
   { href: "/admin/content", label: "Homepage editor", Icon: PenSquare },
   { href: "/admin/events", label: "Events", Icon: CalendarDays },
   { href: "/admin/gallery", label: "Gallery", Icon: Images },
+  { href: "/admin/journal", label: "Student Journal", Icon: NotebookPen },
 ];
 
 function isActive(pathname: string, href: string) {

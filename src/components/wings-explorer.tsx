@@ -3,40 +3,15 @@
 import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  BookOpenText,
-  BriefcaseBusiness,
-  CalendarRange,
-  Gavel,
-  GraduationCap,
-  HandHeart,
-  Megaphone,
-  Scale,
-  Users,
-  Venus,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import type { Wing } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { easeOut } from "@/components/motion";
+import { iconComponents } from "@/components/icon-map";
 
-export const wingIconComponents: Record<
-  Wing["icon"],
-  React.ComponentType<{ className?: string; strokeWidth?: number }>
-> = {
-  briefcase: BriefcaseBusiness,
-  "hand-heart": HandHeart,
-  gavel: Gavel,
-  book: BookOpenText,
-  venus: Venus,
-  "graduation-cap": GraduationCap,
-  calendar: CalendarRange,
-  megaphone: Megaphone,
-  scale: Scale,
-  users: Users,
-};
+export const wingIconComponents = iconComponents;
 
 export function WingsExplorer({ wings }: { wings: Wing[] }) {
   const [active, setActive] = React.useState(wings[0]?.key);

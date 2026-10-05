@@ -37,6 +37,7 @@ All content is editable at **`/admin`** (Supabase login required):
 | Homepage editor | `/admin/content` | Organisation details, numbers, members map, founder, internships, steps, FAQs, scholarships, news, videos, members, patrons, pillars, wings, journey |
 | Events          | `/admin/events`  | Create, edit, hide and delete events with a cover photo                                                                                              |
 | Gallery         | `/admin/gallery` | Bulk upload, caption, categorise and delete photos                                                                                                   |
+| Student Journal | `/admin/journal` | Student articles with attached PDF/Word papers, shown on the homepage and `/journal`                                                                 |
 
 **➡️ Follow [SUPABASE_SETUP.md](SUPABASE_SETUP.md)** to create the Supabase project, run the SQL in
 [`supabase/`](supabase/), create the president's login and connect the keys.
@@ -80,7 +81,7 @@ src/
     supabase/          browser / server / public clients and the session proxy
   proxy.ts             refreshes the Supabase session on /admin routes
   data/site.ts         default content
-supabase/              SQL: schema.sql, seed.sql (optional), make-admin.sql
+supabase/              SQL: schema.sql, journal.sql (existing projects), seed.sql (optional), make-admin.sql
 scripts/               placeholder image generator
 ```
 

@@ -18,7 +18,7 @@ export function PageHero({
       <div className="paper-grid absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
       <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-24 lg:px-8">
         <Reveal className="flex max-w-3xl flex-col gap-5">
-          <Eyebrow>{eyebrow}</Eyebrow>
+          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
           <h1 className="text-5xl leading-[1.02] font-semibold text-balance text-ink sm:text-6xl lg:text-7xl">
             {title}
           </h1>

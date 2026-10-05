@@ -49,7 +49,7 @@ export function SectionHeading({
         className,
       )}
     >
-      <Eyebrow inverse={inverse}>{eyebrow}</Eyebrow>
+      {eyebrow && <Eyebrow inverse={inverse}>{eyebrow}</Eyebrow>}
       <h2
         className={cn(
           "max-w-3xl text-4xl leading-[1.05] font-semibold text-balance sm:text-5xl",

@@ -50,7 +50,7 @@ export default async function JourneyPage() {
         </Stagger>
       </section>
 
-      <JoinCta joinHref={joinHref(content.links)} />
+      <JoinCta joinHref={joinHref(content.links)} text={content.sectionText} />
     </>
   );
 }

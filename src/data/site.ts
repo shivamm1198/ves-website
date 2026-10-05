@@ -9,7 +9,7 @@
  * NOTE: Names, numbers, dates, and contact details below are SAMPLE content.
  */
 
-import type { EventItem, GalleryItem, SiteContent } from "@/lib/content/schema";
+import type { ArticleItem, EventItem, GalleryItem, SiteContent } from "@/lib/content/schema";
 
 const site: SiteContent["site"] = {
   name: "Vidhi Ekta Sangh",
@@ -39,6 +39,7 @@ export const nav = [
   { href: "/wings", label: "Wings" },
   { href: "/journey", label: "Journey" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/journal", label: "Journal" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -719,6 +720,146 @@ const images: SiteContent["images"] = {
   founder2: "/images/gallery-05.svg",
 };
 
+const aboutSection: SiteContent["aboutSection"] = {
+  eyebrow: "About VES",
+  title: "One fraternity for every law student and legal professional",
+  description:
+    "Vidhi Ekta Sangh bridges the gap between the classroom and the courtroom. We connect students with the mentors, opportunities and community they need — wherever in India they study.",
+  badgeText: "of building India's most welcoming legal community",
+  points: [
+    {
+      icon: "briefcase",
+      title: "Internships that open doors",
+      text: "Verified placements with chambers, firms, courts and NGOs — never a fee.",
+    },
+    {
+      icon: "graduation-cap",
+      title: "Mentorship & scholarships",
+      text: "Senior advocates guiding first-generation lawyers, backed by financial support.",
+    },
+    {
+      icon: "hand-heart",
+      title: "Law in service of people",
+      text: "Legal-aid camps and awareness drives that take justice to the last mile.",
+    },
+  ],
+  buttonLabel: "Read our story",
+};
+
+const aboutPage: SiteContent["aboutPage"] = {
+  heroEyebrow: "About VES",
+  heroTitle: "Law is a fraternity.",
+  heroTitleMuted: "We make sure no one walks in alone.",
+  heroDescription:
+    "Vidhi Ekta Sangh (विधि एकता संघ) is a national, volunteer-led organisation that helps law students and young legal professionals find their footing — and gives back to society through legal aid.",
+  purpose: [
+    {
+      icon: "target",
+      title: "Our mission",
+      text: "To make the legal profession accessible to every aspiring lawyer — through free internships, mentorship, scholarships and a community that shows up for each other.",
+    },
+    {
+      icon: "eye",
+      title: "Our vision",
+      text: "A Bar that reflects all of India: where talent from every district and background has an equal shot at the courtroom, the boardroom and the Bench.",
+    },
+    {
+      icon: "compass",
+      title: "Our approach",
+      text: "Volunteer-led and fee-free. Senior professionals give time, students give energy, and our wings turn both into programmes that last.",
+    },
+  ],
+  storyEyebrow: "Our story",
+  storyTitle: "From forty students to a national movement",
+  storyParagraphs: [
+    "In 2020, when courts went virtual and internships vanished overnight, a small group of law students and young advocates in Delhi started sharing whatever opportunities they could find. Within months, students from Jaipur, Patna, Kochi and Guwahati had joined in.",
+    "That informal circle became Vidhi Ekta Sangh — vidhi (law), ekta (unity), sangh (fraternity). Today our wings run internship cycles, scholarships, moot courts and legal-aid camps, with chapters in more than 30 states and union territories.",
+    "We remain fee-free and volunteer-led, because the people who helped us find our first internship never asked for anything in return.",
+  ],
+  showStats: true,
+  workEyebrow: "What we do",
+  workTitle: "Six ways VES shows up for the legal community",
+  work: [
+    {
+      title: "Internship facilitation",
+      text: "Verified openings with chambers, firms, courts, NGOs and legal-services authorities.",
+    },
+    {
+      title: "Mentorship circles",
+      text: "Small groups of students guided by practising advocates for a full academic year.",
+    },
+    {
+      title: "Scholarships & grants",
+      text: "Financial support for merit, access and women in litigation.",
+    },
+    {
+      title: "Legal-aid outreach",
+      text: "Camps and awareness drives that take free legal advice to rural India.",
+    },
+    {
+      title: "Moots & skill-building",
+      text: "National moot courts, legal writing bootcamps and advocacy masterclasses.",
+    },
+    {
+      title: "Research & publication",
+      text: "The VES Quarterly Law Review and student-authored policy briefs.",
+    },
+  ],
+};
+
+const wingsPage: SiteContent["wingsPage"] = {
+  heroEyebrow: "Organisation wings",
+  heroTitle: "{count} wings. One fraternity.",
+  heroDescription:
+    "Each wing is led by a volunteer head and focuses on one part of our mission — together they carry VES from the courtroom to the countryside.",
+  structureEyebrow: "How we're organised",
+  structureTitle: "From the national executive to every campus",
+  tiers: [
+    {
+      count: "Core body",
+      tier: "National Executive",
+      text: "Founder, patrons and office-bearers who set direction, uphold the pillars and steward funds.",
+    },
+    {
+      count: "{wings} wings",
+      tier: "Specialised Wings",
+      text: "Run programmes nationally — internships, legal aid, moots, research, outreach and more.",
+    },
+    {
+      count: "{states} states & UTs",
+      tier: "State Chapters",
+      text: "Led by state coordinators who adapt programmes to local courts, languages and needs.",
+    },
+    {
+      count: "120+ campuses",
+      tier: "Campus Chapters",
+      text: "Student ambassadors who bring VES to their law schools and onboard new members.",
+    },
+  ],
+};
+
+const sectionText: SiteContent["sectionText"] = {
+  founderEyebrow: "From the founder",
+  founderLinkLabel: "Read the founder's message",
+  pillarsEyebrow: "Four pillars of VES",
+  pillarsTitle: "The principles we stand on",
+  pillarsDescription:
+    "Every programme, chapter and decision at Vidhi Ekta Sangh rests on four commitments.",
+  patronsEyebrow: "Our patrons",
+  patronsTitle: "Guided by the Bench, Bar and Academia",
+  patronsDescription:
+    "Eminent members of the legal fraternity who lend their wisdom and support to VES.",
+  journalEyebrow: "Student Journal",
+  journalTitle: "Writing from the next generation of the Bar",
+  journalDescription:
+    "Articles, case comments and research papers by law students across India — read online or download the full paper.",
+  joinTitle: "Join India's fraternity of future lawyers",
+  joinText:
+    "Membership is free for law students. Get early access to internships, scholarships, mentorship circles and every VES event.",
+  joinButtonLabel: "Become a member",
+  joinSecondaryLabel: "Explore our wings",
+};
+
 export const defaultContent: SiteContent = {
   site,
   links,
@@ -737,4 +878,48 @@ export const defaultContent: SiteContent = {
   wings,
   journey,
   images,
+  aboutSection,
+  aboutPage,
+  wingsPage,
+  sectionText,
 };
+
+/** Sample journal articles, shown only when Supabase isn't configured. */
+export const sampleArticles: ArticleItem[] = [
+  {
+    id: "sample-article-1",
+    slug: "right-to-privacy-in-the-age-of-facial-recognition",
+    title: "The Right to Privacy in the Age of Facial Recognition",
+    author: "Ananya Sharma",
+    authorDetail: "4th year, B.A. LL.B. (Hons.)",
+    category: "Constitutional Law",
+    summary:
+      "Eight years after Puttaswamy, facial recognition is spreading across Indian cities. This paper asks whether the proportionality test can keep pace.",
+    body: "When the Supreme Court recognised privacy as a fundamental right, it set out a four-part proportionality test for any State intrusion: legality, legitimate aim, necessity and procedural safeguards.\n\nFacial recognition systems now deployed at railway stations and airports rarely rest on a specific statute. This paper maps those deployments against each limb of the test and finds the 'legality' requirement most often unmet.\n\nIt closes with three recommendations: a statutory basis for public-space biometrics, independent audits of accuracy across demographic groups, and a time-bound data retention rule.",
+    cover: "",
+    documentUrl: "",
+    documentName: "",
+    date: "2026-09-20",
+    dateLabel: "20 Sep 2026",
+    readingMinutes: 1,
+    published: true,
+  },
+  {
+    id: "sample-article-2",
+    slug: "first-year-of-the-bharatiya-nyaya-sanhita",
+    title: "One Year of the Bharatiya Nyaya Sanhita: What Changed in Trial Courts?",
+    author: "Kabir Verma",
+    authorDetail: "LL.M. candidate, Criminal Law",
+    category: "Criminal Law",
+    summary:
+      "A look at how district courts have applied the new criminal code in its first year, drawn from 120 reported orders.",
+    body: "The replacement of the Indian Penal Code was among the largest legislative changes to Indian criminal law since independence.\n\nThis case comment reviews 120 district-court orders to see where the new provisions on organised crime and community service have actually been invoked, and where courts continue to rely on IPC-era precedent.",
+    cover: "",
+    documentUrl: "",
+    documentName: "",
+    date: "2026-08-30",
+    dateLabel: "30 Aug 2026",
+    readingMinutes: 1,
+    published: true,
+  },
+];

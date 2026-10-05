@@ -1,0 +1,63 @@
+import {
+  Award,
+  BookOpenText,
+  BriefcaseBusiness,
+  CalendarRange,
+  Compass,
+  Eye,
+  Gavel,
+  GraduationCap,
+  HandHeart,
+  Handshake,
+  Landmark,
+  Megaphone,
+  Scale,
+  Sparkles,
+  Target,
+  Users,
+  Venus,
+  type LucideIcon,
+} from "lucide-react";
+
+import type { IconName } from "@/lib/content/schema";
+
+/** Lucide icon for every icon name editors can choose in the dashboard. */
+export const iconComponents: Record<IconName, LucideIcon> = {
+  briefcase: BriefcaseBusiness,
+  "hand-heart": HandHeart,
+  gavel: Gavel,
+  book: BookOpenText,
+  venus: Venus,
+  "graduation-cap": GraduationCap,
+  calendar: CalendarRange,
+  megaphone: Megaphone,
+  scale: Scale,
+  users: Users,
+  target: Target,
+  eye: Eye,
+  compass: Compass,
+  landmark: Landmark,
+  handshake: Handshake,
+  award: Award,
+  sparkles: Sparkles,
+};
+
+export const iconLabels: Record<IconName, string> = {
+  briefcase: "Briefcase",
+  "hand-heart": "Helping hand",
+  gavel: "Gavel",
+  book: "Book",
+  venus: "Women",
+  "graduation-cap": "Graduation cap",
+  calendar: "Calendar",
+  megaphone: "Megaphone",
+  scale: "Scales of justice",
+  users: "People",
+  target: "Target",
+  eye: "Eye",
+  compass: "Compass",
+  landmark: "Courthouse",
+  handshake: "Handshake",
+  award: "Award",
+  sparkles: "Sparkle",
+};

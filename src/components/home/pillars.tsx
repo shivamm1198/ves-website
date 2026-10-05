@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Handshake, Landmark, Scale, Sparkles } from "lucide-react";
 
-import type { Pillar } from "@/lib/content/schema";
+import type { Pillar, SectionText } from "@/lib/content/schema";
 import { easeOut } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
@@ -14,16 +14,22 @@ const icons = {
   empowerment: Sparkles,
 } as const;
 
-export function PillarsSection({ pillars }: { pillars: Pillar[] }) {
+export function PillarsSection({
+  pillars,
+  text,
+}: {
+  pillars: Pillar[];
+  text: Pick<SectionText, "pillarsEyebrow" | "pillarsTitle" | "pillarsDescription">;
+}) {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
       <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <SectionHeading
           inverse
           align="center"
-          eyebrow="Four pillars of VES"
-          title="The principles we stand on"
-          description="Every programme, chapter and decision at Vidhi Ekta Sangh rests on four commitments."
+          eyebrow={text.pillarsEyebrow}
+          title={text.pillarsTitle}
+          description={text.pillarsDescription || undefined}
         />
 
         <div className="mt-16 grid border-t border-white/15 sm:grid-cols-2 lg:grid-cols-4">

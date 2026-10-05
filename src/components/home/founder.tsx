@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Quote } from "lucide-react";
 
-import type { Founder, SiteImages } from "@/lib/content/schema";
+import type { Founder, SectionText, SiteImages } from "@/lib/content/schema";
 import { FloatingPhoto } from "@/components/floating-photo";
 import { initialsOf } from "@/lib/content/derive";
-import { Photo } from "@/components/photo";
 import { Monogram } from "@/components/monogram";
 import { Reveal } from "@/components/motion";
 import { Eyebrow } from "@/components/section-heading";
@@ -16,7 +15,15 @@ const truncate = (text: string, maxLength: number) => {
   return `${text.slice(0, maxLength).trimEnd()}…`;
 };
 
-export function FounderSection({ founder, images }: { founder: Founder; images: SiteImages }) {
+export function FounderSection({
+  founder,
+  images,
+  text,
+}: {
+  founder: Founder;
+  images: SiteImages;
+  text: Pick<SectionText, "founderEyebrow" | "founderLinkLabel">;
+}) {
   return (
     <section id="founder" className="relative scroll-mt-24 overflow-hidden border-y bg-paper">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8 lg:py-32">
@@ -70,7 +77,7 @@ export function FounderSection({ founder, images }: { founder: Founder; images: 
         </Reveal>
 
         <Reveal delay={0.1} className="flex flex-col gap-8">
-          <Eyebrow>From the founder</Eyebrow>
+          {text.founderEyebrow && <Eyebrow>{text.founderEyebrow}</Eyebrow>}
           <blockquote className="relative">
             <Quote
               className="absolute -top-3 -left-1 size-9 -scale-x-100 text-gold/20 sm:-top-4 sm:-left-2 sm:size-14"
@@ -95,12 +102,14 @@ export function FounderSection({ founder, images }: { founder: Founder; images: 
               </li>
             ))}
           </ul>
-          <Link
-            href="/about#founder"
-            className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-ink underline-offset-4 hover:underline"
-          >
-            Read the founder&apos;s message <ArrowRight className="size-4" />
-          </Link>
+          {text.founderLinkLabel && (
+            <Link
+              href="/about#founder"
+              className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-ink underline-offset-4 hover:underline"
+            >
+              {text.founderLinkLabel} <ArrowRight className="size-4" />
+            </Link>
+          )}
         </Reveal>
       </div>
     </section>

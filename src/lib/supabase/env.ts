@@ -17,6 +17,17 @@ export function mediaUrl(path: string | null | undefined) {
   return `${supabaseUrl}/storage/v1/object/public/${MEDIA_BUCKET}/${path}`;
 }
 
+/** Public bucket for Student Journal papers (PDF / Word). */
+export const DOCUMENTS_BUCKET = "documents";
+
+/** URL of a journal document; `downloadAs` makes browsers save it under that name. */
+export function documentUrl(path: string | null | undefined, downloadAs?: string) {
+  if (!path) return "";
+  if (path.startsWith("/") || /^https?:\/\//.test(path)) return path;
+  const url = `${supabaseUrl}/storage/v1/object/public/${DOCUMENTS_BUCKET}/${path}`;
+  return downloadAs ? `${url}?download=${encodeURIComponent(downloadAs)}` : url;
+}
+
 /** True when the reference points at a file we uploaded to the media bucket. */
 export function isStoragePath(path: string | null | undefined): path is string {
   return Boolean(path) && !path!.startsWith("/") && !/^https?:\/\//.test(path!);

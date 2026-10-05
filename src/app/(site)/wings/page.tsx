@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { memberTotals } from "@/lib/content/derive";
 import { joinHref } from "@/lib/content/links";
 import { getContent } from "@/lib/content/queries";
+import { fillTokens, numberWord } from "@/lib/content/tokens";
 import { JoinCta } from "@/components/home/join-cta";
 import { PageHero } from "@/components/page-hero";
 import { WingsExplorer } from "@/components/wings-explorer";
@@ -10,100 +11,81 @@ import { Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { site } = await getContent();
+  const { site, wingsPage } = await getContent();
   return {
     title: "Organisation Wings",
-    description: `The specialised wings through which ${site.name} runs its programmes.`,
+    description:
+      wingsPage.heroDescription ||
+      `The specialised wings through which ${site.name} runs its programmes.`,
   };
 }
 
-const NUMBER_WORDS = [
-  "Zero",
-  "One",
-  "Two",
-  "Three",
-  "Four",
-  "Five",
-  "Six",
-  "Seven",
-  "Eight",
-  "Nine",
-  "Ten",
-  "Eleven",
-  "Twelve",
-];
-
-function buildStructure(wingCount: number, statesReached: number) {
-  return [
-    {
-      tier: "National Executive",
-      text: "Founder, patrons and office-bearers who set direction, uphold the pillars and steward funds.",
-      count: "Core body",
-    },
-    {
-      tier: "Specialised Wings",
-      text: "Run programmes nationally — internships, legal aid, moots, research, outreach and more.",
-      count: `${wingCount} wings`,
-    },
-    {
-      tier: "State Chapters",
-      text: "Led by state coordinators who adapt programmes to local courts, languages and needs.",
-      count: `${statesReached} states & UTs`,
-    },
-    {
-      tier: "Campus Chapters",
-      text: "Student ambassadors who bring VES to their law schools and onboard new members.",
-      count: "120+ campuses",
-    },
-  ];
-}
-
 export default async function WingsPage() {
-  const { wings, stateMembers, links } = await getContent();
-  const structure = buildStructure(wings.length, memberTotals(stateMembers).states);
-  const count = NUMBER_WORDS[wings.length] ?? String(wings.length);
+  const { wings, stateMembers, links, sectionText, wingsPage: page } = await getContent();
+  // Placeholders editors can use in this page's text.
+  const tokens = {
+    count: numberWord(wings.length),
+    wings: wings.length,
+    states: memberTotals(stateMembers).states,
+  };
+  const tiers = page.tiers;
+  // Each tier is a little wider than the one above it, like a pyramid.
+  const widthFor = (i: number) => (tiers.length > 1 ? 60 + (i * 40) / (tiers.length - 1) : 100);
+
   return (
     <>
       <PageHero
-        eyebrow="Organisation wings"
-        title={`${count} ${wings.length === 1 ? "wing" : "wings"}. One fraternity.`}
-        description="Each wing is led by a volunteer head and focuses on one part of our mission — together they carry VES from the courtroom to the countryside."
+        eyebrow={fillTokens(page.heroEyebrow, tokens)}
+        title={fillTokens(page.heroTitle, tokens)}
+        description={fillTokens(page.heroDescription, tokens) || undefined}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
         <WingsExplorer wings={wings} />
       </section>
 
-      <section className="border-y bg-paper">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-          <SectionHeading
-            align="center"
-            eyebrow="How we're organised"
-            title="From the national executive to every campus"
-          />
-          <Stagger className="mx-auto mt-16 flex max-w-3xl flex-col items-center">
-            {structure.map((s, i) => (
-              <StaggerItem key={s.tier} className="flex w-full flex-col items-center">
-                {i > 0 && (
-                  <span aria-hidden className="h-10 w-px bg-gradient-to-b from-gold to-border" />
-                )}
-                <div
-                  className="w-full rounded-lg border bg-white px-6 py-6 text-center sm:max-w-[var(--w)] sm:px-10"
-                  style={{ "--w": `${60 + i * 13}%` } as React.CSSProperties}
-                >
-                  <p className="text-[11px] font-semibold tracking-[0.22em] text-gold-dark uppercase">
-                    {s.count}
-                  </p>
-                  <h3 className="mt-2 text-2xl font-semibold text-ink">{s.tier}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+      {tiers.length > 0 && (
+        <section className="border-y bg-paper">
+          <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+            {page.structureTitle && (
+              <SectionHeading
+                align="center"
+                eyebrow={fillTokens(page.structureEyebrow, tokens)}
+                title={fillTokens(page.structureTitle, tokens)}
+              />
+            )}
+            <Stagger className="mx-auto mt-16 flex max-w-3xl flex-col items-center">
+              {tiers.map((s, i) => (
+                <StaggerItem key={`${i}-${s.tier}`} className="flex w-full flex-col items-center">
+                  {i > 0 && (
+                    <span aria-hidden className="h-10 w-px bg-gradient-to-b from-gold to-border" />
+                  )}
+                  <div
+                    className="w-full rounded-lg border bg-white px-6 py-6 text-center sm:max-w-[var(--w)] sm:px-10"
+                    style={{ "--w": `${widthFor(i)}%` } as React.CSSProperties}
+                  >
+                    {s.count && (
+                      <p className="text-[11px] font-semibold tracking-[0.22em] text-gold-dark uppercase">
+                        {fillTokens(s.count, tokens)}
+                      </p>
+                    )}
+                    <h3 className="mt-2 text-2xl font-semibold text-ink">
+                      {fillTokens(s.tier, tokens)}
+                    </h3>
+                    {s.text && (
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        {fillTokens(s.text, tokens)}
+                      </p>
+                    )}
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+        </section>
+      )}
 
-      <JoinCta joinHref={joinHref(links)} />
+      <JoinCta joinHref={joinHref(links)} text={sectionText} />
     </>
   );
 }

@@ -62,14 +62,23 @@ export function Hero({
             </span>
           </motion.div>
 
-          <motion.p
-            {...rise(0.24)}
-            className="mt-7 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground"
-          >
-            Uniting legal professionals and law students across India — opening doors to
-            internships, scholarships, mentorship and events that shape the next generation of the
-            Bar.
-          </motion.p>
+          {site.tagline && (
+            <motion.p
+              {...rise(0.2)}
+              className="mt-6 font-serif text-2xl leading-snug text-ink/80 italic sm:text-[1.7rem]"
+            >
+              {site.tagline}
+            </motion.p>
+          )}
+
+          {site.description && (
+            <motion.p
+              {...rise(0.24)}
+              className="mt-4 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground"
+            >
+              {site.description}
+            </motion.p>
+          )}
 
           <motion.div {...rise(0.32)} className="mt-9 flex flex-wrap gap-3">
             <Button asChild size="lg">

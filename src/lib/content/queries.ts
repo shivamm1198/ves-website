@@ -2,21 +2,27 @@ import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
 
-import { defaultContent, sampleEvents, sampleGallery } from "@/data/site";
+import { defaultContent, sampleArticles, sampleEvents, sampleGallery } from "@/data/site";
 import { createPublicClient } from "@/lib/supabase/public";
-import { isSupabaseConfigured, mediaUrl } from "@/lib/supabase/env";
+import { documentUrl, isSupabaseConfigured, mediaUrl } from "@/lib/supabase/env";
 import { formatEventDate } from "./derive";
 import {
   contentKeys,
   contentSchemas,
   type ContentKey,
+  type ArticleItem,
   type EventItem,
   type GalleryItem,
   type SiteContent,
 } from "./schema";
 
 /** Cache tags invalidated by the dashboards after every save. */
-export const TAGS = { content: "content", events: "events", gallery: "gallery" } as const;
+export const TAGS = {
+  content: "content",
+  events: "events",
+  gallery: "gallery",
+  articles: "articles",
+} as const;
 
 export type ContentRow = { key: string; data: unknown; updated_at?: string };
 
@@ -129,4 +135,84 @@ export async function getGallery(): Promise<GalleryItem[]> {
     return [];
   }
   return (data as GalleryRow[]).map(toGalleryItem);
+}
+
+export type ArticleRow = {
+  id: string;
+  slug: string;
+  title: string;
+  author_name: string;
+  author_detail: string;
+  category: string;
+  summary: string;
+  body: string;
+  cover_url: string;
+  document_url: string;
+  document_name: string;
+  published: boolean;
+  published_on: string;
+};
+
+const ARTICLE_COLUMNS =
+  "id, slug, title, author_name, author_detail, category, summary, body, cover_url, document_url, document_name, published, published_on";
+
+export function toArticleItem(row: ArticleRow): ArticleItem {
+  const words = row.body.trim() ? row.body.trim().split(/\s+/).length : 0;
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    author: row.author_name,
+    authorDetail: row.author_detail,
+    category: row.category,
+    summary: row.summary,
+    body: row.body,
+    cover: mediaUrl(row.cover_url),
+    documentUrl: documentUrl(row.document_url, row.document_name || undefined),
+    documentName: row.document_name,
+    date: row.published_on,
+    dateLabel: formatEventDate(row.published_on),
+    readingMinutes: Math.max(1, Math.round(words / 200)),
+    published: row.published,
+  };
+}
+
+/** Published journal articles, newest first. */
+export async function getArticles(): Promise<ArticleItem[]> {
+  "use cache";
+  cacheTag(TAGS.articles);
+  cacheLife("minutes");
+
+  if (!isSupabaseConfigured) return sampleArticles;
+  const { data, error } = await createPublicClient()
+    .from("articles")
+    .select(ARTICLE_COLUMNS)
+    .eq("published", true)
+    .order("published_on", { ascending: false })
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("[articles] Could not load articles:", error.message);
+    return [];
+  }
+  return (data as ArticleRow[]).map(toArticleItem);
+}
+
+/** One published article, or null when the slug doesn't exist. */
+export async function getArticle(slug: string): Promise<ArticleItem | null> {
+  "use cache";
+  cacheTag(TAGS.articles);
+  cacheLife("minutes");
+
+  if (!isSupabaseConfigured) return sampleArticles.find((a) => a.slug === slug) ?? null;
+  const { data, error } = await createPublicClient()
+    .from("articles")
+    .select(ARTICLE_COLUMNS)
+    .eq("slug", slug)
+    .eq("published", true)
+    .maybeSingle();
+  if (error) {
+    console.error("[articles] Could not load article:", error.message);
+    return null;
+  }
+  return data ? toArticleItem(data as ArticleRow) : null;
 }
