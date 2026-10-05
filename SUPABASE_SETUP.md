@@ -5,11 +5,13 @@ This connects the website to Supabase so the president can edit content from the
 
 **What you'll end up with**
 
-| Dashboard           | URL              | What it manages                                                                                                                                                       |
-| ------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Homepage editor** | `/admin/content` | Organisation details, headline numbers, members map, founder, internships, steps, FAQs, scholarships, news, YouTube videos, members, patrons, pillars, wings, journey |
-| **Events**          | `/admin/events`  | Create, edit, hide and delete events with a cover photo                                                                                                               |
-| **Gallery**         | `/admin/gallery` | Bulk-upload photos with captions and categories, edit, delete                                                                                                         |
+| Dashboard             | URL              | What it manages                                                                                                                                                       |
+| --------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Homepage editor**   | `/admin/content` | Organisation details, headline numbers, members map, founder, internships, steps, FAQs, scholarships, news, YouTube videos, members, patrons, pillars, wings, journey |
+| **Events**            | `/admin/events`  | Create, edit, hide and delete events with a cover photo                                                                                                               |
+| **Gallery**           | `/admin/gallery` | Bulk-upload photos with captions and categories, edit, delete                                                                                                         |
+| **Student Journal**   | `/admin/journal` | Student articles with an attached PDF or Word paper                                                                                                                   |
+| **Internship portal** | `/portal`        | Internships, coordinators, intern invite links, tasks with deadlines, intern work and progress                                                                        |
 
 ---
 
@@ -41,6 +43,7 @@ This creates:
 - `events` and `gallery_items`
 - a public `media` storage bucket for images (10 MB per file)
 - security rules: **anyone can read; only admins can add, change or delete**
+- the **internship portal** tables and a private `internship-files` bucket for interns' work
 
 > The script is safe to run again. Re-running it changes nothing that already exists.
 
@@ -48,6 +51,11 @@ This creates:
 > [`supabase/journal.sql`](supabase/journal.sql) once in a new SQL Editor query. It creates the
 > `articles` table and a public `documents` bucket for PDF/Word papers (20 MB each). New projects
 > don't need it, because `schema.sql` already includes it.
+
+> **Already set up before the Internship portal was added?** Run
+> [`supabase/internships.sql`](supabase/internships.sql) once in a new SQL Editor query. It creates
+> the internship tables, the invite-link functions and a **private** `internship-files` bucket
+> (25 MB per file). New projects don't need it, because `schema.sql` already includes it.
 
 ### Optional: start with the sample events and photos
 
@@ -79,14 +87,24 @@ Creating a login is not enough. The account must also be listed as an admin.
 Repeat steps 4–5 for anyone else who should have access.
 To remove access later: `delete from public.admins where email = 'someone@example.com';`
 
-## Step 6: Turn off public sign-ups (recommended)
+## Step 6: Sign-up settings (for intern accounts)
 
-Only admins can change anything even if someone signs up, but turning sign-ups off keeps the user list
-clean.
+Interns and coordinators create their own account when they open an invite link, so sign-ups must
+stay **on**. That's safe: an account that didn't come through a valid invite link has no access to
+anything, and only the president (Step 5) can open the website dashboards.
 
 1. Open **Authentication → Sign In / Providers** (called **Providers** in some versions).
-2. Under **User Signups**, switch **Allow new users to sign up** **off**.
-3. Click **Save**.
+2. Under **User Signups**, make sure **Allow new users to sign up** is **on**.
+3. Under **Email**, switch **Confirm email** **off**, then click **Save**.
+   Supabase's built-in email service only delivers to your own team's addresses, so without your
+   own SMTP server interns would never receive the confirmation email. With it off, interns are
+   signed in straight after creating their account.
+
+> **Prefer confirmation emails?** Set up your own SMTP server first
+> (**Authentication → Emails → SMTP Settings**, e.g. with Resend, Brevo or Gmail), then leave
+> **Confirm email** on. Interns then click the link in the email to finish joining.
+
+> If you turned sign-ups off earlier (older versions of this guide recommended it), switch them back on.
 
 ## Step 7: Copy the two keys into the website
 
@@ -118,7 +136,10 @@ clean.
 1. Open **Authentication → URL Configuration**.
 2. Set **Site URL** to your live website address, e.g. `https://vidhiektasangh.org`
    (or your `…vercel.app` address).
-3. Click **Save**.
+3. Under **Redirect URLs**, click **Add URL** and add `https://your-site/auth/callback`
+   (e.g. `https://vidhiektasangh.org/auth/callback`). Add `http://localhost:3000/auth/callback` too
+   if you run the site on your computer. This is where confirmation emails send people back to.
+4. Click **Save**.
 
 ## Step 9: Sign in
 
@@ -147,20 +168,69 @@ Open **`https://your-site/admin`**, sign in with the president's email and passw
 - **Gallery:** drop several photos at once, set captions and categories, then **Upload**. Large phone
   photos are resized automatically before upload.
 
+## Step 10: Run an internship (the Internship portal)
+
+The portal lives at **`https://your-site/portal`** (also linked as **Intern login** in the website
+footer and **Internship portal** in the dashboard). There are three kinds of account:
+
+| Account                            | How they get in                                   | What they can do                                                                                                      |
+| ---------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **President**                      | The admin login from Steps 4–5                    | Everything: create internships, appoint coordinators, and everything a coordinator can do in every internship         |
+| **Coordinator** (internship admin) | A _coordinator_ invite link made by the president | Only their internship(s): invite interns, assign tasks with deadlines, follow progress, give feedback, remove interns |
+| **Intern** (student)               | An _intern_ invite link                           | Only their own tasks: write or upload their work, complete tasks, see what's left and their performance               |
+
+Coordinators and interns can only reach the portal, never the website dashboards.
+
+1. **Create the internship.** Open `/portal` → **New internship**. Give it a name, start and end dates
+   and a short description. Make one for each type of internship (e.g. _Legal Research · Winter 2026_,
+   _Content Writing_).
+2. **Appoint a coordinator.** Open the internship → **Invite links** → set **Joins as** to
+   **Coordinator**, pick an expiry and set **Maximum sign-ups** to `1` → **Create link** → **Copy**.
+   Send it to the coordinator. They open it, create an account (name, email, password) and land on
+   the internship's dashboard.
+3. **Invite interns.** The coordinator (or president) creates an **Intern** link, e.g. _Batch A_,
+   expiring in 7 days, optionally limited to the number of seats, and shares it on WhatsApp or by email.
+   Every intern who opens it before it expires creates an account and joins. **Revoke** stops a link
+   early; people who already joined keep access. An intern with an account can sign in later at
+   `/portal/login`.
+4. **Assign tasks.** **New task** → title, type of work (Article, Research paper, Case comment…),
+   instructions, a **deadline**, how to submit (**write in the editor**, **upload a file**, or either),
+   and who it's for (every intern, or selected interns).
+5. **Interns do the work.** Each intern sees _"3 of 8 tasks completed · 5 remaining"_, their next
+   deadline, and their tasks grouped as Overdue, To do and Completed. A task opens a clean writing page
+   (title, a Medium-style editor with headings, lists, quotes and links) and an upload area (up to 5 PDF,
+   Word, PowerPoint or image files, 25 MB each). Work saves automatically as a draft;
+   **Complete task** hands it in. Late work is still accepted and marked late.
+6. **Review.** On the internship's **Tasks** tab, **Submissions** lists every intern's status. Open one
+   to read it, download files, write feedback and **Save feedback**, or **Return for changes** to reopen
+   it for the intern.
+7. **Performance.** The **People** tab shows each intern's completed / on-time / late / missed tasks.
+   After the end date, each intern sees a **performance report**: tasks completed, completion rate,
+   on time vs late, and an overall rating (Outstanding ≥ 90%, Very good ≥ 75%, Good ≥ 50%).
+
+Interns' files are stored in the **private** `internship-files` bucket. Only the intern who uploaded a
+file, the internship's coordinators and the president can open it, through links that expire after an
+hour.
+
 ---
 
 ## Troubleshooting
 
-| Problem                                                                 | Fix                                                                                                            |
-| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Login page says **"Supabase isn't connected yet"**                      | The two environment variables are missing. Add them (Step 7) and redeploy or restart.                          |
-| **"Incorrect email or password"**                                       | Check the user in **Authentication → Users**, or use **⋯ → Send password recovery** there.                     |
-| **"This account doesn't have dashboard access"**                        | Run `supabase/make-admin.sql` with that email (Step 5).                                                        |
-| **"Email isn't confirmed"**                                             | In **Authentication → Users**, open the user and confirm them, or recreate with **Auto Confirm User** ticked.  |
-| Upload fails with **"new row violates row-level security"**             | The account isn't in `admins`, or `schema.sql` didn't finish. Re-run both.                                     |
-| **"permission denied for table …"**                                     | Re-run `schema.sql`; it includes the required grants.                                                          |
-| A change made directly in Supabase's **Table Editor** isn't on the site | Edits from the dashboards appear instantly. Direct table edits show up within about a minute.                  |
-| Want to change the president's password                                 | **Authentication → Users → ⋯ → Send password recovery**, or delete and recreate the user (then re-run Step 5). |
+| Problem                                                                        | Fix                                                                                                            |
+| ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| Login page says **"Supabase isn't connected yet"**                             | The two environment variables are missing. Add them (Step 7) and redeploy or restart.                          |
+| **"Incorrect email or password"**                                              | Check the user in **Authentication → Users**, or use **⋯ → Send password recovery** there.                     |
+| **"This account doesn't have dashboard access"**                               | Run `supabase/make-admin.sql` with that email (Step 5).                                                        |
+| **"Email isn't confirmed"**                                                    | In **Authentication → Users**, open the user and confirm them, or recreate with **Auto Confirm User** ticked.  |
+| Upload fails with **"new row violates row-level security"**                    | The account isn't in `admins`, or `schema.sql` didn't finish. Re-run both.                                     |
+| **"permission denied for table …"**                                            | Re-run `schema.sql`; it includes the required grants.                                                          |
+| A change made directly in Supabase's **Table Editor** isn't on the site        | Edits from the dashboards appear instantly. Direct table edits show up within about a minute.                  |
+| Want to change the president's password                                        | **Authentication → Users → ⋯ → Send password recovery**, or delete and recreate the user (then re-run Step 5). |
+| Intern sees **"New accounts are switched off in Supabase"**                    | Turn **Allow new users to sign up** on (Step 6).                                                               |
+| Intern is told **"we've emailed you a confirmation link"** but nothing arrives | Turn **Confirm email** off (Step 6), or set up custom SMTP. Then they open the invite link again.              |
+| Invite page says **"This link has expired"**                                   | The link expired, was revoked or reached its sign-up limit. Create a new one in **Invite links**.              |
+| **"This account isn't part of an internship yet"** on `/portal/login`          | The account never joined, or was removed. Send them a fresh invite link.                                       |
+| Portal shows **"relation internship_programs does not exist"**                 | Run `supabase/internships.sql` (Step 2).                                                                       |
 
 ## How it fits together (for developers)
 
@@ -175,3 +245,10 @@ Open **`https://your-site/admin`**, sign in with the president's email and passw
 - Images are uploaded straight from the browser to the `media` bucket (after client-side resizing). The
   database stores the path, and files are removed when their event or photo is deleted.
 - Without the environment variables, the whole site runs on the sample content in `src/data/site.ts`.
+- **Internship portal** (`src/app/portal`, `src/lib/portal`): coordinators and interns are rows in
+  `internship_members` (role `admin` or `intern`) and are created only by `redeem_invite()`, a
+  security-definer function that checks the invite token's expiry, revocation and use limit. Row Level
+  Security limits interns to their own submissions and assigned tasks, and coordinators to their own
+  programmes. A trigger stops interns from moving work between tasks or writing their own feedback, and
+  completed work can only be reopened through `review_submission()`. `src/proxy.ts` sends signed-out
+  visitors on `/portal` to `/portal/login`.

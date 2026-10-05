@@ -12,6 +12,7 @@ const programmes = [
   { href: "/internships#scholarships", label: "Scholarships" },
   { href: "/wings", label: "Organisation Wings" },
   { href: "/gallery", label: "Events & Gallery" },
+  { href: "/portal", label: "Intern login" },
 ];
 
 export function SiteFooter({ site, year }: { site: Site; year: number }) {

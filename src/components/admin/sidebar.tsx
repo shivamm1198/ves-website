@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import {
   ArrowUpRight,
   CalendarDays,
+  GraduationCap,
   Images,
   LayoutDashboard,
   LogOut,
@@ -27,6 +28,7 @@ export const adminNav = [
   { href: "/admin/events", label: "Events", Icon: CalendarDays },
   { href: "/admin/gallery", label: "Gallery", Icon: Images },
   { href: "/admin/journal", label: "Student Journal", Icon: NotebookPen },
+  { href: "/portal", label: "Internship portal", Icon: GraduationCap },
 ];
 
 function isActive(pathname: string, href: string) {

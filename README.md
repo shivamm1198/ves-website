@@ -17,6 +17,7 @@ Built with **Next.js 16 (App Router)**, **Tailwind CSS v4**, **shadcn/ui** (Radi
 | `/wings`       | Interactive explorer for the 8 wings and an org-structure diagram                                                                                                                 |
 | `/about`       | Mission, vision, story, founder, what we do, pillars, patrons                                                                                                                     |
 | `/contact`     | Validated contact form (`/contact?subject=membership` preselects a topic) and contact details                                                                                     |
+| `/journal`     | Student Journal articles, each with its own page and attached paper                                                                                                               |
 
 ## Getting started
 
@@ -38,6 +39,21 @@ All content is editable at **`/admin`** (Supabase login required):
 | Events          | `/admin/events`  | Create, edit, hide and delete events with a cover photo                                                                                              |
 | Gallery         | `/admin/gallery` | Bulk upload, caption, categorise and delete photos                                                                                                   |
 | Student Journal | `/admin/journal` | Student articles with attached PDF/Word papers, shown on the homepage and `/journal`                                                                 |
+
+## Internship portal
+
+**`/portal`** is a separate dashboard for running internships, with three kinds of account:
+
+- **President** (the admin login): creates internships and appoints a coordinator for each.
+- **Coordinator** (internship admin): joins through a coordinator invite link. Invites interns with
+  expiring links, assigns tasks with deadlines, reviews work, returns it for changes and follows each
+  intern's progress.
+- **Intern**: joins through an intern invite link. Sees "X of Y completed · Z remaining", writes in a
+  Medium-style editor and/or uploads files, completes tasks, and gets a performance report when the
+  internship ends.
+
+Coordinators and interns can only reach the portal. See **Step 10** of
+[SUPABASE_SETUP.md](SUPABASE_SETUP.md) for the full walkthrough.
 
 **➡️ Follow [SUPABASE_SETUP.md](SUPABASE_SETUP.md)** to create the Supabase project, run the SQL in
 [`supabase/`](supabase/), create the president's login and connect the keys.
@@ -70,18 +86,22 @@ a route handler or a form service.
 src/
   app/
     (site)/            public pages (home, about, internships, gallery, journey, wings, contact)
-    admin/             login + dashboards (overview, content, events, gallery)
+    admin/             login + dashboards (overview, content, events, gallery, journal)
+    portal/            internship portal: login, invite links, programmes, tasks, reviews
+    auth/callback/     finishes email-confirmation sign-ins
   components/
     ui/                shadcn/ui components
     home/              landing-page sections (hero, india-map, members, pillars, …)
     admin/             dashboard UI (content editor, events manager, gallery manager, …)
+    portal/            portal UI (programme dashboard, intern work area, rich-text editor, …)
   lib/
     content/           schemas, cached public queries, admin session helpers
     admin/             server actions (content, events, gallery, auth) + image upload helper
+    portal/            portal session, queries, server actions, progress maths, file uploads
     supabase/          browser / server / public clients and the session proxy
-  proxy.ts             refreshes the Supabase session on /admin routes
+  proxy.ts             refreshes the Supabase session on /admin, /portal and /auth routes
   data/site.ts         default content
-supabase/              SQL: schema.sql, journal.sql (existing projects), seed.sql (optional), make-admin.sql
+supabase/              SQL: schema.sql, journal.sql + internships.sql (existing projects), seed.sql (optional), make-admin.sql
 scripts/               placeholder image generator
 ```
 
