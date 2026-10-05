@@ -10,6 +10,7 @@ import { PatronsSection } from "@/components/home/patrons";
 import { PillarsSection } from "@/components/home/pillars";
 import { PageHero } from "@/components/page-hero";
 import { Photo } from "@/components/photo";
+import { mediaUrl } from "@/lib/supabase/env";
 import { CountUp, Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
@@ -128,19 +129,21 @@ export default async function AboutPage() {
           </div>
           <Reveal
             delay={0.1}
-            className="relative aspect-[4/5] overflow-hidden rounded-lg lg:sticky lg:top-28"
+            className="relative aspect-[4/5] overflow-hidden rounded-lg bg-muted lg:sticky lg:top-28"
           >
-            <Photo
-              src="/images/journey.svg"
-              alt="Scroll and documents illustration"
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-            />
+            {content.images.aboutPage && (
+              <Photo
+                src={mediaUrl(content.images.aboutPage)}
+                alt={`${site.name} — our story`}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
+            )}
           </Reveal>
         </div>
       </section>
 
-      <FounderSection founder={content.founder} />
+      <FounderSection founder={content.founder} images={content.images} />
 
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <SectionHeading

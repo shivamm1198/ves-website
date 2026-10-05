@@ -160,6 +160,20 @@ export const journeySchema = z.array(
 );
 
 /** Every editable section, keyed by its row key in `site_content`. */
+/** Editable photos around the site; an empty floating slot is simply hidden. */
+export const imagesSchema = z.object({
+  aboutSection: optionalStr,
+  aboutPage: optionalStr,
+  hero1: optionalStr,
+  hero2: optionalStr,
+  hero3: optionalStr,
+  hero4: optionalStr,
+  about1: optionalStr,
+  about2: optionalStr,
+  founder1: optionalStr,
+  founder2: optionalStr,
+});
+
 export const contentSchemas = {
   site: siteSchema,
   links: linksSchema,
@@ -177,6 +191,7 @@ export const contentSchemas = {
   videos: videosSchema,
   wings: wingsSchema,
   journey: journeySchema,
+  images: imagesSchema,
 } as const;
 
 export type ContentKey = keyof typeof contentSchemas;
@@ -186,6 +201,7 @@ export type SiteContent = { [K in ContentKey]: z.infer<(typeof contentSchemas)[K
 
 export type Site = SiteContent["site"];
 export type Links = SiteContent["links"];
+export type SiteImages = SiteContent["images"];
 export type Founder = SiteContent["founder"];
 export type Pillar = SiteContent["pillars"][number];
 export type Internship = SiteContent["internships"][number];

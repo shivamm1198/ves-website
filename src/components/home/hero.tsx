@@ -6,7 +6,8 @@ import { ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import type { Stat } from "@/lib/content/derive";
-import type { Site, SiteContent } from "@/lib/content/schema";
+import type { Site, SiteContent, SiteImages } from "@/lib/content/schema";
+import { FloatingPhoto } from "@/components/floating-photo";
 import { Button } from "@/components/ui/button";
 import { CountUp, easeOut } from "@/components/motion";
 import { IndiaMap } from "@/components/home/india-map";
@@ -21,10 +22,12 @@ export function Hero({
   site,
   stats,
   stateMembers,
+  images,
 }: {
   site: Site;
   stats: Stat[];
   stateMembers: SiteContent["stateMembers"];
+  images: SiteImages;
 }) {
   return (
     <section className="relative overflow-hidden">
@@ -96,13 +99,53 @@ export function Hero({
           </motion.dl>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, ease: easeOut, delay: 0.2 }}
-        >
-          <IndiaMap stateMembers={stateMembers} />
-        </motion.div>
+        <div className="relative lg:px-10 lg:pt-14 lg:pb-12">
+          {/* Photos tucked behind the map card */}
+          <FloatingPhoto
+            src={images.hero1}
+            className="top-0 -left-8 z-0 hidden w-56 lg:block"
+            rotate={-4}
+            delay={0.6}
+            sizes="224px"
+          />
+          <FloatingPhoto
+            src={images.hero3}
+            className="-right-10 bottom-28 z-0 hidden w-44 lg:block"
+            rotate={3}
+            delay={0.8}
+            duration={8}
+            sizes="176px"
+          />
+          <motion.div
+            className="relative z-10"
+            initial={{ opacity: 0, y: 30, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1, ease: easeOut, delay: 0.2 }}
+          >
+            <IndiaMap stateMembers={stateMembers} />
+          </motion.div>
+          {/* A small photo resting on the card's top edge, plus one more behind it */}
+          <FloatingPhoto
+            src={images.hero2}
+            className="-top-3 right-2 z-20 hidden w-32 lg:block"
+            rotate={5}
+            delay={1}
+            drift={6}
+            duration={6}
+            aspect="aspect-[4/3]"
+            sizes="128px"
+          />
+          <FloatingPhoto
+            src={images.hero4}
+            className="-bottom-3 -left-14 z-0 hidden w-44 lg:block"
+            rotate={-3}
+            delay={1.2}
+            drift={7}
+            duration={7.5}
+            aspect="aspect-[16/10]"
+            sizes="176px"
+          />
+        </div>
       </div>
     </section>
   );

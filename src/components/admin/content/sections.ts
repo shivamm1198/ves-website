@@ -8,6 +8,7 @@ import {
   GraduationCap,
   HelpCircle,
   ListOrdered,
+  Image as ImageIcon,
   Link2,
   Map,
   Newspaper,
@@ -489,6 +490,65 @@ export const sections: SectionDef[] = [
       { kind: "text", key: "year", label: "Year" },
       { kind: "text", key: "title", label: "Title" },
       { kind: "textarea", key: "text", label: "Text", rows: 3, wide: true },
+    ],
+  },
+  {
+    key: "images",
+    group: "Website images",
+    title: "Photos around the site",
+    Icon: ImageIcon,
+    description:
+      "The About images and the small floating photos beside the members map, the About image and the founder portrait. Landscape photos look best. Remove a floating photo to hide it.",
+    shape: "object",
+    fields: [
+      {
+        kind: "group",
+        key: "",
+        label: "About images",
+        wide: true,
+        fields: [
+          { kind: "image", key: "aboutSection", label: "Homepage — About section", shape: "wide" },
+          { kind: "image", key: "aboutPage", label: "About page — Our story", shape: "wide" },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Floating photos around the members map (homepage hero)",
+        help: "Shown on larger screens. Photos 1, 3 and 4 peek out from behind the map; photo 2 rests on its top edge.",
+        wide: true,
+        fields: [
+          { kind: "image", key: "hero1", label: "Photo 1 · top left (large)", shape: "wide" },
+          {
+            kind: "image",
+            key: "hero2",
+            label: "Photo 2 · top right (small, in front)",
+            shape: "wide",
+          },
+          { kind: "image", key: "hero3", label: "Photo 3 · right (medium)", shape: "wide" },
+          { kind: "image", key: "hero4", label: "Photo 4 · bottom left (medium)", shape: "wide" },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Floating photos around the About image",
+        wide: true,
+        fields: [
+          { kind: "image", key: "about1", label: "Top right", shape: "wide" },
+          { kind: "image", key: "about2", label: "Bottom left", shape: "wide" },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
+        label: "Floating photos around the founder portrait",
+        wide: true,
+        fields: [
+          { kind: "image", key: "founder1", label: "Left", shape: "wide" },
+          { kind: "image", key: "founder2", label: "Right", shape: "wide" },
+        ],
+      },
     ],
   },
 ];

@@ -31,16 +31,20 @@ export function FieldsGrid({
 }) {
   return (
     <div className="grid gap-5 sm:grid-cols-2">
-      {fields.map((field) => (
-        <div key={field.key} className={cn(field.wide && "sm:col-span-2")}>
-          <FieldInput
-            field={field}
-            id={`${idPrefix}-${field.key}`}
-            value={value[field.key]}
-            onChange={(v) => onChange({ ...value, [field.key]: v })}
-          />
-        </div>
-      ))}
+      {fields.map((field, i) => {
+        // A group with an empty key is visual only: its fields edit this same object.
+        const flat = field.kind === "group" && field.key === "";
+        return (
+          <div key={field.key || `group-${i}`} className={cn(field.wide && "sm:col-span-2")}>
+            <FieldInput
+              field={field}
+              id={`${idPrefix}-${field.key || `group-${i}`}`}
+              value={flat ? value : value[field.key]}
+              onChange={(v) => onChange(flat ? (v as Obj) : { ...value, [field.key]: v })}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

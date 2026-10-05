@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, BriefcaseBusiness, HandHeart, GraduationCap } from "lucide-react";
 
-import type { Site } from "@/lib/content/schema";
+import type { Site, SiteImages } from "@/lib/content/schema";
+import { mediaUrl } from "@/lib/supabase/env";
+import { FloatingPhoto } from "@/components/floating-photo";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/photo";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
@@ -25,20 +27,46 @@ const points = [
   },
 ];
 
-export function AboutSection({ site, year }: { site: Site; year: number }) {
+export function AboutSection({
+  site,
+  year,
+  images,
+}: {
+  site: Site;
+  year: number;
+  images: SiteImages;
+}) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <Reveal className="relative">
-          <div className="relative aspect-[4/3.4] overflow-hidden rounded-lg">
-            <Photo
-              src="/images/about.svg"
-              alt="Classical courthouse columns"
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-            />
+          <div className="relative aspect-[4/3.4] overflow-hidden rounded-lg bg-muted">
+            {images.aboutSection && (
+              <Photo
+                src={mediaUrl(images.aboutSection)}
+                alt={`About ${site.name}`}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
+            )}
           </div>
-          <div className="absolute -right-3 -bottom-8 w-56 rounded-lg border bg-white p-5 shadow-xl sm:-right-8">
+          <FloatingPhoto
+            src={images.about1}
+            className="-top-10 -right-3 z-10 hidden w-40 sm:block lg:-right-8"
+            rotate={4}
+            delay={0.3}
+            sizes="160px"
+          />
+          <FloatingPhoto
+            src={images.about2}
+            className="-bottom-12 -left-3 z-10 hidden w-36 sm:block lg:-left-8"
+            rotate={-4}
+            delay={0.5}
+            duration={8}
+            aspect="aspect-[4/3]"
+            sizes="144px"
+          />
+          <div className="absolute -right-3 -bottom-8 z-20 w-56 rounded-lg border bg-white p-5 shadow-xl sm:-right-8">
             <div className="mb-3 h-[3px] w-10 gold-gradient" />
             <p className="font-serif text-4xl font-semibold text-ink">
               {Math.max(year - site.founded, 1)}+ yrs

@@ -706,6 +706,19 @@ export const sampleGallery: GalleryItem[] = [
   },
 ];
 
+const images: SiteContent["images"] = {
+  aboutSection: "/images/about.svg",
+  aboutPage: "/images/journey.svg",
+  hero1: "/images/event-legal-aid.svg",
+  hero2: "/images/gallery-07.svg",
+  hero3: "/images/event-career-conclave.svg",
+  hero4: "/images/gallery-12.svg",
+  about1: "/images/gallery-02.svg",
+  about2: "/images/gallery-10.svg",
+  founder1: "/images/event-constitution-day.svg",
+  founder2: "/images/gallery-05.svg",
+};
+
 export const defaultContent: SiteContent = {
   site,
   links,
@@ -723,4 +736,5 @@ export const defaultContent: SiteContent = {
   videos,
   wings,
   journey,
+  images,
 };

@@ -127,6 +127,9 @@ Open **`https://your-site/admin`**, sign in with the president's email and passw
   link is empty, the button falls back to the contact page (or an email application for internships).
 - **Logo:** upload it in **Homepage editor → Organisation details**. It appears in the header, footer,
   dashboard and browser tab. Use a square PNG (transparent background works best).
+- **Photos around the site** (Homepage editor → Website images): the About images on the homepage and
+  About page, and the small floating photos around the members map (4), the About image (2) and the
+  founder portrait (2). Landscape photos look best; remove one to hide it.
 - **Events:** **New event**, add a cover photo, dates, place and description. Turn **Visible** off
   to hide an event without deleting it.
 - **Gallery:** drop several photos at once, set captions and categories, then **Upload**. Large phone

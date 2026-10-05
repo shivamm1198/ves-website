@@ -27,10 +27,15 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero site={content.site} stats={buildStats(content)} stateMembers={content.stateMembers} />
+      <Hero
+        site={content.site}
+        stats={buildStats(content)}
+        stateMembers={content.stateMembers}
+        images={content.images}
+      />
       <ValuesMarquee />
-      <AboutSection site={content.site} year={year} />
-      <FounderSection founder={content.founder} />
+      <AboutSection site={content.site} year={year} images={content.images} />
+      <FounderSection founder={content.founder} images={content.images} />
       {content.internships.length > 0 && (
         <InternshipSection internships={content.internships} email={content.site.email} />
       )}

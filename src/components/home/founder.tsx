@@ -1,18 +1,35 @@
 import Link from "next/link";
 import { ArrowRight, Quote } from "lucide-react";
 
-import type { Founder } from "@/lib/content/schema";
+import type { Founder, SiteImages } from "@/lib/content/schema";
+import { FloatingPhoto } from "@/components/floating-photo";
 import { initialsOf } from "@/lib/content/derive";
 import { Photo } from "@/components/photo";
 import { Monogram } from "@/components/monogram";
 import { Reveal } from "@/components/motion";
 import { Eyebrow } from "@/components/section-heading";
 
-export function FounderSection({ founder }: { founder: Founder }) {
+export function FounderSection({ founder, images }: { founder: Founder; images: SiteImages }) {
   return (
     <section id="founder" className="relative scroll-mt-24 overflow-hidden border-y bg-paper">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8 lg:py-32">
         <Reveal className="relative mx-auto w-full max-w-sm">
+          <FloatingPhoto
+            src={images.founder1}
+            className="top-12 -left-20 z-10 hidden w-40 sm:block"
+            rotate={-5}
+            delay={0.3}
+            sizes="160px"
+          />
+          <FloatingPhoto
+            src={images.founder2}
+            className="-right-20 bottom-16 z-10 hidden w-44 sm:block"
+            rotate={4}
+            delay={0.5}
+            duration={8}
+            aspect="aspect-[16/10]"
+            sizes="176px"
+          />
           {/* Portrait frame — swap the monogram for a photo when available */}
           <div className="relative aspect-[4/5] rounded-lg bg-ink p-8">
             <span className="absolute top-4 left-4 h-10 w-10 border-t border-l border-gold-light/70" />
