@@ -32,6 +32,7 @@ export default async function HomePage() {
         stats={buildStats(content)}
         stateMembers={content.stateMembers}
         images={content.images}
+        joinHref={joinHref(content.links)}
       />
       <ValuesMarquee />
       <AboutSection site={content.site} year={year} images={content.images} />

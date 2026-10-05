@@ -40,7 +40,7 @@ export function AboutSection({
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <Reveal className="relative">
-          <div className="relative aspect-[4/3.4] overflow-hidden rounded-lg bg-muted">
+          <div className="relative aspect-[5/3] overflow-hidden rounded-lg bg-muted">
             {images.aboutSection && (
               <Photo
                 src={mediaUrl(images.aboutSection)}

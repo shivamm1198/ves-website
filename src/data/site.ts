@@ -707,8 +707,8 @@ export const sampleGallery: GalleryItem[] = [
 ];
 
 const images: SiteContent["images"] = {
-  aboutSection: "/images/about.svg",
-  aboutPage: "/images/journey.svg",
+  aboutSection: "/images/ves-group-photo.png",
+  aboutPage: "/images/VES-About.png",
   hero1: "/images/event-legal-aid.svg",
   hero2: "/images/gallery-07.svg",
   hero3: "/images/event-career-conclave.svg",

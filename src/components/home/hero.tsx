@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import type { Stat } from "@/lib/content/derive";
@@ -11,6 +11,7 @@ import { FloatingPhoto } from "@/components/floating-photo";
 import { Button } from "@/components/ui/button";
 import { CountUp, easeOut } from "@/components/motion";
 import { IndiaMap } from "@/components/home/india-map";
+import { SmartLink } from "@/components/smart-link";
 
 const rise = (delay: number) => ({
   initial: { opacity: 0, y: 22 },
@@ -23,11 +24,13 @@ export function Hero({
   stats,
   stateMembers,
   images,
+  joinHref,
 }: {
   site: Site;
   stats: Stat[];
   stateMembers: SiteContent["stateMembers"];
   images: SiteImages;
+  joinHref: string;
 }) {
   return (
     <section className="relative overflow-hidden">
@@ -70,9 +73,9 @@ export function Hero({
 
           <motion.div {...rise(0.32)} className="mt-9 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/internships">
-                Explore internships <ArrowRight />
-              </Link>
+              <SmartLink href={joinHref}>
+                Become a part of family <ArrowUpRight /> {/* {site.short} */}
+              </SmartLink>
             </Button>
             <Button asChild size="lg" variant="outline">
               <Link href="/about">Our story</Link>
