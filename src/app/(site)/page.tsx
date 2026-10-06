@@ -61,7 +61,12 @@ export default async function HomePage() {
       <EventsSection events={events.slice(0, 6)} />
       <JournalSection articles={articles} text={content.sectionText} />
       <NewsSection news={content.news} />
-      {content.members.length > 0 && <MembersSection members={content.members} />}
+      {content.members.length > 0 && (
+        <MembersSection
+          members={content.members}
+          text={content.sectionText}
+        />
+      )}
       <PillarsSection pillars={content.pillars} text={content.sectionText} />
       {content.patrons.length > 0 && (
         <PatronsSection patrons={content.patrons} text={content.sectionText} />

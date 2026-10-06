@@ -779,6 +779,23 @@ export const sections: SectionDef[] = [
       {
         kind: "group",
         key: "",
+        label: "Members",
+        wide: true,
+        fields: [
+          { kind: "text", key: "membersEyebrow", label: "Small heading" },
+          { kind: "text", key: "membersTitle", label: "Title" },
+          {
+            kind: "textarea",
+            key: "membersDescription",
+            label: "Description",
+            rows: 2,
+            wide: true,
+          },
+        ],
+      },
+      {
+        kind: "group",
+        key: "",
         label: "Patrons",
         wide: true,
         fields: [
