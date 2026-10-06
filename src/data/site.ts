@@ -841,18 +841,27 @@ const wingsPage: SiteContent["wingsPage"] = {
 const sectionText: SiteContent["sectionText"] = {
   founderEyebrow: "From the founder",
   founderLinkLabel: "Read the founder's message",
+
   pillarsEyebrow: "Four pillars of VES",
   pillarsTitle: "The principles we stand on",
   pillarsDescription:
     "Every programme, chapter and decision at Vidhi Ekta Sngh rests on four commitments.",
+
+  membersEyebrow: "Our members",
+  membersTitle: "People who carry VES forward",
+  membersDescription:
+    "Wing heads, state coordinators and volunteers — the national core team that makes every internship, camp and conclave happen.",
+
   patronsEyebrow: "Our patrons",
   patronsTitle: "Guided by the Bench, Bar and Academia",
   patronsDescription:
     "Eminent members of the legal fraternity who lend their wisdom and support to VES.",
+
   journalEyebrow: "Student Journal",
   journalTitle: "Writing from the next generation of the Bar",
   journalDescription:
     "Articles, case comments and research papers by law students across India — read online or download the full paper.",
+
   joinTitle: "Join India's fraternity of future lawyers",
   joinText:
     "Membership is free for law students. Get early access to internships, scholarships, mentorship circles and every VES event.",
