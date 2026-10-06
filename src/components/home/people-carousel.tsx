@@ -16,6 +16,7 @@ import {
 import { Avatar } from "@/components/monogram";
 import { Reveal } from "@/components/motion";
 import { Eyebrow, SectionHeading } from "@/components/section-heading";
+import { mediaUrl } from "@/lib/supabase/env";
 
 export type Person = {
   name: string;
@@ -46,25 +47,74 @@ export function PeopleCarousel({
   label: string;
 }) {
   const featured = variant === "featured";
+
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
-  const [plugins] = React.useState(() => [
-    Autoplay({ delay: featured ? 3200 : 4200, stopOnInteraction: false, stopOnMouseEnter: true }),
-  ]);
+
+  const sectionRef = React.useRef<HTMLElement>(null);
+
+  const autoplay = React.useMemo(
+    () =>
+      Autoplay({
+        delay: featured ? 3200 : 4200,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    [featured],
+  );
+
+  const plugins = React.useMemo(() => [autoplay], [autoplay]);
 
   React.useEffect(() => {
     if (!api) return;
-    const onSelect = () => setCurrent(api.selectedScrollSnap());
+
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
     api.on("select", onSelect);
+
     return () => {
       api.off("select", onSelect);
     };
   }, [api]);
 
+  React.useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          autoplay.play();
+        } else {
+          autoplay.stop();
+        }
+      },
+      {
+        threshold: 0.25,
+      },
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      autoplay.stop();
+    };
+  }, [autoplay]);
+
   const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
-    <section className={cn("overflow-hidden", featured ? "border-y bg-paper" : "bg-white")}>
+    <section
+      ref={sectionRef}
+      className={cn(
+        "overflow-hidden",
+        featured ? "border-y bg-paper" : "bg-white",
+      )}
+    >
       <div
         className={cn(
           "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8",
@@ -120,7 +170,7 @@ export function PeopleCarousel({
                       <div className="relative">
                         <Avatar
                           name={p.name}
-                          photo={p.photo}
+                          photo={p.photo ? mediaUrl(p.photo) : undefined}
                           sizes="96px"
                           className="w-24 text-3xl transition-transform duration-500 group-hover:scale-105"
                         />
@@ -142,7 +192,7 @@ export function PeopleCarousel({
                     <article className="flex h-full flex-col items-center rounded-lg border border-foreground/10 bg-paper/60 px-4 pt-6 pb-5 text-center">
                       <Avatar
                         name={p.name}
-                        photo={p.photo}
+                        photo={p.photo ? mediaUrl(p.photo) : undefined}
                         tone="paper"
                         sizes="64px"
                         className="w-16 text-xl"
