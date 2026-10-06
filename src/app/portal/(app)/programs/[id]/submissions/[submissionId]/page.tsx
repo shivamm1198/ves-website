@@ -15,7 +15,10 @@ import { RichViewer } from "@/components/portal/rich-editor";
 
 export const metadata: Metadata = { title: "Review" };
 
-type Params = PageProps<"/portal/programs/[id]/submissions/[submissionId]">["params"];
+type Params = Promise<{
+  id: string;
+  submissionId: string;
+}>;
 
 export default function SubmissionPage({ params }: { params: Params }) {
   return (
@@ -26,7 +29,7 @@ export default function SubmissionPage({ params }: { params: Params }) {
 }
 
 async function Review({ params }: { params: Params }) {
-  const { id, submissionId } = await params;
+  const { id, submissionId } = await params;//Property 'submissionId' does not exist on type 'unknown'. Property 'id' does not exist on type 'unknown'.
   const session = await requirePortalSession();
   if (!canManage(accessTo(session, id))) notFound();
 

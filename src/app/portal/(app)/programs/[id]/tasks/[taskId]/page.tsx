@@ -2,16 +2,29 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import { getProgram, getProgramData, getTask, signAttachments } from "@/lib/portal/data";
+import {
+  getProgram,
+  getProgramData,
+  getTask,
+  signAttachments,
+} from "@/lib/portal/data";
 import { performanceFor, tasksFor } from "@/lib/portal/progress";
-import { accessTo, canManage, requestTime, requirePortalSession } from "@/lib/portal/session";
+import {
+  accessTo,
+  canManage,
+  requestTime,
+  requirePortalSession,
+} from "@/lib/portal/session";
 import { PageFallback } from "@/components/portal/bits";
 import { TaskSubmissions } from "@/components/portal/task-submissions";
 import { WorkArea } from "@/components/portal/work-area";
 
 export const metadata: Metadata = { title: "Task" };
 
-type Params = PageProps<"/portal/programs/[id]/tasks/[taskId]">["params"];
+type Params = Promise<{
+  id: string;
+  taskId: string;
+}>;
 
 export default function TaskPage({ params }: { params: Params }) {
   return (
@@ -23,10 +36,17 @@ export default function TaskPage({ params }: { params: Params }) {
 
 async function TaskView({ params }: { params: Params }) {
   const { id, taskId } = await params;
+
   const session = await requirePortalSession();
   const access = accessTo(session, id);
+
   if (!access) notFound();
-  const [program, task] = await Promise.all([getProgram(session, id), getTask(session, taskId)]);
+
+  const [program, task] = await Promise.all([
+    getProgram(session, id),
+    getTask(session, taskId),
+  ]);
+
   if (!program || !task || task.program_id !== id) notFound();
 
   const manage = canManage(access);
@@ -34,13 +54,33 @@ async function TaskView({ params }: { params: Params }) {
   const now = await requestTime();
 
   if (manage) {
-    return <TaskSubmissions program={program} task={task} {...data} now={now} />;
+    return (
+      <TaskSubmissions
+        program={program}
+        task={task}
+        {...data}
+        now={now}
+      />
+    );
   }
 
-  const mine = data.submissions.filter((s) => s.user_id === session.user.id);
-  const submission = mine.find((s) => s.task_id === task.id) ?? null;
-  const perf = performanceFor(tasksFor(data.tasks, session.user.id), mine, now);
-  const files = await signAttachments(session, submission?.attachments ?? []);
+  const mine = data.submissions.filter(
+    (s) => s.user_id === session.user.id
+  );
+
+  const submission =
+    mine.find((s) => s.task_id === task.id) ?? null;
+
+  const perf = performanceFor(
+    tasksFor(data.tasks, session.user.id),
+    mine,
+    now
+  );
+
+  const files = await signAttachments(
+    session,
+    submission?.attachments ?? []
+  );
 
   return (
     <WorkArea
