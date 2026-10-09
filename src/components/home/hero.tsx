@@ -74,7 +74,7 @@ export function Hero({
           {site.description && (
             <motion.p
               {...rise(0.24)}
-              className="mt-4 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground"
+              className="mt-4 max-w-xl text-base sm:text-lg leading-relaxed text-pretty text-muted-foreground"
             >
               {site.description}
             </motion.p>

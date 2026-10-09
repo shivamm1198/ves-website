@@ -6,7 +6,6 @@ import { getCurrentYear } from "@/lib/current-year";
 import { mediaUrl } from "@/lib/supabase/env";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import Script from "next/script";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
@@ -40,22 +39,6 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
       <SiteHeader site={site} joinHref={joinHref(links)} />
       <main id="main" className="flex-1">
         {children}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-              `}
-            </Script>
-          </>
-        )}
       </main>
       <SiteFooter site={site} year={year} />
     </>
