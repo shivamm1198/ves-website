@@ -24,8 +24,15 @@ export const metadata: Metadata = {
 };
 
 export default async function InternshipsPage() {
-  const { internships, internshipSteps, internshipFaqs, scholarships, site, links } =
-    await getContent();
+  const {
+    internships,
+    internshipSteps,
+    internshipFaqs,
+    scholarships,
+    site,
+    links,
+    sectionText,
+  } = await getContent();
   return (
     <>
       <PageHero
@@ -76,7 +83,11 @@ export default async function InternshipsPage() {
       </section>
 
       {scholarships.length > 0 && (
-        <ScholarshipSection scholarships={scholarships} applyHref={scholarshipHref(links)} />
+        <ScholarshipSection
+          scholarships={scholarships}
+          applyHref={scholarshipHref(links)}
+          text={sectionText}
+        />
       )}
 
       {internshipFaqs.length > 0 && (

@@ -30,9 +30,16 @@ export default async function GalleryPage() {
           </p>
         )}
       </section>
-      <EventsSection events={events} />
+      <EventsSection
+        events={events.slice(0, 6)}
+        text={content.sectionText}
+      />
       {content.videos.length > 0 && (
-        <YoutubeSection videos={content.videos} channelUrl={content.site.socials.youtube} />
+        <YoutubeSection
+          videos={content.videos}
+          channelUrl={content.site.socials.youtube}
+          text={content.sectionText}
+        />
       )}
     </>
   );
