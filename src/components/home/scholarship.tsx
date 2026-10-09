@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import type { SiteContent } from "@/lib/content/schema";
+import type { Scholarship, SectionText } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { SmartLink } from "@/components/smart-link";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
@@ -10,9 +10,14 @@ import { SectionHeading } from "@/components/section-heading";
 export function ScholarshipSection({
   scholarships,
   applyHref,
+  text,
 }: {
-  scholarships: SiteContent["scholarships"];
+  scholarships: Scholarship[];
   applyHref: string;
+  text: Pick<
+    SectionText,
+    "scholarshipsEyebrow" | "scholarshipsTitle" | "scholarshipsDescription"
+  >;
 }) {
   return (
     <section id="scholarships" className="relative scroll-mt-20 overflow-hidden bg-ink text-white">
@@ -22,9 +27,9 @@ export function ScholarshipSection({
           <Reveal>
             <SectionHeading
               inverse
-              eyebrow="Scholarships"
-              title="Talent should never wait on means"
-              description="Funded by our patrons and members, VES scholarships support deserving law students with tuition, travel and year-long mentorship."
+              eyebrow={text.scholarshipsEyebrow}
+              title={text.scholarshipsTitle}
+              description={text.scholarshipsDescription}
             />
           </Reveal>
 

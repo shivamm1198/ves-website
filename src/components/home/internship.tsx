@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import type { Internship } from "@/lib/content/schema";
+import type { Internship, SectionText } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { InternshipCard } from "@/components/internship-card";
 import { Stagger, StaggerItem } from "@/components/motion";
@@ -10,17 +10,24 @@ import { SectionHeading } from "@/components/section-heading";
 export function InternshipSection({
   internships,
   email,
+  text,
 }: {
   internships: Internship[];
   email: string;
+  text: Pick<
+    SectionText,
+    "internshipsEyebrow" |
+    "internshipsTitle" |
+    "internshipsDescription"
+  >;
 }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <SectionHeading
-          eyebrow="Internships"
-          title="Your first step into the profession"
-          description="Verified internships with advocates, firms, courts and legal-aid bodies — matched to your interests and always free of placement fees."
+          eyebrow={text.internshipsEyebrow}
+          title={text.internshipsTitle}
+          description={text.internshipsDescription}
         />
         <Button asChild variant="outline" className="shrink-0">
           <Link href="/internships">

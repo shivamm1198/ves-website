@@ -7,16 +7,27 @@ import { Photo } from "@/components/photo";
 import { Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export function GalleryPreview({ gallery }: { gallery: GalleryItem[] }) {
+import type { SectionText } from "@/lib/content/schema";
+
+export function GalleryPreview({
+  gallery,
+  text,
+}: {
+  gallery: GalleryItem[];
+  text: Pick<
+    SectionText,
+    "galleryEyebrow" | "galleryTitle" | "galleryDescription"
+  >;
+}) {
   const items = gallery.slice(0, 12);
   if (items.length === 0) return null;
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <SectionHeading
-          eyebrow="Gallery"
-          title="Moments from the fraternity"
-          description="Courtrooms, classrooms and village squares — a glimpse of VES in action."
+          eyebrow={text.galleryEyebrow}
+          title={text.galleryTitle}
+          description={text.galleryDescription}
         />
         <Button asChild variant="outline" className="shrink-0">
           <Link href="/gallery">

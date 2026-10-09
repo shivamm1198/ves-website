@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import type { Video } from "@/lib/content/schema";
+import type { SectionText, Video } from "@/lib/content/schema";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Photo } from "@/components/photo";
@@ -14,7 +14,18 @@ import { SectionHeading } from "@/components/section-heading";
 import { YoutubeIcon } from "@/components/social-icons";
 import { mediaUrl } from "@/lib/supabase/env";
 
-export function YoutubeSection({ videos, channelUrl }: { videos: Video[]; channelUrl: string }) {
+export function YoutubeSection({
+  videos,
+  channelUrl,
+  text,
+}: {
+  videos: Video[];
+  channelUrl: string;
+  text: Pick<
+    SectionText,
+    "youtubeEyebrow" | "youtubeTitle" | "youtubeDescription"
+  >;
+}) {
   const [playing, setPlaying] = React.useState<Video | null>(null);
   const [feature, ...rest] = videos;
 
@@ -27,9 +38,9 @@ export function YoutubeSection({ videos, channelUrl }: { videos: Video[]; channe
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="VES on YouTube"
-            title="Watch, learn and stay informed"
-            description="Event highlights, rights-awareness explainers and career guidance from practising lawyers."
+            eyebrow={text.youtubeEyebrow}
+            title={text.youtubeTitle}
+            description={text.youtubeDescription}
           />
           <Button asChild className="shrink-0">
             <a href={channelUrl} target="_blank" rel="noreferrer">

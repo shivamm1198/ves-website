@@ -186,18 +186,47 @@ export const aboutPageSchema = z.object({
 export const sectionTextSchema = z.object({
   founderEyebrow: optionalStr,
   founderLinkLabel: optionalStr,
+
   pillarsEyebrow: optionalStr,
   pillarsTitle: optionalStr,
   pillarsDescription: optionalStr,
+
   membersEyebrow: optionalStr,
   membersTitle: optionalStr,
   membersDescription: optionalStr,
+
   patronsEyebrow: optionalStr,
   patronsTitle: optionalStr,
   patronsDescription: optionalStr,
+
+  internshipsEyebrow: optionalStr,
+  internshipsTitle: optionalStr,
+  internshipsDescription: optionalStr,
+
+  scholarshipsEyebrow: optionalStr,
+  scholarshipsTitle: optionalStr,
+  scholarshipsDescription: optionalStr,
+
+  galleryEyebrow: optionalStr,
+  galleryTitle: optionalStr,
+  galleryDescription: optionalStr,
+
+  eventsEyebrow: optionalStr,
+  eventsTitle: optionalStr,
+  eventsDescription: optionalStr,
+
+  newsEyebrow: optionalStr,
+  newsTitle: optionalStr,
+  newsDescription: optionalStr,
+
+  youtubeEyebrow: optionalStr,
+  youtubeTitle: optionalStr,
+  youtubeDescription: optionalStr,
+
   journalEyebrow: optionalStr,
   journalTitle: optionalStr,
   journalDescription: optionalStr,
+
   joinTitle: optionalStr,
   joinText: optionalStr,
   joinButtonLabel: optionalStr,
@@ -279,6 +308,7 @@ export type SectionText = SiteContent["sectionText"];
 export type Founder = SiteContent["founder"];
 export type Pillar = SiteContent["pillars"][number];
 export type Internship = SiteContent["internships"][number];
+export type Scholarship = SiteContent["scholarships"][number];
 export type Member = SiteContent["members"][number];
 export type Patron = SiteContent["patrons"][number];
 export type Video = SiteContent["videos"][number];

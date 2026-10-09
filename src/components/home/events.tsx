@@ -1,19 +1,28 @@
 import { CalendarDays, MapPin } from "lucide-react";
 
-import type { EventItem } from "@/lib/content/schema";
+import type { EventItem, SectionText } from "@/lib/content/schema";
 import { Photo } from "@/components/photo";
 import { Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export function EventsSection({ events }: { events: EventItem[] }) {
+export function EventsSection({
+  events,
+  text,
+}: {
+  events: EventItem[];
+  text: Pick<
+    SectionText,
+    "eventsEyebrow" | "eventsTitle" | "eventsDescription"
+  >;
+}) {
   if (events.length === 0) return null;
   return (
     <section className="border-y bg-paper">
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <SectionHeading
-          eyebrow="Events"
-          title="Where the legal community gathers"
-          description="Moot courts, seminars, legal-aid camps and conclaves — organised by VES wings across the country."
+          eyebrow={text.eventsEyebrow}
+          title={text.eventsTitle}
+          description={text.eventsDescription}
         />
         <Stagger className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {events.map((e) => (

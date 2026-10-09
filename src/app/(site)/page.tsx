@@ -49,30 +49,48 @@ export default async function HomePage() {
         text={content.sectionText}
       />
       {content.internships.length > 0 && (
-        <InternshipSection internships={content.internships} email={content.site.email} />
+        <InternshipSection
+          internships={content.internships}
+          email={content.site.email}
+          text={content.sectionText}
+        />
       )}
       {content.scholarships.length > 0 && (
         <ScholarshipSection
           scholarships={content.scholarships}
           applyHref={scholarshipHref(content.links)}
+          text={content.sectionText}
         />
       )}
-      <GalleryPreview gallery={gallery} />
-      <EventsSection events={events.slice(0, 6)} />
-      <JournalSection articles={articles} text={content.sectionText} />
-      <NewsSection news={content.news} />
+      <GalleryPreview
+        gallery={gallery}
+        text={content.sectionText}
+      />
+      <EventsSection
+        events={events.slice(0, 6)}
+        text={content.sectionText}
+      />
+      <NewsSection
+        news={content.news}
+        text={content.sectionText}
+      />
       {content.members.length > 0 && (
         <MembersSection
-          members={content.members}
-          text={content.sectionText}
+        members={content.members}
+        text={content.sectionText}
         />
       )}
       <PillarsSection pillars={content.pillars} text={content.sectionText} />
       {content.patrons.length > 0 && (
         <PatronsSection patrons={content.patrons} text={content.sectionText} />
       )}
+      <JournalSection articles={articles} text={content.sectionText} />
       {content.videos.length > 0 && (
-        <YoutubeSection videos={content.videos} channelUrl={content.site.socials.youtube} />
+        <YoutubeSection
+          videos={content.videos}
+          channelUrl={content.site.socials.youtube}
+          text={content.sectionText}
+        />
       )}
       <JoinCta joinHref={joinHref(content.links)} text={content.sectionText} />
     </>

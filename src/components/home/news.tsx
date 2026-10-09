@@ -1,19 +1,28 @@
 import { ArrowUpRight } from "lucide-react";
 
-import type { SiteContent } from "@/lib/content/schema";
+import type { SectionText, SiteContent } from "@/lib/content/schema";
 import { Stagger, StaggerItem } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 
-export function NewsSection({ news }: { news: SiteContent["news"] }) {
+export function NewsSection({
+  news,
+  text,
+}: {
+  news: SiteContent["news"];
+  text: Pick<
+    SectionText,
+    "newsEyebrow" | "newsTitle" | "newsDescription"
+  >;
+}) {
   if (news.length === 0) return null;
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div className="lg:sticky lg:top-32 lg:self-start">
           <SectionHeading
-            eyebrow="Inside VES"
-            title="News from the Sngh"
-            description="Announcements, chapter updates, publications and recognitions — straight from our wings."
+            eyebrow={text.newsEyebrow}
+            title={text.newsTitle}
+            description={text.newsDescription}
           />
         </div>
         <Stagger className="flex flex-col border-t">

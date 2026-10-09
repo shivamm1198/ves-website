@@ -856,6 +856,36 @@ const sectionText: SiteContent["sectionText"] = {
   patronsTitle: "Guided by the Bench, Bar and Academia",
   patronsDescription:
     "Eminent members of the legal fraternity who lend their wisdom and support to VES.",
+  
+  internshipsEyebrow: "Internships",
+  internshipsTitle: "Your first step into the profession",
+  internshipsDescription:
+    "Verified internships with advocates, firms, courts and legal-aid bodies — matched to your interests and always free of placement fees.",
+
+  scholarshipsEyebrow: "Scholarships",
+  scholarshipsTitle: "Talent should never wait on means",
+  scholarshipsDescription:
+    "Funded by our patrons and members, VES scholarships support deserving law students with tuition, travel and year-long mentorship.",
+
+  galleryEyebrow: "Gallery",
+  galleryTitle: "Moments from the fraternity",
+  galleryDescription:
+    "Courtrooms, classrooms and village squares — a glimpse of VES in action.",
+
+  eventsEyebrow: "Events",
+  eventsTitle: "Where the legal community gathers",
+  eventsDescription:
+    "Moot courts, seminars, legal-aid camps and conclaves — organised by VES wings across the country.",
+
+  newsEyebrow: "Inside VES",
+  newsTitle: "News from the Sngh",
+  newsDescription:
+    "Announcements, chapter updates, publications and recognitions — straight from our wings.",
+
+  youtubeEyebrow: "VES on YouTube",
+  youtubeTitle: "Watch, learn and stay informed",
+  youtubeDescription:
+    "Event highlights, rights-awareness explainers and career guidance from practising lawyers.",
 
   journalEyebrow: "Student Journal",
   journalTitle: "Writing from the next generation of the Bar",
